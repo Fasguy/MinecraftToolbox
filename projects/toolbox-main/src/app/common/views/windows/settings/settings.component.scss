@@ -1,0 +1,40 @@
+tbx-sub-section {
+	margin: 1em;
+
+	&>label {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		margin-bottom: 0.5em;
+
+		&>input {
+			display: none;
+
+			&+span {
+				display: inline-block;
+				min-width: 18px;
+				height: 18px;
+				margin-right: 5px;
+
+				border: 1px solid #000;
+				background-image: url("../../../../../style/sprites/checkbox.png");
+			}
+
+			&:checked+span {
+				background-position: 0 -18px;
+			}
+
+			&:indeterminate+span {
+				background-position: 0 -36px;
+			}
+		}
+
+		&:hover>input+span {
+			border-color: #fff;
+		}
+	}
+
+	&>pre {
+		white-space: pre-line;
+	}
+}

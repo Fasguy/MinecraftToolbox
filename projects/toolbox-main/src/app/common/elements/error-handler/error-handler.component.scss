@@ -1,0 +1,38 @@
+:host {
+	background-color: rgba(0, 0, 0, 0.5);
+	overflow-x: hidden;
+	overflow-y: auto;
+	z-index: 1;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+pre {
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
+
+.container {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	padding: 8px;
+}
+
+.spacer {
+	margin: 15px;
+}
+
+.button-container {
+	display: inline-grid;
+}
+
+.positioner {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+	justify-content: center;
+}

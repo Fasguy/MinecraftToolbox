@@ -1,0 +1,48 @@
+tbx-sub-section {
+	margin: 1em;
+
+	&>.header {
+		margin-bottom: 0.5em;
+	}
+
+	&>ul {
+		margin-left: 50px;
+		list-style: none;
+
+		&>li {
+			&::before {
+				position: absolute;
+				margin-left: -1.5em;
+			}
+
+			&.addition {
+				color: #00db00;
+
+				&::before {
+					content: '+';
+				}
+			}
+
+			&.removal {
+				color: #ff0000;
+
+				&::before {
+					content: '-';
+				}
+			}
+
+			&.modification {
+				color: #ffff00;
+
+				&::before {
+					content: '*';
+				}
+			}
+		}
+	}
+
+	&>pre {
+		margin-top: 1em;
+		white-space: pre-line;
+	}
+}

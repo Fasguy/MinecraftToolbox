@@ -1,0 +1,13 @@
+# https://stackoverflow.com/a/44819446
+
+RewriteEngine On
+# If an existing asset or directory is requested go to it as it is
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+RewriteRule ^ - [L]
+
+# If a resource is requested, don't rewrite
+RewriteCond %{REQUEST_URI} !\.(?:css|js|json|png|zip|txt)$ [NC]
+
+# If the requested resource doesn't exist, use index.html
+RewriteRule ^ index.html

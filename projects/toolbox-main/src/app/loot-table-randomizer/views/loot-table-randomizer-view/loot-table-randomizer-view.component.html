@@ -1,0 +1,15 @@
+<form (submit)="onSubmit($event)">
+	<tbx-sub-section header="Randomization Seed">
+		<input standard type="text" name="seed" value="{{seed}}">
+	</tbx-sub-section>
+	<tbx-sub-section header="Loot-Table Selection">
+		<tbx-selection [entries]="lootTables"></tbx-selection>
+	</tbx-sub-section>
+	<tbx-sub-section>
+		<button standard type="submit">Start the randomization</button>
+		<br>
+		<button standard type="button" (click)="showInstructions()">Installation instructions</button>
+		<br>
+		<button standard type="button" (click)="showFAQ()">Frequently asked questions</button>
+	</tbx-sub-section>
+</form>

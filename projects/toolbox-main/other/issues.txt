@@ -1,0 +1,7 @@
+Accessibility:
+	Keyboard accessibility is currently horrible. A special example is the selection, as items can currently not be toggled via keyboard.
+	High contrast mode may be a worthwhile addition? Especially considering there is a lot of clashing visuals currently.
+
+
+Performance:
+	Currently, i'm using quite a few function calls and getters. These should be replaced by pure pipes, whenever possible.

@@ -1,0 +1,29 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 10px 5px;
+	background:
+		linear-gradient(transparent, #000000B0),
+		url("../../../../style/images/grass_block_side.png") repeat-x 0 0 / 48px 48px,
+		url("../../../../style/images/dirt.png") repeat 0 0 / 48px 48px;
+
+	&>div {
+		margin: 5px 0;
+	}
+}
+
+button {
+	border: none;
+	background: none;
+	margin: 0 5px;
+	border-bottom: 2px solid white;
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.final-notes {
+	text-align: center;
+}

@@ -1,0 +1,191 @@
+:host {
+	z-index: -1;
+}
+
+* {
+	font-size: 8px;
+}
+
+.isometric-container {
+	position: relative;
+	height: 312px;
+}
+
+.empty {
+	background-color: black;
+	height: 62px;
+	width: 70px;
+	margin: 5px auto;
+	transform: rotate(206deg) skewX(-37deg);
+}
+
+.content {
+	position: relative;
+	top: 160px;
+}
+
+.face {
+	background: url("../../../../style/sprites/chest.png");
+	background-size: 42em;
+	overflow: hidden;
+	transform-origin: 0 0;
+	backface-visibility: hidden;
+}
+
+.scene,
+.shape,
+.face {
+	position: absolute;
+	transform-style: preserve-3d;
+}
+
+.scene {
+	margin: auto;
+	position: relative;
+	transform: rotateX(330deg) rotateY(-45deg);
+}
+
+.shape {
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+
+	.ft {
+		width: 100%;
+		height: 100%;
+	}
+
+	.lt {
+		transform: rotateY(90deg) translateX(-50%);
+		left: 100%;
+	}
+
+	.tp {
+		transform: rotateX(90deg) translateY(-50%);
+	}
+
+	.bm {
+		transform: rotateX(-90deg) translateY(-50%);
+		top: 100%;
+	}
+}
+
+.chest-base {
+	width: 14em;
+	height: 10em;
+	margin: -5em 0 0 -7em;
+	display: flex;
+	justify-content: center;
+
+	.ft {
+		background-position: -14em -4em;
+		transform: translateZ(7em);
+	}
+
+	.tp {
+		background-position: -28em -14em;
+		width: 14em;
+		height: 14em;
+	}
+
+	.lt {
+		background-position: -28em -4em;
+		width: 14em;
+		height: 10em;
+	}
+}
+
+.chest-knob {
+	transform: translate3D(0em, -18.5em, -7em) rotateX(90deg);
+	width: 2em;
+	height: 4em;
+	margin: -2em 0 0 -1em;
+
+	.ft {
+		background-position: -11em -14em;
+		transform: translateZ(0.5em);
+	}
+
+	.bm {
+		background-position: -12em -18em;
+		width: 2em;
+		height: 1em;
+	}
+
+	.lt {
+		background-position: -12em -14em;
+		width: 1em;
+		height: 4em;
+	}
+}
+
+.chest-top {
+	transform: translate3D(0em, -11em, -9.5em) rotateX(90deg);
+	width: 14em;
+	height: 5em;
+	margin: -2.5em 0 0 -7em;
+
+	.ft {
+		background-position: -14em 0;
+		transform: translateZ(7em);
+	}
+
+	.bm {
+		background-position: -14em -14em;
+		width: 14em;
+		height: 14em;
+	}
+
+	.lt {
+		background-position: -28em 0;
+		width: 14em;
+		height: 5em;
+	}
+}
+
+.item-pivot {
+	transform-style: preserve-3d;
+
+	* {
+		transform-style: preserve-3d;
+	}
+}
+
+.item {
+	position: absolute;
+	width: 8em;
+	height: 8em;
+	background: url("../../../../style/sprites/item_atlas.png");
+	background-size: 400%;
+	animation: throw-vertical 1s infinite, throw-horizontal 1s infinite ease-out;
+}
+
+@keyframes throw-vertical {
+	0% {
+		top: -50px;
+		animation-timing-function: ease-out;
+		opacity: 0;
+	}
+
+	50% {
+		top: -150px;
+		animation-timing-function: ease-in;
+	}
+
+	100% {
+		top: 40px;
+		animation-timing-function: linear;
+		transform: rotate(720deg);
+	}
+}
+
+@keyframes throw-horizontal {
+	0% {
+		left: -500px;
+	}
+
+	100% {
+		left: -25px;
+	}
+}

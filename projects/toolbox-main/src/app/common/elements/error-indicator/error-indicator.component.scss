@@ -1,0 +1,172 @@
+:host {
+	z-index: -1;
+}
+
+* {
+	font-size: 8px;
+}
+
+.isometric-container {
+	position: relative;
+	height: 312px;
+	display: flex;
+	flex-direction: column;
+}
+
+.scene,
+.shape,
+.face {
+	position: absolute;
+	transform-style: preserve-3d;
+}
+
+.scene {
+	top: 75px;
+	margin: auto;
+	position: relative;
+	transform: rotateX(330deg) rotateY(-45deg);
+}
+
+.shape {
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+
+	.ft {
+		width: 100%;
+		height: 100%;
+	}
+
+	.lt {
+		transform: rotateY(90deg) translateX(-50%);
+	}
+
+	.tp {
+		transform: rotateX(90deg) translateY(-50%);
+	}
+
+	.lt {
+		left: 100%;
+	}
+}
+
+.face {
+	overflow: hidden;
+	transform-origin: 0 0;
+	backface-visibility: hidden;
+}
+
+.chest {
+	transform: translate3D(0em, -2em, 0em);
+	width: 14em;
+	height: 14em;
+	margin: -7em 0 0 -7em;
+
+	.face {
+		background: url("../../../../style/sprites/chest.png");
+		background-size: 42em;
+	}
+
+	.ft {
+		transform: translateZ(7em);
+		background-position-x: -14em;
+	}
+
+	.lt {
+		width: 14em;
+		height: 14em;
+		background-position-x: 14em;
+	}
+
+	.tp {
+		width: 14em;
+		height: 14em;
+	}
+}
+
+.chest-knob {
+	transform: translate3D(0em, -5em, 7.5em);
+	width: 2em;
+	height: 4em;
+	margin: -2em 0 0 -1em;
+
+	.face {
+		background: url("../../../../style/sprites/chest.png");
+		background-size: 42em;
+	}
+
+	.ft {
+		background-position: -11em -14em;
+		transform: translateZ(0.5em);
+	}
+
+	.tp {
+		background-position: -12em -18em;
+		width: 2em;
+		height: 1em;
+	}
+
+	.lt {
+		background-position: -12em -14em;
+		width: 1em;
+		height: 4em;
+	}
+}
+
+.exclamation-bar,
+.exclamation-point {
+	transform: translate3D(-9em, -19em, 9em);
+	width: 4em;
+	height: 14em;
+	margin: -7em 0 0 -2em;
+
+	.face {
+		background: linear-gradient(to bottom, transparent, #ff0000 16em, transparent 32em);
+		background-size: 1em 32em;
+		animation: exclamation-slide 5s linear infinite;
+		width: 100%;
+		height: 100%;
+	}
+
+	.ft {
+		transform: translateZ(2em);
+	}
+
+	.tp {
+		height: 4em;
+		background: none;
+		animation: exclamation-pulse 5s linear infinite;
+	}
+}
+
+.exclamation-point {
+	transform: translate3D(-9em, -7em, 9em);
+	height: 4em;
+	margin: -2em 0 0 -2em;
+
+	.face,
+	.tp {
+		animation-delay: -2.5s;
+	}
+}
+
+@keyframes exclamation-slide {
+	0% {
+		background-position-y: 0;
+	}
+
+	100% {
+		background-position-y: 32em;
+	}
+}
+
+@keyframes exclamation-pulse {
+	0% {
+		background-color: transparent;
+	}
+
+	50% {
+		background-color: #FF0000;
+	}
+}

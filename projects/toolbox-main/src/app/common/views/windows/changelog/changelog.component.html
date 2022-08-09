@@ -1,0 +1,9 @@
+<tbx-sub-section *ngFor="let entry of changelog | reverse">
+	<div class="header">Version {{entry.version}} ({{entry.build_date}})</div>
+	<ul>
+		<li class="addition" *ngFor="let item of entry.changes.additions">{{item}}</li>
+		<li class="modification" *ngFor="let item of entry.changes.modifications">{{item}}</li>
+		<li class="removal" *ngFor="let item of entry.changes.removals">{{item}}</li>
+	</ul>
+	<pre>{{entry.notes}}</pre>
+</tbx-sub-section>

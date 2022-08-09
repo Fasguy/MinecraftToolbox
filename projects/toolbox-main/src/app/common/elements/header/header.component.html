@@ -1,0 +1,4 @@
+<p>Fasguy's Minecraft Toolbox v{{version}}</p>
+<div class="tool-selection-container">
+	<a *ngFor="let route of routes | filter: filterTitledRoutes" routerLink="{{route.path}}" routerLinkActive="is-active">{{route!.data!["title"]}}</a>
+</div>

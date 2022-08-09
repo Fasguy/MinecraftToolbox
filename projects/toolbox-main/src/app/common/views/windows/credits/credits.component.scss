@@ -1,0 +1,61 @@
+:root {
+	--startPos: 0;
+}
+
+:host {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	overflow: hidden;
+	background-image: url("../../../../../style/images/dirt_block_dark.png");
+	background-size: 48px;
+	animation: parallax_scroll 5s linear infinite;
+	box-shadow: inset 0 0 100px black;
+}
+
+@keyframes parallax_scroll {
+	0% {
+		background-position: 0 0;
+	}
+
+	100% {
+		background-position: 0 -48px;
+	}
+}
+
+#text {
+	position: relative;
+	animation-name: credits_scroll;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	max-width: 548px;
+	margin: auto;
+	white-space: pre-line;
+	text-align: center;
+}
+
+@keyframes credits_scroll {
+	0% {
+		transform: translateY(var(--startPos));
+	}
+
+	100% {
+		transform: translateY(-100%);
+	}
+}
+
+#credits_header {
+	line-height: 48px;
+}
+
+#credits_main {
+	text-align: left;
+	line-height: 48px;
+	margin-top: 22px;
+}
+
+.space {
+	margin-left: 80px;
+}

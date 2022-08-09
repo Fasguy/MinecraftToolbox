@@ -1,0 +1,63 @@
+:host {
+	max-height: 450px;
+	overflow-y: auto;
+	display: block;
+}
+
+.checkbox {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+
+	&>input {
+		display: none;
+
+		&+span {
+			display: inline-block;
+			min-width: 18px;
+			height: 18px;
+			margin-right: 5px;
+
+			border: 1px solid #000;
+			background-image: url("../../../../style/sprites/checkbox.png");
+		}
+
+		&:checked+span {
+			background-position: 0 -18px;
+		}
+
+		&:indeterminate+span {
+			background-position: 0 -36px;
+		}
+	}
+
+	&:hover>input+span {
+		border-color: #fff;
+	}
+}
+
+.entry-group-header {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 5px;
+	margin-top: 0;
+	padding-top: 5px;
+	position: sticky;
+	top: 0;
+
+	&>.entry-toggler {
+		min-width: 18px;
+		cursor: pointer;
+	}
+}
+
+.entries {
+	display: none;
+	margin-left: 40px;
+}
+
+.entry {
+	margin: 5px;
+}

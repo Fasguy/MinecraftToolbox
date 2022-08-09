@@ -1,0 +1,18 @@
+<p>Loot-Table-Randomizer preparer</p>
+<form (submit)="prepare($event)">
+	Datapack
+	<input type="file" name="datapack">
+	<br>
+	Current asset definitions
+	<input type="file" name="asset_definitions">
+	<br>
+	Unselected
+	<input type="file" name="unselected">
+	<br>
+	<div *ngFor="let item of missingAssetDefinitions | keyvalue">
+		<span>Missing asset definition for {{item.key}}</span>
+		<input type="text" name="missing_asset_definitions" data-id="{{item.key}}" value="{{item.value}}">
+	</div>
+	<button type="submit">Prepare</button>
+</form>
+<a *ngIf="finalFile" [href]="finalFile | safeLink">Download prepared datapack</a>

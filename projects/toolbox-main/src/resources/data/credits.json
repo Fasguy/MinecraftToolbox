@@ -1,0 +1,84 @@
+[
+	{
+		"section": "Minecraft Toolbox",
+		"titles": [
+			{
+				"title": "Developers",
+				"names": [
+					"Fasguy"
+				]
+			},
+			{
+				"title": "Minecraft Development Studio",
+				"names": [
+					"Mojang"
+				]
+			}
+		]
+	},
+	{
+		"section": "Visual Arts",
+		"titles": [
+			{
+				"title": "Minecraft Textures",
+				"names": [
+					"Mojang"
+				]
+			},
+			{
+				"title": "Toolbox Logo",
+				"names": [
+					"Fasguy"
+				]
+			},
+			{
+				"title": "Loot-Table Randomizer & Crafting-Recipe Randomizer pack.png",
+				"names": [
+					"Cioss"
+				]
+			}
+		]
+	},
+	{
+		"section": "Tools, Libraries, etc.",
+		"titles": [
+			{
+				"title": "fflate",
+				"names": [
+					"101arrowz"
+				]
+			},
+			{
+				"title": "serialize-error",
+				"names": [
+					"sindresorhus"
+				]
+			}
+		]
+	},
+	{
+		"section": "Special Thanks",
+		"titles": [
+			{
+				"title": "Moderation & Encyclopedia",
+				"names": [
+					"Pixel"
+				]
+			},
+			{
+				"title": "Accidental Quality Assurance",
+				"names": [
+					"iBazly",
+					"MissLauralot"
+				]
+			},
+			{
+				"title": "Extensive Extending",
+				"names": [
+					"Jessie101",
+					"hungryhyena78"
+				]
+			}
+		]
+	}
+]

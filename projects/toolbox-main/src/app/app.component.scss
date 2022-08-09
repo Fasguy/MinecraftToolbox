@@ -1,0 +1,39 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+
+	&::after {
+		content: "";
+		position: absolute;
+		width: 0;
+		height: 0;
+
+		/* Pre-loading assets lazily */
+		background-image:
+			url("../style/images/logo.png"),
+			url("../style/images/dirt_block_dark.png"),
+			url("../style/sprites/checkbox.png"),
+			url("../style/sprites/chest.png"),
+			url("../style/sprites/item_atlas.png"),
+			url("../style/sprites/window_border.png"),
+			url("../style/sprites/button.png");
+	}
+}
+
+.content-container {
+	padding: 8px;
+	overflow: hidden;
+	flex: 1 1 auto;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	box-shadow:
+		inset 0 100px 100px -100px black,
+		inset 0 -100px 100px -100px black;
+
+	&>.content {
+		max-width: 980px;
+		width: 100%;
+	}
+}

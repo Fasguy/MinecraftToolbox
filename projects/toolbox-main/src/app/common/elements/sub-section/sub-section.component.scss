@@ -1,0 +1,15 @@
+:host {
+	display: block;
+	margin-bottom: 20px;
+	border-left: 2px solid white;
+	background-color: #0000002e;
+	padding: 15px;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.header {
+	margin-bottom: 20px;
+}

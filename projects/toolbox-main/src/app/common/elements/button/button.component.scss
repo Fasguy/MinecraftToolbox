@@ -1,0 +1,13 @@
+:host {
+	appearance: none;
+	border-image: url("../../../../style/sprites/button.png") repeat 4 1 fill / 6px 2px;
+	padding: 0 10px;
+	width: 340px;
+	height: 38px;
+	box-shadow: 0 0 0 2px #000;
+	margin: 2px;
+
+	&:hover {
+		box-shadow: 0 0 0 2px #fff;
+	}
+}

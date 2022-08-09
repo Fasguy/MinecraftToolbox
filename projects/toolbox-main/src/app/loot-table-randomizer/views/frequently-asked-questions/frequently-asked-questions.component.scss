@@ -1,0 +1,17 @@
+tbx-sub-section {
+	margin: 1em;
+
+	div {
+		&:first-child {
+			margin-bottom: 0.5em;
+
+			&::before {
+				content: "Q: ";
+			}
+		}
+
+		&:last-child::before {
+			content: "A: ";
+		}
+	}
+}

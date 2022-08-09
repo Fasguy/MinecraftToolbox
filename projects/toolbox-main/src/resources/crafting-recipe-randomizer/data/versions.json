@@ -1,0 +1,73 @@
+[
+	{
+		"title": "Minecraft v1.19",
+		"versions": [
+			{
+				"title": "Minecraft v1.19 (any version)",
+				"id": "1.19.X"
+			}
+		]
+	},
+	{
+		"title": "Minecraft v1.18",
+		"versions": [
+			{
+				"title": "Minecraft v1.18 (1.18.2)",
+				"id": "1.18.2"
+			},
+			{
+				"title": "Minecraft v1.18 (1.18.0 - 1.18.1)",
+				"id": "1.18.0"
+			}
+		]
+	},
+	{
+		"title": "Minecraft v1.17",
+		"versions": [
+			{
+				"title": "Minecraft v1.17 (any version)",
+				"id": "1.17.X"
+			}
+		]
+	},
+	{
+		"title": "Minecraft v1.16",
+		"versions": [
+			{
+				"title": "Minecraft v1.16 (1.16.2+)",
+				"id": "1.16.2"
+			},
+			{
+				"title": "Minecraft v1.16 (1.16.0 - 1.16.1)",
+				"id": "1.16.0"
+			}
+		]
+	},
+	{
+		"title": "Minecraft v1.15",
+		"versions": [
+			{
+				"title": "Minecraft v1.15 (any version)",
+				"id": "1.15.X"
+			}
+		]
+	},
+	{
+		"title": "Minecraft v1.14",
+		"versions": [
+			{
+				"title": "Minecraft v1.14 (any version)",
+				"id": "1.14.X"
+			}
+		]
+	},
+	{
+		"title": "Minecraft v1.13",
+		"versions": [
+			{
+				"title": "Minecraft v1.13 (any version)",
+				"id": "1.13.X"
+			}
+		]
+	}
+]

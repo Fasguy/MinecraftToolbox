@@ -1,0 +1,46 @@
+@import "style/font/minecraft.scss";
+
+* {
+	margin: 0;
+	padding: 0;
+	color: white;
+	text-shadow: 2px 2px #3f3f3f;
+	font-family: "Minecraft";
+	font-size: 16px;
+	font-weight: 400;
+}
+
+html,
+body {
+	min-height: 100vh;
+	image-rendering: pixelated;
+	image-rendering: crisp-edges;
+}
+
+body {
+	background: url("style/images/stone.png") repeat 0 0 / 48px 48px;
+}
+
+input {
+	box-sizing: border-box;
+}
+
+a,
+u {
+	text-decoration: none;
+	border-bottom: 2px solid white;
+}
+
+.tooltip {
+	display: none;
+	background-clip: padding-box;
+	background-color: #100110;
+	padding: 1px 5px 5px;
+	border: 4px solid #100110;
+	border-image-source: url("style/sprites/tooltip.png");
+	border-image-slice: 2;
+	position: absolute;
+	z-index: 20;
+	white-space: pre-line;
+	max-width: 400px;
+}

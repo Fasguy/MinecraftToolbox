@@ -1,0 +1,12 @@
+:host {
+	background-color: black;
+	border: 2px solid #A0A0A0;
+	padding: 0 10px;
+	width: 340px;
+	height: 38px;
+
+	&:focus {
+		outline: none;
+		border-color: #fff;
+	}
+}

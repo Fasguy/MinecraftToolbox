@@ -1,0 +1,17 @@
+.groupContainer {
+	margin: 1em 0;
+}
+
+.groupTitle {
+	margin-bottom: 0.5em;
+}
+
+.buttonContainer {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+	gap: 10px;
+}
+
+button {
+	width: auto;
+}

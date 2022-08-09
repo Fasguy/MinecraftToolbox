@@ -1,0 +1,6 @@
+<div class="groupContainer" *ngFor="let versionGroup of versionGroups">
+	<div class="groupTitle">{{versionGroup.title}}</div>
+	<div class="buttonContainer">
+		<button standard *ngFor="let version of versionGroup.versions" routerLink="./{{version.id}}">{{version.title}}</button>
+	</div>
+</div>

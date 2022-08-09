@@ -1,0 +1,12 @@
+canvas {
+	z-index: -1;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border: none;
+	width: 100%;
+	height: 100%;
+	// filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='a'%3E%3CfeGaussianBlur stdDeviation='4'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='11'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3C/svg%3E#a");
+}

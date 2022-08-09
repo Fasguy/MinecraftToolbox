@@ -1,0 +1,8 @@
+<tbx-sub-section *ngFor="let option of options">
+	<label>
+		<input type="checkbox" [checked]="getOptionValue(option)" (change)="setOptionValue(option, $event)">
+		<span></span>
+		{{option.text}}
+	</label>
+	<pre>{{option.description}}</pre>
+</tbx-sub-section>
