@@ -11,8 +11,7 @@ tbx-sub-section {
 
 		&>li {
 			&::before {
-				position: absolute;
-				margin-left: -1.5em;
+				margin-right: 0.5em;
 			}
 
 			&.addition {
