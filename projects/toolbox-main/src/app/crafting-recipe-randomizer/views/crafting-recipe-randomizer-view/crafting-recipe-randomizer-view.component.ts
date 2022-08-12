@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { strFromU8, unzip } from 'fflate';
@@ -49,7 +49,16 @@ export class CraftingRecipeRandomizerViewComponent implements OnInit {
 		this._activityMonitor.startActivity({
 			text: "Downloading necessary data...",
 			promise: new Promise<void>((res, rej) => {
-				this._http.get(`resources/crafting-recipe-randomizer/${version}/data.zip`, { responseType: 'arraybuffer' })
+				let requestOptions: any = {
+					responseType: 'arraybuffer',
+					headers: new HttpHeaders({
+						'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+						'Pragma': 'no-cache',
+						'Expires': '0'
+					})
+				};
+
+				this._http.get(`resources/crafting-recipe-randomizer/${version}/data.zip`, requestOptions)
 					.subscribe({
 						next: data => {
 							unzip(new Uint8Array(data), (err, result) => {

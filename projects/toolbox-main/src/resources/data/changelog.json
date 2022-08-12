@@ -29,5 +29,18 @@
 			"removals": []
 		},
 		"notes": "This changelog sort-of starts where the old Minecraft Randomizer left-off development-wise."
+	},
+	{
+		"version": "1.0.1",
+		"build_date": "2022-08-12",
+		"changes": {
+			"additions": [],
+			"modifications": [
+				"The files that contain the necessary data for the Loot-Table Randomizer (data.zip) are now requested un-cached",
+				"The files that contain the necessary data for the Crafting-Recipe Randomizer (data.zip) are now requested un-cached"
+			],
+			"removals": []
+		},
+		"notes": ""
 	}
 ]
