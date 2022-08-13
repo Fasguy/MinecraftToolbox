@@ -4,32 +4,32 @@
 	"type": "commonjs",
 	"scripts": {
 		"ng": "ng",
-		"start": "ng serve",
+		"start": "ng serve toolbox-main",
 		"start-utilities": "ng serve toolbox-utilities --port 4201",
-		"build": "ng build",
+		"build": "ng build toolbox-main",
 		"postbuild": "node --inspect -r ts-node/register projects/toolbox-main/postbuild.ts",
-		"watch": "ng build --watch --configuration development",
-		"test": "ng test"
+		"watch": "ng build toolbox-main --watch --configuration development",
+		"test": "ng test toolbox-main"
 	},
 	"private": true,
 	"dependencies": {
-		"@angular/common": "~13.2.0",
-		"@angular/compiler": "~13.2.0",
-		"@angular/core": "~13.2.0",
-		"@angular/platform-browser": "~13.2.0",
-		"@angular/platform-browser-dynamic": "~13.2.0",
-		"@angular/router": "~13.2.0",
+		"@angular/common": "^14.1.2",
+		"@angular/compiler": "^14.1.2",
+		"@angular/core": "^14.1.2",
+		"@angular/platform-browser": "^14.1.2",
+		"@angular/platform-browser-dynamic": "^14.1.2",
+		"@angular/router": "^14.1.2",
 		"fflate": "^0.7.3",
 		"rxjs": "~7.5.0",
 		"serialize-error": "^11.0.0",
 		"zone.js": "~0.11.4"
 	},
 	"devDependencies": {
-		"@angular-devkit/build-angular": "^13.3.9",
-		"@angular/cli": "~13.2.4",
-		"@angular/compiler-cli": "~13.2.0",
+		"@angular-devkit/build-angular": "^14.1.2",
+		"@angular/cli": "^14.1.2",
+		"@angular/compiler-cli": "^14.1.2",
 		"ts-node": "^10.8.2",
 		"tslib": "^2.4.0",
-		"typescript": "~4.5.2"
+		"typescript": "~4.7.4"
 	}
 }
