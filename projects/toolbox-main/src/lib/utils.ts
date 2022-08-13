@@ -114,6 +114,11 @@ function tryParseInt(str: string) {
 	}
 }
 
+/*
+TODO: It may be worth investigating, if cyrb53 is better suited for this.
+There's no real reason to emulate how Minecraft handles hash generation and using all available 53 bits, instead of the 32 with this current method, decreases the likelyhood of collisions.
+https://github.com/bryc/code/blob/master/jshash/experimental/cyrb53.js
+*/
 function hashCode(input: string) {
 	if (input.length === 0) return 0;
 
