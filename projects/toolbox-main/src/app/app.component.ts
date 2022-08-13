@@ -1,6 +1,7 @@
 import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 import packageJson from '../../../../package.json';
 import { PanoramaService } from './common/services/panorama-service/panorama.service';
+import { TitleService } from './common/services/title-service/title.service';
 import { ToolboxSettingsService } from './common/services/toolbox-settings/toolbox-settings.service';
 import { WindowService } from './common/services/window-service/window.service';
 
@@ -10,16 +11,16 @@ import { WindowService } from './common/services/window-service/window.service';
 	styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-	public title = 'toolbox';
 	public version = packageJson.version;
 
 	@ViewChild('windowContainer', { read: ViewContainerRef })
 	public target!: ViewContainerRef;
 
 	constructor(
-		private toolboxSettings: ToolboxSettingsService,
-		private panorama: PanoramaService,
-		private _window: WindowService
+		private _toolboxSettings: ToolboxSettingsService,
+		private _panorama: PanoramaService,
+		private _window: WindowService,
+		private _titleService: TitleService
 	) {
 	}
 

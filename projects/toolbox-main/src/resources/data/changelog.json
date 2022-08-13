@@ -42,5 +42,17 @@
 			"removals": []
 		},
 		"notes": ""
+	},
+	{
+		"version": "1.0.2",
+		"build_date": "",
+		"changes": {
+			"additions": [],
+			"modifications": [
+				"The page titles are now set properly for each route, even on the version selection page"
+			],
+			"removals": []
+		},
+		"notes": ""
 	}
 ]

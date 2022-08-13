@@ -6,7 +6,6 @@ import { EntryGroup } from 'src/app/common/elements/selection/selection.componen
 import { ActivityMonitorService } from 'src/app/common/services/activity-monitor/activity-monitor.service';
 import { AssetManagerService } from 'src/app/common/services/asset-manager/asset-manager.service';
 import { PanoramaService } from 'src/app/common/services/panorama-service/panorama.service';
-import { TitleService } from 'src/app/common/services/title-service/title.service';
 import { WindowService } from 'src/app/common/services/window-service/window.service';
 import { CraftingRecipeRandomizerService } from 'src/app/crafting-recipe-randomizer/services/crafting-recipe-randomizer/crafting-recipe-randomizer.service';
 import { GenericFile } from 'src/lib/ts-datapack/genericfile';
@@ -35,10 +34,8 @@ export class CraftingRecipeRandomizerViewComponent implements OnInit {
 		private _randomizerService: CraftingRecipeRandomizerService,
 		private _activityMonitor: ActivityMonitorService,
 		private _window: WindowService,
-		public assetManagerService: AssetManagerService,
-		titleService: TitleService
+		public assetManagerService: AssetManagerService
 	) {
-		titleService.setTitle("Crafting-Recipe Randomizer");
 	}
 
 	public ngOnInit(): void {
