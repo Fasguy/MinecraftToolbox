@@ -3,7 +3,7 @@ import { firstValueFrom, skip } from 'rxjs';
 import { PanoramaService } from '../../services/panorama-service/panorama.service';
 import { ToolboxSettingsService } from '../../services/toolbox-settings/toolbox-settings.service';
 
-//TODO: Change the cube-texturing method from individual textures to texture coordinates.
+//#4 TODO: Change the cube-texturing method from individual textures to texture coordinates.
 //		This would allow for more efficient texture rendering, as well as removing the need to
 //		load the individual parts as separate images, reducing the memory footprint and processing time.
 

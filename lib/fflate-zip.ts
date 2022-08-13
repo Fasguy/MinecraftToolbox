@@ -2,7 +2,7 @@ import { strToU8, Zip, ZipDeflate } from "fflate";
 
 /*
 
-	TODO: If you open the generated zip using 7-Zip and check the file's info window, you'll see a section called "Errors".
+	#13 TODO: If you open the generated zip using 7-Zip and check the file's info window, you'll see a section called "Errors".
 		  This section will currently show "Headers error".
 		  This doesn't seem like it actually is much of a problem, as the zip still works in Minecraft, but should probably be fixed.
 
