@@ -14,7 +14,7 @@ export class AppComponent {
 	public version = packageJson.version;
 
 	@ViewChild('windowContainer', { read: ViewContainerRef })
-	public target!: ViewContainerRef;
+	public windowContainerTarget!: ViewContainerRef;
 
 	constructor(
 		private _toolboxSettings: ToolboxSettingsService,
@@ -25,6 +25,6 @@ export class AppComponent {
 	}
 
 	ngAfterViewInit() {
-		this._window.windowContainer = this.target;
+		this._window.windowContainer = this.windowContainerTarget;
 	}
 }

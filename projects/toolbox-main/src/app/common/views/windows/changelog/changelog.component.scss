@@ -1,12 +1,11 @@
+:host {
+	margin: 0.5em;
+	display: block;
+}
+
 tbx-sub-section {
-	margin: 1em;
-
-	&>.header {
-		margin-bottom: 0.5em;
-	}
-
 	&>ul {
-		margin-left: 50px;
+		margin-left: 2em;
 		list-style: none;
 
 		&>li {

@@ -1,6 +1,9 @@
-tbx-sub-section {
-	margin: 1em;
+:host {
+	margin: 0.5em;
+	display: block;
+}
 
+tbx-sub-section {
 	&>label {
 		display: flex;
 		flex-direction: row;
