@@ -5,7 +5,6 @@ import { strFromU8, unzip } from 'fflate';
 import { ActivityMonitorService } from 'src/app/common/services/activity-monitor/activity-monitor.service';
 import { AssetManagerService } from 'src/app/common/services/asset-manager/asset-manager.service';
 import { PanoramaService } from 'src/app/common/services/panorama-service/panorama.service';
-import { TitleService } from 'src/app/common/services/title-service/title.service';
 import { WindowService } from 'src/app/common/services/window-service/window.service';
 import { GenericFile } from 'src/lib/ts-datapack/genericfile';
 import { hashCode, tryParseInt } from 'src/lib/utils';
@@ -35,10 +34,8 @@ export class LootTableRandomizerViewComponent implements OnInit {
 		private _randomizerService: LootTableRandomizerService,
 		private _activityMonitor: ActivityMonitorService,
 		private _window: WindowService,
-		public assetManagerService: AssetManagerService,
-		titleService: TitleService
+		public assetManagerService: AssetManagerService
 	) {
-		titleService.setTitle("Loot-Table Randomizer");
 	}
 
 	public ngOnInit(): void {
@@ -146,9 +143,14 @@ export class LootTableRandomizerViewComponent implements OnInit {
 		let keys = new Set<string>([...formData].map(x => x[0]));
 		for (const key of keys) {
 			submittedData[key] = formData.getAll(key);
+			if (submittedData[key].length === 1) {
+				submittedData[key] = submittedData[key][0];
+			}
 		}
 
 		this._randomizerService.selectedLootTables = submittedData["selection"];
+
+		this._randomizerService.otherOptions.dropChance100 = submittedData["dropChance100"] === "on";
 
 		//There's one thing to note about how seeds work here:
 		//I wanted to emulate how Minecraft handles seeds as much as possible.

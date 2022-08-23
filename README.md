@@ -16,3 +16,12 @@ Randomizes the crafting recipes of items.
 ## Use
 
 If you just want to use the Toolbox, you can check out a live version at https://fasguy.net/minecraft_toolbox.
+
+## Branches
+
+* trunk
+\
+The current, stable release version of the Toolbox.
+* dev
+\
+The cutting-edge, unstable version of the Toolbox.

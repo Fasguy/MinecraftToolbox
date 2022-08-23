@@ -204,6 +204,8 @@
 				}
 			}
 		}
-	},
-	"defaultProject": "toolbox-main"
+  },
+  "cli": {
+    "analytics": false
+  }
 }

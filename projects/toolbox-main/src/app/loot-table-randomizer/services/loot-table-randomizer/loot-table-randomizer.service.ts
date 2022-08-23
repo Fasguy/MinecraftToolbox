@@ -8,7 +8,7 @@ import { GenericAdvancement } from 'src/lib/ts-datapack/generic-advancement';
 import { GenericFile } from 'src/lib/ts-datapack/genericfile';
 import { IFile } from 'src/lib/ts-datapack/interfaces/file';
 import { IFolder } from 'src/lib/ts-datapack/interfaces/folder';
-import { ILootTable } from 'src/lib/ts-datapack/interfaces/loot_table';
+import { ILootTable } from 'src/lib/ts-datapack/interfaces/loot_table/loot_table';
 import { addMainDatapackAdvancement, filenameWithoutExtension, seededRandom, shuffle, sleep } from 'src/lib/utils';
 
 @Injectable()
@@ -20,6 +20,10 @@ export class LootTableRandomizerService {
 	};
 
 	public selectedLootTables: string[] = [];
+
+	public otherOptions = {
+		dropChance100: false
+	};
 
 	public set loadedLootTables(lootTables: any) {
 		function flatten(obj: any, prefix: string, separator: string, dict: any) {
@@ -115,23 +119,6 @@ export class LootTableRandomizerService {
 		let shuffledLootTables = shuffle([...lootTables], seededRandom(seed));
 
 		await this._activityMonitor.startActivity({
-			text: "Removing restricting conditions...",
-			promise: (async () => {
-				for (let i = 0; i < lootTables.length; i++) {
-					if (i % 100 === 0) {
-						//Perform a small UI-update every 100 files.
-						await sleep(0);
-					}
-
-					let originalFile = intermediaryDatapack.get<LootTableFile>(lootTables[i])!;
-
-					originalFile.removeCondition("minecraft:killed_by_player");
-					originalFile.removeCondition("minecraft:block_state_property");
-				}
-			})()
-		});
-
-		await this._activityMonitor.startActivity({
 			text: "Generating cheatsheet...",
 			promise: (async () => {
 				let cheatsheet = "";
@@ -154,10 +141,81 @@ export class LootTableRandomizerService {
 
 					let originalFile = intermediaryDatapack.get<LootTableFile>(lootTables[i])!;
 
-					finalDatapack.set(new LootTableFile(shuffledLootTables[i], originalFile.data));
+					//The file gets cloned, so we can make changes to the file without affecting the original file.
+					let clone = originalFile.clone();
+					clone.name = shuffledLootTables[i];
+
+					finalDatapack.set(clone);
 				}
 			})()
 		});
+
+		await this._activityMonitor.startActivity({
+			text: "Removing restricting conditions...",
+			promise: (async () => {
+				for (let i = 0; i < lootTables.length; i++) {
+					if (i % 100 === 0) {
+						//Perform a small UI-update every 100 files.
+						await sleep(0);
+					}
+
+					let originalFile = finalDatapack.get<LootTableFile>(lootTables[i])!;
+
+					let conditions = [
+						...originalFile.getConditions("minecraft:killed_by_player"),
+						...originalFile.getConditions("minecraft:block_state_property"),
+					]
+
+					for (const condition of conditions) {
+						condition.remove();
+					}
+				}
+			})()
+		});
+
+		if (this.otherOptions.dropChance100) {
+			await this._activityMonitor.startActivity({
+				text: "Manipulating drop chances...",
+				promise: (async () => {
+					for (let i = 0; i < lootTables.length; i++) {
+						if (i % 100 === 0) {
+							//Perform a small UI-update every 100 files.
+							await sleep(0);
+						}
+
+						let originalFile = finalDatapack.get<LootTableFile>(lootTables[i])!;
+
+						let functions = originalFile.getFunctions("minecraft:set_count");
+
+						for (const functionKit of functions) {
+							//TODO: This check is completely redundant and only here because of TypeScript.
+							//There is probably a way to make it, so getFunctions directly returns with the proper requested type.
+							if (functionKit.data.function !== "minecraft:set_count") continue;
+
+							if (typeof functionKit.data.count === "number") {
+								//If it's already just a number, then there is no variance. Skip.
+								continue;
+							}
+
+							switch (functionKit.data.count.type) {
+								case "minecraft:constant":
+									functionKit.data.count = functionKit.data.count.value;
+									break;
+								case "minecraft:uniform":
+									functionKit.data.count = functionKit.data.count.max;
+									break;
+								case "minecraft:binomial":
+									functionKit.data.count = functionKit.data.count.n;
+									break;
+								case "minecraft:score":
+									functionKit.remove();
+									break;
+							}
+						}
+					}
+				})()
+			});
+		}
 
 		let finalDatapackBlob = await this._activityMonitor.startActivity({
 			text: "Generating final data pack...",
