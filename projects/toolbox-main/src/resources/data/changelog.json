@@ -23,7 +23,7 @@
 			],
 			"modifications": [
 				"Things like doors and beds can now drop properly in randomized Loot-Tables (block_state_property gets removed)",
-				"The pack versions are now set properly, so you won't see the 'Incompatible' warning in-game anymore.",
+				"The pack versions are now set properly, so you won't see the 'Incompatible' warning in-game anymore",
 				"The WebApp has been overhauled from scratch"
 			],
 			"removals": []
@@ -44,12 +44,16 @@
 		"notes": ""
 	},
 	{
-		"version": "1.0.2",
-		"build_date": "",
+		"version": "1.1.0",
+		"build_date": "2022-08-23",
 		"changes": {
-			"additions": [],
+			"additions": [
+				"The Loot-Table randomizer now has an option to make drops drop 100% of the time"
+			],
 			"modifications": [
-				"The page titles are now set properly for each route, even on the version selection page"
+				"The page titles are now set properly for each route, even on the version selection page",
+				"The design of the WebApp has been adjusted slightly",
+				"The WebApp now runs on Angular 14"
 			],
 			"removals": []
 		},
