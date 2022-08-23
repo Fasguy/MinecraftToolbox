@@ -143,9 +143,14 @@ export class LootTableRandomizerViewComponent implements OnInit {
 		let keys = new Set<string>([...formData].map(x => x[0]));
 		for (const key of keys) {
 			submittedData[key] = formData.getAll(key);
+			if (submittedData[key].length === 1) {
+				submittedData[key] = submittedData[key][0];
+			}
 		}
 
 		this._randomizerService.selectedLootTables = submittedData["selection"];
+
+		this._randomizerService.otherOptions.dropChance100 = submittedData["dropChance100"] === "on";
 
 		//There's one thing to note about how seeds work here:
 		//I wanted to emulate how Minecraft handles seeds as much as possible.

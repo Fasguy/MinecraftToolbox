@@ -190,6 +190,10 @@ function filenameWithoutExtension(path: string) {
 	return path;
 }
 
+function spreadOrEmpty<T>(array: T[]) {
+	return [...(array ?? [])];
+}
+
 export {
 	flatten,
 	duckCheck,
@@ -204,6 +208,7 @@ export {
 	hashCode,
 	addMainDatapackAdvancement,
 	deepCopy,
-	filenameWithoutExtension
+	filenameWithoutExtension,
+	spreadOrEmpty
 };
 
