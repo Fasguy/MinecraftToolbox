@@ -1,7 +1,6 @@
 <ng-template ngFor let-entryGroup [ngForOf]="entries">
 	<div #entryGroupRef class="entry-group">
 		<div class="entry-group-header">
-			<span class="entry-toggler" (click)="toggleEntries(entriesRef)">></span>
 			<label class="checkbox">
 				<input #groupCheckboxRef type="checkbox" (change)="changeEntireGroup(entryGroupRef, groupCheckboxRef)">
 				<span></span>
@@ -9,14 +8,17 @@
 			</label>
 		</div>
 
-		<div class="entries" #entriesRef>
-			<div class="entry" *ngFor="let entry of entryGroup.entries">
-				<label tabindex="0" class="checkbox">
-					<input type="checkbox" name="selection" value="{{entry.value}}" [checked]="entry.checked" (change)="groupItemChanged(entryGroupRef, groupCheckboxRef)">
-					<span></span>
-					{{entry.text}}
-				</label>
+		<div class="display-container">
+			<div class="entries collapsed" #entriesRef>
+				<div class="entry" *ngFor="let entry of entryGroup.entries">
+					<label tabindex="0" class="checkbox">
+						<input type="checkbox" name="selection" value="{{entry.value}}" [checked]="entry.checked" (change)="groupItemChanged(entryGroupRef, groupCheckboxRef)">
+						<span></span>
+						{{entry.text}}
+					</label>
+				</div>
 			</div>
+			<button type="button" class="state-toggler" (click)="toggleEntries(entriesRef)"></button>
 		</div>
 	</div>
 

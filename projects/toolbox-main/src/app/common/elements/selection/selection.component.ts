@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, HostListener, Input, OnChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
 import { AssetManagerService } from 'src/app/common/services/asset-manager/asset-manager.service';
 
 @Component({
@@ -26,16 +26,6 @@ export class SelectionComponent implements OnChanges {
 		this._changeDetectorRef.detach();
 	}
 
-	@HostListener("scroll", ["$event"])
-	public clipOnScroll(e: Event) {
-		const target = e.target as HTMLElement;
-		const entriesList = target.querySelectorAll<HTMLElement>(".entries");
-
-		for (const entries of entriesList) {
-			entries.style.clipPath = `inset(${target.scrollTop + 263 - entries.parentElement!.offsetTop}px 0px 0px)`;
-		}
-	}
-
 	public changeEntireGroup(group: HTMLElement, groupCheckbox: HTMLInputElement) {
 		let groupCheckboxes = group.querySelectorAll<HTMLInputElement>(".entry > label > input[type=checkbox]");
 		let checked = groupCheckbox.checked;
@@ -59,8 +49,7 @@ export class SelectionComponent implements OnChanges {
 	}
 
 	public toggleEntries(entryContainer: HTMLElement) {
-		let visible = entryContainer.style.display === "block";
-		entryContainer.style.display = visible ? "none" : "block";
+		entryContainer.classList.toggle("collapsed");
 	}
 
 	/*
