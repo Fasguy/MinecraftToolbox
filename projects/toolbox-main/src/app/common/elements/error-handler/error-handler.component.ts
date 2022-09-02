@@ -17,15 +17,15 @@ export class ErrorHandlerComponent implements OnInit {
 	) {
 	}
 
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		this.errorHandler.setErrorHandler(this);
 	}
 
-	public reportIssue() {
+	protected reportIssue() {
 		window.open("https://github.com/Fasguy/MinecraftToolbox/issues", "_blank", "noopener,noreferrer")
 	}
 
-	public close() {
+	protected close() {
 		this.errorHandler.error = null;
 	}
 }

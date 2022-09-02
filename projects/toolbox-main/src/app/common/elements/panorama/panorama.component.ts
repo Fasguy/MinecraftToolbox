@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { firstValueFrom, skip } from 'rxjs';
 import { PanoramaService } from '../../services/panorama-service/panorama.service';
 import { ToolboxSettingsService } from '../../services/toolbox-settings/toolbox-settings.service';
@@ -10,7 +10,8 @@ import { ToolboxSettingsService } from '../../services/toolbox-settings/toolbox-
 @Component({
 	selector: 'tbx-panorama',
 	templateUrl: './panorama.component.html',
-	styleUrls: ['./panorama.component.scss']
+	styleUrls: ['./panorama.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PanoramaComponent implements AfterViewInit {
 	private _panoramaSrcCache: string | undefined;
@@ -33,7 +34,7 @@ export class PanoramaComponent implements AfterViewInit {
 	) {
 	}
 
-	ngAfterViewInit(): void {
+	public ngAfterViewInit(): void {
 		this.context = this.canvas.nativeElement.getContext("webgl")!;
 		if (!this.context) {
 			this.canvas.nativeElement.remove();

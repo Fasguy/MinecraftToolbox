@@ -1,10 +1,11 @@
-import { ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
 import { AssetManagerService } from 'src/app/common/services/asset-manager/asset-manager.service';
 
 @Component({
 	selector: 'tbx-selection',
 	templateUrl: './selection.component.html',
-	styleUrls: ['./selection.component.scss']
+	styleUrls: ['./selection.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectionComponent implements OnChanges {
 	private _entries: EntryGroup[] = [];

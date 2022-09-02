@@ -67,6 +67,7 @@
 	overflow-y: auto;
 	max-height: 450px;
 	margin-left: 2em;
+	transition: max-height 1s cubic-bezier(0, 1, 0, 1);
 
 	&+.state-toggler {
 		cursor: pointer;
@@ -76,7 +77,10 @@
 		width: 100%;
 
 		&::before {
-			content: "Collapse list";
+			content: "⯅ Collapse list";
+			text-shadow:
+				0px 0px 8px #000,
+				0px 0px 8px #000;
 		}
 	}
 
@@ -97,10 +101,7 @@
 			top: 0;
 
 			&::before {
-				content: "Expand list";
-				text-shadow:
-					0px 0px 8px #000,
-					0px 0px 8px #000;
+				content: "⯆ Expand list";
 			}
 		}
 	}

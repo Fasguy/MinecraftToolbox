@@ -7,12 +7,12 @@ import { ActivityMonitorService } from '../../services/activity-monitor/activity
 	styleUrls: ['./activity-monitor.component.scss']
 })
 export class ActivityMonitorComponent implements OnInit {
-	public get activities() {
+	protected get activities() {
 		return this._activityMonitor.activities;
 	}
 
-	constructor(
-		private _ref: ElementRef,
+	public constructor(
+		private _ref: ElementRef<HTMLElement>,
 		private _activityMonitor: ActivityMonitorService
 	) {
 	}
@@ -21,7 +21,7 @@ export class ActivityMonitorComponent implements OnInit {
 		this._ref.nativeElement.style.display = enabled ? "block" : "none";
 	}
 
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		this._activityMonitor.setActivityMonitor(this);
 	}
 }

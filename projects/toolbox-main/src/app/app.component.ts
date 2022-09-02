@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, ViewContainerRef } from '@angular/core';
 import packageJson from '../../../../package.json';
 import { PanoramaService } from './common/services/panorama-service/panorama.service';
 import { TitleService } from './common/services/title-service/title.service';
@@ -10,21 +10,23 @@ import { WindowService } from './common/services/window-service/window.service';
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-	public version = packageJson.version;
+export class AppComponent implements AfterViewInit {
+	protected version = packageJson.version;
 
 	@ViewChild('windowContainer', { read: ViewContainerRef })
-	public windowContainerTarget!: ViewContainerRef;
+	protected windowContainerTarget!: ViewContainerRef;
 
-	constructor(
-		private _toolboxSettings: ToolboxSettingsService,
-		private _panorama: PanoramaService,
+	public constructor(
 		private _window: WindowService,
-		private _titleService: TitleService
+
+		//This essentially bootstraps the services to the start of the application.
+		toolboxSettings: ToolboxSettingsService,
+		panorama: PanoramaService,
+		titleService: TitleService
 	) {
 	}
 
-	ngAfterViewInit() {
+	public ngAfterViewInit() {
 		this._window.windowContainer = this.windowContainerTarget;
 	}
 }
