@@ -1,0 +1,7 @@
+<p>Panorama generator</p>
+<form (submit)="prepare($event)">
+	Panorama Images
+	<input type="file" multiple name="panoramas">
+	<button type="submit">Generate</button>
+</form>
+<img [src]="finalFile" *ngIf="finalFile">
