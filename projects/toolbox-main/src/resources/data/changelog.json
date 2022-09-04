@@ -58,5 +58,22 @@
 			"removals": []
 		},
 		"notes": ""
+	},
+	{
+		"version": "1.1.1",
+		"build_date": "2022-09-04",
+		"changes": {
+			"additions": [],
+			"modifications": [
+				"Selection menus are now more obvious, with a full 'Expand' and 'Collapse' button",
+				"The background of smaller sub-sections is now a bit darker, to improve readability",
+				"Slight general performance improvements",
+				"The panorama now actually starts with the front face",
+				"The panorama now loads faster and no longer arbitrarily chooses between the newest and current version",
+				"Panorama images are now less compressed, to prevent the giant dither artifacts"
+			],
+			"removals": []
+		},
+		"notes": ""
 	}
 ]
