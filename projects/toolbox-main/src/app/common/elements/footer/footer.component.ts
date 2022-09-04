@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { WindowService } from '../../services/window-service/window.service';
 import { ChangelogComponent } from '../../views/windows/changelog/changelog.component';
 import { CreditsComponent } from '../../views/windows/credits/credits.component';
@@ -7,10 +7,12 @@ import { SettingsComponent } from '../../views/windows/settings/settings.compone
 @Component({
 	selector: 'tbx-footer',
 	templateUrl: './footer.component.html',
-	styleUrls: ['./footer.component.scss']
+	styleUrls: ['./footer.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterComponent {
-	public items = [
+	protected currentYear = new Date().getFullYear();
+	protected items = [
 		{
 			text: "Credits",
 			click: () => this._window.createWindow(CreditsComponent)
@@ -33,11 +35,7 @@ export class FooterComponent {
 		}
 	];
 
-	public get currentYear(): number {
-		return new Date().getFullYear();
-	}
-
-	constructor(
+	public constructor(
 		private _window: WindowService
 	) {
 	}

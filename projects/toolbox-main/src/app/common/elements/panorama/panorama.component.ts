@@ -1,39 +1,60 @@
-import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { firstValueFrom, skip } from 'rxjs';
 import { PanoramaService } from '../../services/panorama-service/panorama.service';
 import { ToolboxSettingsService } from '../../services/toolbox-settings/toolbox-settings.service';
 
-//#4 TODO: Change the cube-texturing method from individual textures to texture coordinates.
-//		This would allow for more efficient texture rendering, as well as removing the need to
-//		load the individual parts as separate images, reducing the memory footprint and processing time.
-
 @Component({
 	selector: 'tbx-panorama',
 	templateUrl: './panorama.component.html',
-	styleUrls: ['./panorama.component.scss']
+	styleUrls: ['./panorama.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PanoramaComponent implements AfterViewInit {
 	private _panoramaSrcCache: string | undefined;
 	private _firstPanoramaRendered = false;
+	private _image = document.createElement("img");
 
 	@ViewChild("panorama")
 	private canvas!: ElementRef<HTMLCanvasElement>;
 	private context!: WebGLRenderingContext;
 	private fieldOfViewRadians = this.degToRad(90);
 	private projectionMatrix = [
-		0, 0, 0, 0,
-		0, 0, 0, 0,
-		0, 0, -3, -1,
-		0, 0, -4, 0
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, -1, -1,
+		0, 0, 0, 0
 	];
+	//projectionMatrix calculation
+	/*
+		(() => {
+			const aspect = this.context.canvas.clientWidth / this.context.canvas.clientHeight;
+			const zNear = 0.1;
+			const zFar = 100.0;
+			var f = Math.tan(Math.PI * 0.5 - 0.5 * this.fieldOfViewRadians);
+			var rangeInv = 1.0 / (zNear - zFar);
+
+			return [
+				f / aspect, 0, 0, 0,
+				0, f, 0, 0,
+				0, 0, (zNear + zFar) * rangeInv, -1,
+				0, 0, zNear * zFar * rangeInv * 2, 0
+			];
+		})();
+	*/
 
 	public constructor(
 		private _panorama: PanoramaService,
 		private _toolboxSettings: ToolboxSettingsService,
 	) {
+		this._image.addEventListener('load', () => {
+			this.context.texImage2D(this.context.TEXTURE_2D, 0, this.context.RGBA, this.context.RGBA, this.context.UNSIGNED_BYTE, this._image);
+			this.canvas.nativeElement.style.removeProperty('display');
+			this.resize();
+			this._firstPanoramaRendered = true;
+		});
 	}
 
-	ngAfterViewInit(): void {
+	public ngAfterViewInit(): void {
 		this.context = this.canvas.nativeElement.getContext("webgl")!;
 		if (!this.context) {
 			this.canvas.nativeElement.remove();
@@ -48,116 +69,123 @@ export class PanoramaComponent implements AfterViewInit {
 				}
 
 				if (uselessVisualsEnabled && this._panoramaSrcCache) {
-					this.setCubemap(this._panoramaSrcCache, this.context);
+					this._image.src = this._panoramaSrcCache;
 					this._panoramaSrcCache = undefined;
 				}
 
 				this.resize();
 			});
 
-		this.canvas.nativeElement.style.display = "none";
-
 		this._panorama.Observe.panoramaImage
 			.pipe(skip(1))
 			.subscribe(async imageUri => {
 				let enabled = await firstValueFrom(this._toolboxSettings.Observe.uselessVisualsEnabled);
 				if (enabled) {
-					this.setCubemap(imageUri, this.context);
+					this._image.src = imageUri;
 				} else {
 					this._panoramaSrcCache = imageUri;
 				}
 			});
 
 		this.resize();
-		this.run(this.context);
+		this.run();
 		this._panorama.setIndex("newest");
 	}
 
-	private run = (context: WebGLRenderingContext) => {
-		let up = [0, 1, 0];
-		let program = this.createProgram(context);
-		let positionLocation = context.getAttribLocation(program, "a_pos");
-		let viewDirectionProjectionInverseLocation = context.getUniformLocation(program, "u_ivdp");
-		context.enableVertexAttribArray(positionLocation);
-		context.bindBuffer(context.ARRAY_BUFFER, context.createBuffer());
-		context.bufferData(context.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), context.STATIC_DRAW);
-		context.bindTexture(context.TEXTURE_CUBE_MAP, context.createTexture());
-		context.texParameteri(context.TEXTURE_CUBE_MAP, context.TEXTURE_MIN_FILTER, context.LINEAR);
-		context.vertexAttribPointer(positionLocation, 2, context.FLOAT, false, 0, 0);
+	private run = () => {
+		const program = this.createProgram();
+
+		this.context.bindTexture(this.context.TEXTURE_2D, this.context.createTexture());
+		this.context.texParameteri(this.context.TEXTURE_2D, this.context.TEXTURE_WRAP_S, this.context.CLAMP_TO_EDGE);
+		this.context.texParameteri(this.context.TEXTURE_2D, this.context.TEXTURE_WRAP_T, this.context.CLAMP_TO_EDGE);
+		this.context.texParameteri(this.context.TEXTURE_2D, this.context.TEXTURE_MIN_FILTER, this.context.LINEAR);
+
+		//Panorama Cube
+		this.context.bindBuffer(this.context.ARRAY_BUFFER, this.context.createBuffer());
+		this.context.bufferData(this.context.ARRAY_BUFFER, new Float32Array([
+			-1, 1, -1, 1, 1, -1, 1, -1, -1, -1, -1, -1, // Front
+			1, 1, 1, -1, 1, 1, -1, -1, 1, 1, -1, 1, // Back
+			-1, 1, 1, 1, 1, 1, 1, 1, -1, -1, 1, -1, // Top
+			-1, -1, -1, 1, -1, -1, 1, -1, 1, -1, -1, 1, // Bottom
+			1, 1, -1, 1, 1, 1, 1, -1, 1, 1, -1, -1, // Right
+			-1, 1, 1, -1, 1, -1, -1, -1, -1, -1, -1, 1, // Left
+		]), this.context.STATIC_DRAW);
+
+		const vertexPosition = this.context.getAttribLocation(program, "a_vpos");
+		this.context.vertexAttribPointer(vertexPosition, 3, this.context.FLOAT, false, 0, 0);
+		this.context.enableVertexAttribArray(vertexPosition);
+
+		//Texture Coordinates
+		const getTextureCoordinates = (face: number) => {
+			let x = face % 3;
+			let y = Math.floor(face / 3);
+
+			const thirdFraction = 1 / 3;
+			const secondFraction = 1 / 2;
+
+			let result = [
+				thirdFraction * x, secondFraction * y, // Top-Left
+				thirdFraction + (thirdFraction * x), secondFraction * y, // Top-Right
+				thirdFraction + (thirdFraction * x), secondFraction + (secondFraction * y), // Bottom-Right
+				thirdFraction * x, secondFraction + (secondFraction * y) // Bottom-Left
+			];
+
+			const margin = 0.0003;
+			return [
+				result[0] + margin, result[1] + margin,
+				result[2] - margin, result[3] + margin,
+				result[4] - margin, result[5] - margin,
+				result[6] + margin, result[7] - margin
+			];
+		}
+
+		this.context.bindBuffer(this.context.ARRAY_BUFFER, this.context.createBuffer());
+		this.context.bufferData(this.context.ARRAY_BUFFER, new Float32Array([
+			...getTextureCoordinates(0), // Front
+			...getTextureCoordinates(1), // Back
+			...getTextureCoordinates(2), // Top
+			...getTextureCoordinates(3), // Bottom
+			...getTextureCoordinates(4), // Right
+			...getTextureCoordinates(5), // Left
+		]), this.context.STATIC_DRAW);
+
+		const textureCoord = this.context.getAttribLocation(program, "a_texcoord");
+		this.context.vertexAttribPointer(textureCoord, 2, this.context.FLOAT, false, 0, 0);
+		this.context.enableVertexAttribArray(textureCoord);
+
+		//Indices
+		this.context.bindBuffer(this.context.ELEMENT_ARRAY_BUFFER, this.context.createBuffer());
+		this.context.bufferData(this.context.ELEMENT_ARRAY_BUFFER, new Uint16Array([
+			0, 1, 2, 0, 2, 3, // Front
+			4, 5, 6, 4, 6, 7, // Back
+			8, 9, 10, 8, 10, 11, // Top
+			12, 13, 14, 12, 14, 15, // Bottom
+			16, 17, 18, 16, 18, 19, // Right
+			20, 21, 22, 20, 22, 23, // Left
+		]), this.context.STATIC_DRAW);
+
+		this.context.uniformMatrix4fv(this.context.getUniformLocation(program, "u_modelmatrix"), false, [
+			0, 0, -1, 0,
+			0, 1, 0, 0,
+			1, 0, 0, 0,
+			0, 0, 0, 1
+		]);
+
+		const up = [0, 1, 0];
 
 		let drawScene = (time: number) => {
 			let rotFactor = time / 1000 * .035;
-			let cameraPosition = [Math.cos(rotFactor), (-Math.cos(rotFactor * 2.1) + 1) * .5, Math.sin(rotFactor)];
+			let cameraPosition = [Math.cos(rotFactor), (-Math.cos(rotFactor * 2.1) + 1) * 0.5, Math.sin(rotFactor)];
 			let cameraMatrix = this.lookAt(cameraPosition, up);
 			let viewMatrix = this.inverse(cameraMatrix);
 			let viewDirectionProjectionMatrix = this.multiply(this.projectionMatrix, viewMatrix);
-			let viewDirectionProjectionInverseMatrix = this.inverse(viewDirectionProjectionMatrix);
-			context.uniformMatrix4fv(viewDirectionProjectionInverseLocation, false, viewDirectionProjectionInverseMatrix);
-			context.drawArrays(context.TRIANGLES, 0, 6);
+
+			this.context.uniformMatrix4fv(this.context.getUniformLocation(program, "u_projectionmatrix"), false, viewDirectionProjectionMatrix);
+			this.context.drawElements(this.context.TRIANGLES, 36, this.context.UNSIGNED_SHORT, 0);
 
 			requestAnimationFrame(drawScene);
 		}
 		drawScene(0);
-	}
-
-	private createSides(image: HTMLImageElement) {
-		let cubeDimension = image.height / 2;
-
-		let sideCanvas = document.createElement('canvas');
-		let sideContext = sideCanvas.getContext('2d')!;
-		sideCanvas.width = cubeDimension;
-		sideCanvas.height = cubeDimension;
-
-		sideContext.translate(cubeDimension, 0);
-		sideContext.scale(-1, 1);
-
-		let faces: HTMLImageElement[] = [];
-		const event = new CustomEvent('created', { detail: faces });
-		let elem = document.createElement('object');
-		for (let cubemapIndex = 0; cubemapIndex < 6; cubemapIndex++) {
-			let x = cubemapIndex % 3;
-			let y = Math.floor(cubemapIndex / 3);
-			sideContext.drawImage(image, x * cubeDimension, y * cubeDimension, cubeDimension, cubeDimension, 0, 0, cubeDimension, cubeDimension);
-			sideCanvas.toBlob((blob) => {
-				let cubemapFace = document.createElement('img');
-				let url = URL.createObjectURL(blob!);
-
-				cubemapFace.addEventListener('load', () => {
-					URL.revokeObjectURL(url);
-					faces[cubemapIndex] = cubemapFace;
-					if (faces.filter(Boolean).length === 6) {
-						elem.dispatchEvent(event);
-					}
-				});
-
-				cubemapFace.src = url;
-			});
-		}
-		return elem;
-	}
-
-	private setCubemap = (uri: string, gl: WebGLRenderingContext) => {
-		let faces = [
-			gl.TEXTURE_CUBE_MAP_NEGATIVE_X,
-			gl.TEXTURE_CUBE_MAP_NEGATIVE_Z,
-			gl.TEXTURE_CUBE_MAP_POSITIVE_X,
-			gl.TEXTURE_CUBE_MAP_POSITIVE_Z,
-			gl.TEXTURE_CUBE_MAP_POSITIVE_Y,
-			gl.TEXTURE_CUBE_MAP_NEGATIVE_Y
-		];
-		let img = document.createElement('img');
-		img.addEventListener('load', () => {
-			this.createSides(img).addEventListener('created', (e) => {
-				let i = 0;
-				(<CustomEvent>e).detail.forEach((face: TexImageSource) => {
-					gl.texImage2D(faces[i++], 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, face);
-				});
-				this.canvas.nativeElement.style.removeProperty('display');
-				this.resize();
-				this._firstPanoramaRendered = true;
-			});
-		});
-		img.src = uri;
 	}
 
 	@HostListener('window:resize', ['$event'])
@@ -175,21 +203,21 @@ export class PanoramaComponent implements AfterViewInit {
 		this.projectionMatrix[5] = f;
 	}
 
-	private createProgram(context: WebGLRenderingContext) {
-		const program = context.createProgram()!;
+	private createProgram() {
+		const program = this.context.createProgram()!;
 
-		let vertex = context.createShader(context.VERTEX_SHADER)!;
-		context.shaderSource(vertex, 'attribute vec4 a_pos;varying vec4 v_pos;void main(){v_pos=a_pos;gl_Position=a_pos;}');
-		context.compileShader(vertex);
-		context.attachShader(program, vertex);
+		let vertex = this.context.createShader(this.context.VERTEX_SHADER)!;
+		this.context.shaderSource(vertex, `attribute vec4 a_vpos;attribute vec2 a_texcoord;uniform mat4 u_modelmatrix;uniform mat4 u_projectionmatrix;varying highp vec2 v_texcoord;void main(void){gl_Position=u_projectionmatrix*u_modelmatrix*a_vpos;v_texcoord=a_texcoord;}`);
+		this.context.compileShader(vertex);
+		this.context.attachShader(program, vertex);
 
-		let fragment = context.createShader(context.FRAGMENT_SHADER)!;
-		context.shaderSource(fragment, 'precision mediump float;uniform samplerCube u_sky;uniform mat4 u_ivdp;varying vec4 v_pos;void main(){vec4 t=u_ivdp*v_pos;gl_FragColor=textureCube(u_sky,normalize(t.xyz/t.w));}');
-		context.compileShader(fragment);
-		context.attachShader(program, fragment);
+		let fragment = this.context.createShader(this.context.FRAGMENT_SHADER)!;
+		this.context.shaderSource(fragment, `varying highp vec2 v_texcoord;uniform sampler2D u_sampler;void main(void){gl_FragColor=texture2D(u_sampler,v_texcoord);}`);
+		this.context.compileShader(fragment);
+		this.context.attachShader(program, fragment);
 
-		context.linkProgram(program);
-		context.useProgram(program);
+		this.context.linkProgram(program);
+		this.context.useProgram(program);
 
 		return program;
 	}

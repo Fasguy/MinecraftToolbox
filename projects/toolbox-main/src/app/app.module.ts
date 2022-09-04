@@ -35,11 +35,6 @@ import { LootTableRandomizerFAQComponent } from './loot-table-randomizer/views/f
 import { LootTableRandomizerInstructionsComponent } from './loot-table-randomizer/views/instructions/instructions.component';
 import { LootTableRandomizerViewComponent } from './loot-table-randomizer/views/loot-table-randomizer-view/loot-table-randomizer-view.component';
 
-//Services
-import { PanoramaService } from './common/services/panorama-service/panorama.service';
-import { TitleService } from './common/services/title-service/title.service';
-import { ToolboxSettingsService } from './common/services/toolbox-settings/toolbox-settings.service';
-
 //Interceptors
 import { CacheInterceptor } from './common/interceptors/cache/cache.interceptor';
 import { LocalInterceptor } from './common/interceptors/local/local.interceptor';
@@ -85,9 +80,6 @@ import { ReversePipe } from './common/pipes/reverse/reverse.pipe';
 		HttpClientModule
 	],
 	providers: [
-		TitleService,
-		PanoramaService,
-		ToolboxSettingsService,
 		{
 			provide: APP_BASE_HREF,
 			useValue: angularJson.projects['toolbox-main'].architect.build.options.baseHref

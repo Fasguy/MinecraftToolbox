@@ -8,7 +8,7 @@ import { Route, Router, Routes } from '@angular/router';
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
-	public routes: Routes = [];
+	protected routes: Routes = [];
 
 	@Input()
 	public version!: string;
@@ -21,11 +21,11 @@ export class HeaderComponent implements OnInit {
 		this.routes.push(...router.config);
 	}
 
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		this._changeDetector.detectChanges();
 	}
 
-	filterTitledRoutes(t: Route): boolean {
+	protected filterTitledRoutes(t: Route): boolean {
 		return t.data?.["title"] != null;
 	}
 }

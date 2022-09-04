@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CRR_DatapackPreparerComponent } from './crafting-recipe-randomizer/datapack-preparer/datapack-preparer.component';
 import { LTR_DatapackPreparerComponent } from './loot-table-randomizer/datapack-preparer/datapack-preparer.component';
+import { PanoramaGeneratorComponent } from './panorama-generator/panorama-generator.component';
 import { SafeLinkPipe } from './pipes/safe-link/safe-link.pipe';
 
 @NgModule({
@@ -12,7 +13,8 @@ import { SafeLinkPipe } from './pipes/safe-link/safe-link.pipe';
 		AppComponent,
 		LTR_DatapackPreparerComponent,
 		CRR_DatapackPreparerComponent,
-		SafeLinkPipe
+		SafeLinkPipe,
+		PanoramaGeneratorComponent
 	],
 	imports: [
 		BrowserModule,

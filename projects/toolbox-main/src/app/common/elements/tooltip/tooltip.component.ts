@@ -1,9 +1,10 @@
-import { Component, HostListener, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, Input } from '@angular/core';
 
 @Component({
 	selector: '[tooltip]',
-	templateUrl: './tooltip.component.html',
-	styleUrls: ['./tooltip.component.scss']
+	template: '<ng-content></ng-content>',
+	styleUrls: ['./tooltip.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TooltipComponent {
 	private static _tooltipDisplay = (() => {
