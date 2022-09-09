@@ -1,11 +1,11 @@
 <div class="text-container" #text>
 	<ng-container *ngFor="let credit of credits">
 		<div class="section-header">
-			<div class="mc-yellow">{{credit.section}}</div>
+			<div class="mc-yellow shadow">{{credit.section}}</div>
 		</div>
 		<div class="section-content">
 			<ng-container *ngFor="let title of credit.titles">
-				<div class="padded title mc-grey">{{title.title}}</div>
+				<div class="padded title mc-grey shadow">{{title.title}}</div>
 				<div *ngFor="let name of title.names" class="padded space name">{{name}}</div>
 			</ng-container>
 		</div>

@@ -5,4 +5,5 @@ import { Component } from '@angular/core';
 	styleUrls: ['./instructions.component.scss']
 })
 export class LootTableRandomizerInstructionsComponent {
+	public title: string = "Loot-Table Randomizer - Instructions";
 }

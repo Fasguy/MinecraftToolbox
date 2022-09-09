@@ -5,4 +5,5 @@ import { Component } from '@angular/core';
 	styleUrls: ['./frequently-asked-questions.component.scss']
 })
 export class CraftingRecipeRandomizerFAQComponent {
+	public title: string = "Crafting-Recipe Randomizer - Frequently Asked Questions";
 }

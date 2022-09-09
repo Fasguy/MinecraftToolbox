@@ -21,6 +21,7 @@ button {
 	height: 30px;
 	border: none;
 	background-color: transparent;
+	user-select: none;
 
 	&:hover {
 		background-color: #AEAEAE;
@@ -57,4 +58,14 @@ button {
 			overflow-y: auto;
 		}
 	}
+}
+
+.title {
+	position: absolute;
+	top: -36px;
+	left: 10px;
+	border: none;
+	user-select: none;
+	height: 2em;
+	overflow: hidden;
 }
