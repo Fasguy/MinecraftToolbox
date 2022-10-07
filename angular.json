@@ -54,7 +54,8 @@
 						"styles": [
 							"projects/toolbox-main/src/styles.scss"
 						],
-						"scripts": []
+						"scripts": [],
+						"webWorkerTsConfig": "projects/toolbox-main/tsconfig.worker.json"
 					},
 					"configurations": {
 						"production": {
@@ -204,8 +205,8 @@
 				}
 			}
 		}
-  },
-  "cli": {
-    "analytics": false
-  }
+	},
+	"cli": {
+		"analytics": false
+	}
 }

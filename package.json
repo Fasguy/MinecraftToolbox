@@ -1,6 +1,6 @@
 {
 	"name": "toolbox",
-	"version": "1.1.1",
+	"version": "1.2.0",
 	"type": "commonjs",
 	"scripts": {
 		"ng": "ng",
@@ -20,6 +20,7 @@
 		"@angular/platform-browser": "^14.1.2",
 		"@angular/platform-browser-dynamic": "^14.1.2",
 		"@angular/router": "^14.1.2",
+		"comlink": "^4.3.1",
 		"fflate": "^0.7.3",
 		"rxjs": "~7.5.0",
 		"serialize-error": "^11.0.0",

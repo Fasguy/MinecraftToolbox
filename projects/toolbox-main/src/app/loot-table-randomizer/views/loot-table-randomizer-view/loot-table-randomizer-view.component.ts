@@ -1,12 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { strFromU8, unzip } from 'fflate';
 import { ActivityMonitorService } from 'src/app/common/services/activity-monitor/activity-monitor.service';
 import { AssetManagerService } from 'src/app/common/services/asset-manager/asset-manager.service';
+import { NetRequestService } from 'src/app/common/services/net-request/net-request.service';
 import { PanoramaService } from 'src/app/common/services/panorama-service/panorama.service';
 import { WindowService } from 'src/app/common/services/window-service/window.service';
-import { GenericFile } from 'src/lib/ts-datapack/genericfile';
 import { hashCode, tryParseInt } from 'src/lib/utils';
 import { EntryGroup } from '../../../common/elements/selection/selection.component';
 import { LootTableRandomizerService } from '../../services/loot-table-randomizer/loot-table-randomizer.service';
@@ -28,129 +27,80 @@ export class LootTableRandomizerViewComponent implements OnInit {
 	})();
 
 	constructor(
-		private panorama: PanoramaService,
+		private _panorama: PanoramaService,
 		private _activatedRoute: ActivatedRoute,
-		private _http: HttpClient,
 		private _randomizerService: LootTableRandomizerService,
 		private _activityMonitor: ActivityMonitorService,
 		private _window: WindowService,
-		public assetManagerService: AssetManagerService
+		private _netRequest: NetRequestService,
+		private _assetManagerService: AssetManagerService
 	) {
 	}
 
-	public ngOnInit(): void {
+	public async ngOnInit() {
+		await this._randomizerService.ngOnInit();
+
 		let version = this._activatedRoute.snapshot.paramMap.get('version')!;
 
-		this.panorama.setIndex(version);
+		this._panorama.setIndex(version);
 
-		this._activityMonitor.startActivity({
+		let data = await this._activityMonitor.startActivity({
 			text: "Downloading necessary data...",
-			promise: new Promise<void>((res, rej) => {
-				let requestOptions: any = {
-					responseType: 'arraybuffer',
-					headers: new HttpHeaders({
-						'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
-						'Pragma': 'no-cache',
-						'Expires': '0'
-					})
-				};
-
-				this._http.get(`resources/loot-table-randomizer/${version}/data.zip`, requestOptions)
+			promise: new Promise<ArrayBuffer>((res, rej) => {
+				this._netRequest.binary(`resources/loot-table-randomizer/${version}/data.zip`)
 					.subscribe({
-						next: data => {
-							unzip(new Uint8Array(data), (err, result) => {
-								if (err) {
-									rej(err);
-									return;
-								}
-
-								this._activityMonitor.startActivity({
-									text: "Preparing data pack...",
-									promise: (async () => {
-										//Set pre-determined data pack information
-										let info: DatapackInformation = JSON.parse(strFromU8(result["info.json"]));
-										this._randomizerService.dataPackInfo = {
-											packFormat: info.packFormat,
-											packPng: new GenericFile("pack.png", "binary", result["pack.png"])
-										};
-									})()
-								});
-
-								this._activityMonitor.startActivity({
-									text: "Loading loot tables...",
-									promise: (async () => {
-										this._randomizerService.loadedLootTables = JSON.parse(strFromU8(result["loot_tables.json"]));
-									})()
-								});
-
-								this._activityMonitor.startActivity({
-									text: "Loading loot table selection list...",
-									promise: (async () => {
-										let dataJson: LootTableSelectionData = JSON.parse(strFromU8(result["selection_menu.json"]));
-
-										let selectionList: EntryGroup[] = [];
-
-										await this.assetManagerService.loading;
-
-										for (const group of Object.keys(dataJson)) {
-											selectionList.push({
-												title: this.assetManagerService.getString(group),
-												entries: dataJson[group].map(x => {
-													return {
-														text: this.assetManagerService.getString(x.assetId),
-														value: x.value,
-														checked: x.selected
-													}
-												})
-											});
-										}
-
-										this.lootTables = selectionList;
-									})()
-								});
-
-								res();
-							});
-						},
+						next: res,
 						error: rej
 					});
 			})
 		});
-	}
 
-	reduceObjectKeys(prev: string, obj: any): string[] {
-		let keys: string[] = [];
+		let dataCopy = new Uint8Array(new ArrayBuffer(data.byteLength));
+		dataCopy.set(new Uint8Array(data));
 
-		for (const key of Object.keys(obj)) {
-			if (!key.endsWith(".json")) {
-				keys.push(...this.reduceObjectKeys(`${prev}${key}/`, obj[key]));
-			}
-			else {
-				keys.push(prev + key);
-			}
-		}
+		await this._assetManagerService.loading;
 
-		return keys;
+		await this._activityMonitor.startActivity({
+			text: "Preparing necessary data pack data...",
+			promise: new Promise<void>(async (res, rej) => {
+				unzip(dataCopy, (err, result) => {
+					if (err) {
+						rej(err);
+						return;
+					}
+
+					let dataJson: LootTableSelectionData = JSON.parse(strFromU8(result["selection_menu.json"]));
+
+					let entries: EntryGroup[] = [];
+
+					for (const group of Object.keys(dataJson)) {
+						entries.push({
+							title: this._assetManagerService.getString(group),
+							entries: dataJson[group].map(x => {
+								return {
+									text: this._assetManagerService.getString(x.assetId),
+									value: x.value,
+									checked: x.selected
+								}
+							})
+						});
+					}
+
+					this.lootTables = entries;
+
+					res();
+				});
+
+				await this._randomizerService.loadDatapackFiles(dataCopy);
+			})
+		});
 	}
 
 	public onSubmit(e: SubmitEvent) {
 		e.preventDefault();
 		e.stopPropagation();
 
-		let formData = new FormData(<HTMLFormElement>e.target);
-		let submittedData: any = {};
-
-		let keys = new Set<string>([...formData].map(x => x[0]));
-		for (const key of keys) {
-			submittedData[key] = formData.getAll(key);
-			if (submittedData[key].length === 1) {
-				submittedData[key] = submittedData[key][0];
-			}
-		}
-
-		this._randomizerService.selectedLootTables = submittedData["selection"];
-
-		this._randomizerService.otherOptions.dropChance100 = submittedData["dropChance100"] === "on";
+		let submittedData = mapFormData(<HTMLFormElement>e.target);
 
 		//There's one thing to note about how seeds work here:
 		//I wanted to emulate how Minecraft handles seeds as much as possible.
@@ -160,12 +110,20 @@ export class LootTableRandomizerViewComponent implements OnInit {
 		//We have a maximum safe integer precision of 53 bits, so we can't use the full range of numbers, that Minecraft would normally allow.
 		//This means, that if we actually *have* a number that's outside those bounds, the last 3 digits will essentially be dropped.
 
-		let seed = tryParseInt(<string>formData.get("seed"));
-		if (seed.success) {
-			this._randomizerService.randomize(seed.value);
+		let parsedSeed = tryParseInt(submittedData["seed"]);
+		let seed: number;
+
+		if (parsedSeed.success) {
+			seed = parsedSeed.value;
 		} else {
-			this._randomizerService.randomize(hashCode(<string>formData.get("seed")));
+			seed = hashCode(submittedData["seed"]);
 		}
+
+		this._randomizerService.randomize({
+			seed: seed,
+			dropChance100: submittedData["dropChance100"] === "on",
+			selectedLootTables: submittedData["selection"]
+		});
 	}
 
 	public showInstructions() {
@@ -177,6 +135,22 @@ export class LootTableRandomizerViewComponent implements OnInit {
 	}
 }
 
+//For whatever reason, Angular doesn't honor the tsconfig file in utils.ts, so i have to place this here.
+function mapFormData(form: any) {
+	let formData = new FormData(form);
+	let formDataMap: any = {};
+
+	let keys = new Set<string>([...formData].map(x => x[0]));
+	for (const key of keys) {
+		formDataMap[key] = formData.getAll(key);
+		if (formDataMap[key].length === 1) {
+			formDataMap[key] = formDataMap[key][0];
+		}
+	}
+
+	return formDataMap;
+}
+
 interface LootTableSelectionData {
 	[group: string]: LootTableSelectionEntry[];
 }
@@ -185,8 +159,4 @@ interface LootTableSelectionEntry {
 	selected: boolean;
 	assetId: string;
 	value: string;
-}
-
-interface DatapackInformation {
-	packFormat: number;
 }

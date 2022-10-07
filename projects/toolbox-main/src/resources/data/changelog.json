@@ -75,5 +75,17 @@
 			"removals": []
 		},
 		"notes": ""
+	},
+	{
+		"version": "1.2.0",
+		"build_date": "",
+		"changes": {
+			"additions": [],
+			"modifications": [
+				"Loot-Table-Randomizer is now running in a webworker, to prevent the UI from freezing"
+			],
+			"removals": []
+		},
+		"notes": ""
 	}
 ]
