@@ -1,7 +1,7 @@
 import { Datapack } from "./ts-datapack/datapack";
 import { GenericAdvancement } from "./ts-datapack/generic-advancement";
 
-function flatten(obj: any, prefix: string, separator: string, dict: any) {
+export function flatten(obj: any, prefix: string, separator: string, dict: any) {
 	for (const key in obj) {
 		let newKey: string;
 		if (prefix != '') {
@@ -21,7 +21,7 @@ function flatten(obj: any, prefix: string, separator: string, dict: any) {
 	return dict;
 }
 
-function duckCheck(obj: any, ...properties: any[]) {
+export function duckCheck(obj: any, ...properties: any[]) {
 	for (const property of properties) {
 		if (typeof obj[property] === "undefined") {
 			return false;
@@ -31,7 +31,7 @@ function duckCheck(obj: any, ...properties: any[]) {
 	return true;
 }
 
-function seededRandom(seed: number) {
+export function seededRandom(seed: number) {
 	const baseSeeds = [101182939, 495868718, 999091121, 39475253];
 
 	let [x, y, z, w] = baseSeeds;
@@ -49,15 +49,15 @@ function seededRandom(seed: number) {
 	return random;
 }
 
-function sleep(ms: number) {
+export function sleep(ms: number) {
 	return new Promise<void>(x => setTimeout(x, ms));
 }
 
-function randomRange(min: number, max: number) {
+export function randomRange(min: number, max: number) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function trimStart(str: string, text: string) {
+export function trimStart(str: string, text: string) {
 	while (str.startsWith(text)) {
 		str = str.slice(0, text.length);
 	}
@@ -65,7 +65,7 @@ function trimStart(str: string, text: string) {
 	return str;
 }
 
-function trimEnd(str: string, text: string) {
+export function trimEnd(str: string, text: string) {
 	while (str.endsWith(text)) {
 		str = str.slice(0, -text.length);
 	}
@@ -73,11 +73,11 @@ function trimEnd(str: string, text: string) {
 	return str;
 }
 
-function trim(str: string, text: string) {
+export function trim(str: string, text: string) {
 	return trimStart(trimEnd(str, text), text);
 }
 
-function shuffle<T>(array: T[], random = Math.random) {
+export function shuffle<T>(array: T[], random = Math.random) {
 	//Preventing a potential infinite loop
 	if (array.length < 2) return array;
 
@@ -96,7 +96,7 @@ function shuffle<T>(array: T[], random = Math.random) {
 	return array;
 }
 
-function shuffleSattolo<T>(array: T[], random = Math.random) {
+export function shuffleSattolo<T>(array: T[], random = Math.random) {
 	for (let i = array.length; i-- > 1;) {
 		let j = Math.floor(random() * i);
 		[array[i], array[j]] = [array[j], array[i]];
@@ -105,7 +105,7 @@ function shuffleSattolo<T>(array: T[], random = Math.random) {
 	return array;
 }
 
-function tryParseInt(str: string) {
+export function tryParseInt(str: string) {
 	const result = parseInt(str);
 
 	return {
@@ -119,7 +119,7 @@ function tryParseInt(str: string) {
 There's no real reason to emulate how Minecraft handles hash generation and using all available 53 bits, instead of the 32 with this current method, decreases the likelyhood of collisions.
 https://github.com/bryc/code/blob/master/jshash/experimental/cyrb53.js
 */
-function hashCode(input: string) {
+export function hashCode(input: string) {
 	if (input.length === 0) return 0;
 
 	let hash = 0;
@@ -132,11 +132,11 @@ function hashCode(input: string) {
 	return hash;
 };
 
-function isArrayOrTypedArray(arg: any) {
+export function isArrayOrTypedArray(arg: any) {
 	return Boolean(arg && (typeof arg === 'object') && (Array.isArray(arg) || (ArrayBuffer.isView(arg) && !(arg instanceof DataView))));
 }
 
-function addMainDatapackAdvancement(datapack: Datapack) {
+export function addMainDatapackAdvancement(datapack: Datapack) {
 	let advancement = new GenericAdvancement("data/fasguys_toolbox/advancements/root.json");
 	advancement.setValues({
 		display: {
@@ -161,7 +161,7 @@ function addMainDatapackAdvancement(datapack: Datapack) {
 
 //structedClone is not supported well enough (and slow)
 //JSON stringify/parse is slower than just recursively cloning the object
-function deepCopy(o: any): any {
+export function deepCopy(o: any): any {
 	// if not array or object or is null return self
 	if (typeof o !== 'object' || o === null) return o;
 	let newO: any, i;
@@ -178,7 +178,7 @@ function deepCopy(o: any): any {
 	return newO;
 }
 
-function filenameWithoutExtension(path: string) {
+export function filenameWithoutExtension(path: string) {
 	let folderIndex = path.lastIndexOf("/") + 1;
 	if (folderIndex > 0) {
 		path = path.substring(folderIndex);
@@ -190,25 +190,6 @@ function filenameWithoutExtension(path: string) {
 	return path;
 }
 
-function spreadOrEmpty<T>(array: T[]) {
+export function spreadOrEmpty<T>(array: T[]) {
 	return [...(array ?? [])];
 }
-
-export {
-	flatten,
-	duckCheck,
-	seededRandom,
-	sleep,
-	randomRange,
-	trimStart,
-	trimEnd,
-	trim,
-	shuffle,
-	tryParseInt,
-	hashCode,
-	addMainDatapackAdvancement,
-	deepCopy,
-	filenameWithoutExtension,
-	spreadOrEmpty
-};
-
