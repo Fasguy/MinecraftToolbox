@@ -82,7 +82,7 @@
 		"changes": {
 			"additions": [],
 			"modifications": [
-				"Loot-Table-Randomizer is now running in a webworker, to prevent the UI from freezing"
+				"The Loot-Table- and Crafting-Recipe-Randomizer are now running in webworkers, to prevent the UI from freezing"
 			],
 			"removals": []
 		},
