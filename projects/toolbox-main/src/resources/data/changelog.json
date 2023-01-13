@@ -82,7 +82,8 @@
 		"changes": {
 			"additions": [],
 			"modifications": [
-				"The Loot-Table- and Crafting-Recipe-Randomizer are now running in webworkers, to prevent the UI from freezing"
+				"The Loot-Table- and Crafting-Recipe-Randomizer are now running in webworkers, to prevent the UI from freezing",
+				"The WebApp now runs on Angular 15"
 			],
 			"removals": []
 		},
