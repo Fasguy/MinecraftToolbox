@@ -14,7 +14,10 @@ export class LootTableRandomizerService implements OnDestroy, OnInit {
 	}
 
 	public async ngOnInit() {
-		this._worker = await new (wrap<typeof LootTableRandomizerWorker>(this._realWorker))();
+		this._worker = await this._activityMonitor.startActivity({
+			text: "Starting service...",
+			promise: new (wrap<typeof LootTableRandomizerWorker>(this._realWorker))()
+		});
 	}
 
 	public ngOnDestroy(): void {

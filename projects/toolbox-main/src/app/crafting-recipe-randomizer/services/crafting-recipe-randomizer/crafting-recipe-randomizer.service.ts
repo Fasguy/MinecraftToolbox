@@ -14,7 +14,10 @@ export class CraftingRecipeRandomizerService implements OnInit, OnDestroy {
 	}
 
 	public async ngOnInit() {
-		this._worker = await new (wrap<typeof CraftingRecipeRandomizerWorker>(this._realWorker))();
+		this._worker = await this._activityMonitor.startActivity({
+			text: "Starting service...",
+			promise: new (wrap<typeof CraftingRecipeRandomizerWorker>(this._realWorker))()
+		});
 	}
 
 	public ngOnDestroy(): void {
