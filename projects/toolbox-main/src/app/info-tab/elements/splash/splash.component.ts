@@ -1,11 +1,11 @@
-import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { ToolboxSettingsService } from 'src/app/common/services/toolbox-settings/toolbox-settings.service';
+import { HttpClient } from "@angular/common/http";
+import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
+import { ToolboxSettingsService } from "src/app/common/services/toolbox-settings/toolbox-settings.service";
 
 @Component({
-	selector: 'tbx-splash',
-	templateUrl: './splash.component.html',
-	styleUrls: ['./splash.component.scss']
+	selector: "tbx-splash",
+	templateUrl: "./splash.component.html",
+	styleUrls: ["./splash.component.scss"]
 })
 export class SplashComponent implements AfterViewInit {
 	@ViewChild("splashText")
@@ -24,13 +24,13 @@ export class SplashComponent implements AfterViewInit {
 					this._splashText.nativeElement.style.removeProperty("display");
 
 					this._httpClient
-						.get('resources/data/splashes.txt', { responseType: 'text' })
+						.get("resources/data/splashes.txt", { responseType: "text" })
 						.subscribe(text => {
-							let lines = text.split('\n').map(line => line.trim());
+							let lines = text.split("\n").map(line => line.trim());
 							let splash = lines[Math.floor(Math.random() * lines.length)];
 							this._splashText.nativeElement.innerText = splash;
 							document.fonts.ready.then(() => {
-								if (document.fonts.check('1em Minecraft')) {
+								if (document.fonts.check("1em Minecraft")) {
 									this.fitText(this._splashText.nativeElement);
 								}
 							});

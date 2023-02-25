@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { Route, Router, Routes } from '@angular/router';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
+import { Route, Router, Routes } from "@angular/router";
 
 @Component({
-	selector: 'tbx-header',
-	templateUrl: './header.component.html',
-	styleUrls: ['./header.component.scss'],
+	selector: "tbx-header",
+	templateUrl: "./header.component.html",
+	styleUrls: ["./header.component.scss"],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {

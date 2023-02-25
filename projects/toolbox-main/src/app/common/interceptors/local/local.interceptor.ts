@@ -1,8 +1,8 @@
-import { APP_BASE_HREF } from '@angular/common';
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { trimEnd, trimStart } from 'src/lib/utils';
+import { APP_BASE_HREF } from "@angular/common";
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
+import { Inject, Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { trimEnd, trimStart } from "src/lib/utils";
 
 @Injectable()
 export class LocalInterceptor implements HttpInterceptor {

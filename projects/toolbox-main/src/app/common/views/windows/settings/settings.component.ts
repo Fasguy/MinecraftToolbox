@@ -1,10 +1,10 @@
-import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
-import { ToolboxOption, ToolboxSettingsService } from 'src/app/common/services/toolbox-settings/toolbox-settings.service';
-import { IWindow } from '../../window/window.component';
+import { AfterViewInit, ChangeDetectorRef, Component } from "@angular/core";
+import { ToolboxOption, ToolboxSettingsService } from "src/app/common/services/toolbox-settings/toolbox-settings.service";
+import { IWindow } from "../../window/window.component";
 
 @Component({
-	templateUrl: './settings.component.html',
-	styleUrls: ['./settings.component.scss']
+	templateUrl: "./settings.component.html",
+	styleUrls: ["./settings.component.scss"]
 })
 export class SettingsComponent implements AfterViewInit, IWindow {
 	public title: string = "Settings";

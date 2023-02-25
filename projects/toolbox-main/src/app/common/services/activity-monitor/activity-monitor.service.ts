@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, take } from 'rxjs';
-import { sleep } from 'src/lib/utils';
-import { ActivityMonitorComponent } from '../../elements/activity-monitor/activity-monitor.component';
-import { ErrorHandlerService } from '../error-handler/error-handler.service';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, Observable, take } from "rxjs";
+import { sleep } from "src/lib/utils";
+import { ActivityMonitorComponent } from "../../elements/activity-monitor/activity-monitor.component";
+import { ErrorHandlerService } from "../error-handler/error-handler.service";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root"
 })
 export class ActivityMonitorService {
 	private _activityMonitor!: ActivityMonitorComponent;

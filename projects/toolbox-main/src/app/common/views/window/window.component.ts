@@ -1,15 +1,15 @@
-import { AfterViewInit, Component, ComponentRef, Type, ViewChild, ViewContainerRef } from '@angular/core';
-import { sleep } from 'src/lib/utils';
+import { AfterViewInit, Component, ComponentRef, Type, ViewChild, ViewContainerRef } from "@angular/core";
+import { sleep } from "src/lib/utils";
 
 @Component({
-	selector: 'tbx-window',
-	templateUrl: './window.component.html',
-	styleUrls: ['./window.component.scss']
+	selector: "tbx-window",
+	templateUrl: "./window.component.html",
+	styleUrls: ["./window.component.scss"]
 })
 export class WindowComponent<TWindow extends IWindow> implements AfterViewInit {
 	private _childComponent!: Type<TWindow>;
 
-	@ViewChild('childView', { read: ViewContainerRef })
+	@ViewChild("childView", { read: ViewContainerRef })
 	protected childViewTarget!: ViewContainerRef;
 
 	protected title: string = "";

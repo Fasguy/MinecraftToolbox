@@ -1,7 +1,7 @@
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync } from "fs";
 
 (() => {
-	const packageJson = require('../../package.json');
+	const packageJson = require("../../package.json");
 
 	const changelogFile = "./projects/toolbox-main/src/resources/data/changelog.json";
 	const changelog = <any[]>JSON.parse(readFileSync(changelogFile, { encoding: "utf-8" }));
@@ -20,7 +20,7 @@ import { readFileSync, writeFileSync } from 'fs';
 	}
 
 	currentEntry.version = packageJson.version;
-	currentEntry.build_date = new Date().toISOString().split('T')[0];
+	currentEntry.build_date = new Date().toISOString().split("T")[0];
 
 	writeFileSync(changelogFile, JSON.stringify(changelog, undefined, "\t"));
 

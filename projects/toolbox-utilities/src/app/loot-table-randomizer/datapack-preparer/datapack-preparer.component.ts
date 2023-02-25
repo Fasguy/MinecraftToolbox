@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { strFromU8, unzip } from 'fflate';
-import { fflateZip } from '../../../../../../lib/fflate-zip';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from "@angular/core";
+import { strFromU8, unzip } from "fflate";
+import { fflateZip } from "../../../../../../lib/fflate-zip";
 
 @Component({
-	selector: 'ltr-datapack-preparer',
-	templateUrl: './datapack-preparer.component.html',
-	styleUrls: ['./datapack-preparer.component.scss'],
+	selector: "ltr-datapack-preparer",
+	templateUrl: "./datapack-preparer.component.html",
+	styleUrls: ["./datapack-preparer.component.scss"],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LTR_DatapackPreparerComponent {

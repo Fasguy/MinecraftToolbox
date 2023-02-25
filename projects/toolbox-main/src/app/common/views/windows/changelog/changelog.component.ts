@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import changelogJson from "../../../../../resources/data/changelog.json";
-import { IWindow } from '../../window/window.component';
+import { IWindow } from "../../window/window.component";
 
 @Component({
-	templateUrl: './changelog.component.html',
-	styleUrls: ['./changelog.component.scss'],
+	templateUrl: "./changelog.component.html",
+	styleUrls: ["./changelog.component.scss"],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChangelogComponent implements OnInit, IWindow {

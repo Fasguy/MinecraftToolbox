@@ -1,15 +1,15 @@
 import { expose } from "comlink";
-import { strFromU8, unzip } from 'fflate';
-import { LootTableFile } from '../../../../lib/ts-datapack-extensions/loot_table_file';
-import { DatapackSerializer } from '../../../../lib/ts-datapack-fflate/datapack-serializer';
-import { Datapack } from '../../../../lib/ts-datapack/datapack';
-import { PackFormat } from '../../../../lib/ts-datapack/enums/packformat';
-import { GenericAdvancement } from '../../../../lib/ts-datapack/generic-advancement';
-import { GenericFile } from '../../../../lib/ts-datapack/genericfile';
-import { IFile } from '../../../../lib/ts-datapack/interfaces/file';
-import { IFolder } from '../../../../lib/ts-datapack/interfaces/folder';
-import { ILootTable } from '../../../../lib/ts-datapack/interfaces/loot_table/loot_table';
-import { addMainDatapackAdvancement, filenameWithoutExtension, seededRandom, shuffle } from '../../../../lib/utils';
+import { strFromU8, unzip } from "fflate";
+import { LootTableFile } from "../../../../lib/ts-datapack-extensions/loot_table_file";
+import { DatapackSerializer } from "../../../../lib/ts-datapack-fflate/datapack-serializer";
+import { Datapack } from "../../../../lib/ts-datapack/datapack";
+import { PackFormat } from "../../../../lib/ts-datapack/enums/packformat";
+import { GenericAdvancement } from "../../../../lib/ts-datapack/generic-advancement";
+import { GenericFile } from "../../../../lib/ts-datapack/genericfile";
+import { IFile } from "../../../../lib/ts-datapack/interfaces/file";
+import { IFolder } from "../../../../lib/ts-datapack/interfaces/folder";
+import { ILootTable } from "../../../../lib/ts-datapack/interfaces/loot_table/loot_table";
+import { addMainDatapackAdvancement, filenameWithoutExtension, seededRandom, shuffle } from "../../../../lib/utils";
 
 export class LootTableRandomizerWorker {
 	private _dataPackData = {
@@ -30,13 +30,13 @@ export class LootTableRandomizerWorker {
 				function flatten(obj: any, prefix: string, separator: string, dict: any) {
 					for (const key in obj) {
 						let newKey: string;
-						if (prefix != '') {
+						if (prefix != "") {
 							newKey = prefix + separator + key;
 						} else {
 							newKey = key;
 						}
 
-						if (!key.endsWith(".json") && typeof obj[key] === 'object') {
+						if (!key.endsWith(".json") && typeof obj[key] === "object") {
 							flatten(obj[key], newKey, separator, dict);
 						} else {
 							dict[newKey] = obj[key];
@@ -67,8 +67,8 @@ export class LootTableRandomizerWorker {
 		this._finalDatapack = new Datapack();
 
 		this._finalDatapack.name = `random_loot_${seed}`;
-		this._finalDatapack['pack.mcmeta'].description = `Loot-Table Randomizer\nSeed: ${seed}`;
-		this._finalDatapack['pack.mcmeta'].packFormat = this._dataPackData.packFormat;
+		this._finalDatapack["pack.mcmeta"].description = `Loot-Table Randomizer\nSeed: ${seed}`;
+		this._finalDatapack["pack.mcmeta"].packFormat = this._dataPackData.packFormat;
 		this._finalDatapack.set(this._dataPackData.packPng);
 
 		for (const [key, value] of Object.entries(this._dataPackData.loadedLootTables)) {

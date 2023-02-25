@@ -1,14 +1,14 @@
-import { MapTextID } from '../../enums/map_text_id';
-import { Effect } from '../../enums/resource_locations/effect';
-import { Enchantment } from '../../enums/resource_locations/enchantment';
-import { IAttributeModifier } from '../attribute_modifier';
-import { INBTOperation } from '../nbt_operation';
-import { INumberProvider } from '../number_provider';
-import { IPredicate } from '../predicate';
-import { IRange } from '../range';
-import { IRawJSONText } from '../rawjsontext';
-import { ILootTable } from './loot_table';
-import { IPattern } from './pattern';
+import { MapTextID } from "../../enums/map_text_id";
+import { Effect } from "../../enums/resource_locations/effect";
+import { Enchantment } from "../../enums/resource_locations/enchantment";
+import { IAttributeModifier } from "../attribute_modifier";
+import { INBTOperation } from "../nbt_operation";
+import { INumberProvider } from "../number_provider";
+import { IPredicate } from "../predicate";
+import { IRange } from "../range";
+import { IRawJSONText } from "../rawjsontext";
+import { ILootTable } from "./loot_table";
+import { IPattern } from "./pattern";
 
 export type IItemFunction = IItemFunction_Base
 	& (IItemFunction_ApplyBonus

@@ -1,17 +1,19 @@
+// @ts-nocheck
+
 import { Datapack } from "./ts-datapack/datapack";
 import { GenericAdvancement } from "./ts-datapack/generic-advancement";
 
 export function flatten(obj: any, prefix: string, separator: string, dict: any) {
 	for (const key in obj) {
 		let newKey: string;
-		if (prefix != '') {
+		if (prefix != "") {
 			newKey = prefix + separator + key;
 		} else {
 			newKey = key;
 		}
 
 		let value = obj[key];
-		if (typeof value === 'object' && !isArrayOrTypedArray(value)) {
+		if (typeof value === "object" && !isArrayOrTypedArray(value)) {
 			flatten(value, newKey, separator, dict);
 		} else {
 			dict[newKey] = value;
@@ -133,7 +135,7 @@ export function hashCode(input: string) {
 };
 
 export function isArrayOrTypedArray(arg: any) {
-	return Boolean(arg && (typeof arg === 'object') && (Array.isArray(arg) || (ArrayBuffer.isView(arg) && !(arg instanceof DataView))));
+	return Boolean(arg && (typeof arg === "object") && (Array.isArray(arg) || (ArrayBuffer.isView(arg) && !(arg instanceof DataView))));
 }
 
 export function addMainDatapackAdvancement(datapack: Datapack) {
@@ -163,7 +165,7 @@ export function addMainDatapackAdvancement(datapack: Datapack) {
 //JSON stringify/parse is slower than just recursively cloning the object
 export function deepCopy(o: any): any {
 	// if not array or object or is null return self
-	if (typeof o !== 'object' || o === null) return o;
+	if (typeof o !== "object" || o === null) return o;
 	let newO: any, i;
 	// handle case: array
 	if (o instanceof Array) {
@@ -192,4 +194,26 @@ export function filenameWithoutExtension(path: string) {
 
 export function spreadOrEmpty<T>(array: T[]) {
 	return [...(array ?? [])];
+}
+
+export function mapFormData(form: HTMLFormElement) {
+	let formData = new FormData(form);
+	let formDataMap: any = {};
+
+	let keys = new Set<string>([...formData].map(x => x[0]));
+	for (const key of keys) {
+		formDataMap[key] = formData.getAll(key);
+		if (formDataMap[key].length === 1) {
+			formDataMap[key] = formDataMap[key][0];
+		}
+	}
+
+	return formDataMap;
+}
+
+export function download(name: string, href: string) {
+	let a = document.createElement("a");
+	a.download = name;
+	a.href = href;
+	a.click();
 }

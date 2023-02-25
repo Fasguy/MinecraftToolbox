@@ -1,8 +1,8 @@
-import { Injectable, Type, ViewContainerRef } from '@angular/core';
-import { IWindow, WindowComponent } from '../../views/window/window.component';
+import { Injectable, Type, ViewContainerRef } from "@angular/core";
+import { IWindow, WindowComponent } from "../../views/window/window.component";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root"
 })
 export class WindowService {
 	public windowContainer!: ViewContainerRef;

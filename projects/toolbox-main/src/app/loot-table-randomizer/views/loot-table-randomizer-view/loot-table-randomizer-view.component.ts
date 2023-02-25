@@ -1,28 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { strFromU8, unzip } from 'fflate';
-import { ActivityMonitorService } from 'src/app/common/services/activity-monitor/activity-monitor.service';
-import { AssetManagerService } from 'src/app/common/services/asset-manager/asset-manager.service';
-import { NetRequestService } from 'src/app/common/services/net-request/net-request.service';
-import { PanoramaService } from 'src/app/common/services/panorama-service/panorama.service';
-import { WindowService } from 'src/app/common/services/window-service/window.service';
-import { hashCode, tryParseInt } from 'src/lib/utils';
-import { EntryGroup } from '../../../common/elements/selection/selection.component';
-import { LootTableRandomizerService } from '../../services/loot-table-randomizer/loot-table-randomizer.service';
-import { LootTableRandomizerFAQComponent } from '../frequently-asked-questions/frequently-asked-questions.component';
-import { LootTableRandomizerInstructionsComponent } from '../instructions/instructions.component';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { strFromU8, unzip } from "fflate";
+import { ActivityMonitorService } from "src/app/common/services/activity-monitor/activity-monitor.service";
+import { AssetManagerService } from "src/app/common/services/asset-manager/asset-manager.service";
+import { NetRequestService } from "src/app/common/services/net-request/net-request.service";
+import { PanoramaService } from "src/app/common/services/panorama-service/panorama.service";
+import { WindowService } from "src/app/common/services/window-service/window.service";
+import { download, hashCode, mapFormData, tryParseInt } from "src/lib/utils";
+import { EntryGroup } from "../../../common/elements/selection/selection.component";
+import { LootTableRandomizerService } from "../../services/loot-table-randomizer/loot-table-randomizer.service";
+import { LootTableRandomizerFAQComponent } from "../frequently-asked-questions/frequently-asked-questions.component";
+import { LootTableRandomizerInstructionsComponent } from "../instructions/instructions.component";
 
 @Component({
-	selector: 'tbx-loot-table-randomizer-view',
-	templateUrl: './loot-table-randomizer-view.component.html',
-	styleUrls: ['./loot-table-randomizer-view.component.scss'],
+	selector: "tbx-loot-table-randomizer-view",
+	templateUrl: "./loot-table-randomizer-view.component.html",
+	styleUrls: ["./loot-table-randomizer-view.component.scss"],
 	providers: [LootTableRandomizerService]
 })
 export class LootTableRandomizerViewComponent implements OnInit {
-	public lootTables!: EntryGroup[];
+	protected version: string = "";
 
-	public seed: string = (() => {
-		let baseNumber = [...Array(19)].map(_ => Math.random() * 10 | 0).join('');
+	protected lootTables!: EntryGroup[];
+
+	protected seed: string = (() => {
+		let baseNumber = [...Array(19)].map(_ => Math.random() * 10 | 0).join("");
 		return `${Math.random() < 0.5 ? "-" : ""}${baseNumber}`;
 	})();
 
@@ -38,16 +40,16 @@ export class LootTableRandomizerViewComponent implements OnInit {
 	}
 
 	public async ngOnInit() {
+		this.version = this._activatedRoute.snapshot.paramMap.get("version")!;
+
 		await this._randomizerService.ngOnInit();
 
-		let version = this._activatedRoute.snapshot.paramMap.get('version')!;
-
-		this._panorama.setIndex(version);
+		this._panorama.setIndex(this.version);
 
 		let data = await this._activityMonitor.startActivity({
 			text: "Downloading necessary data...",
 			promise: new Promise<ArrayBuffer>((res, rej) => {
-				this._netRequest.binary(`resources/loot-table-randomizer/${version}/data.zip`)
+				this._netRequest.binary(`resources/loot-table-randomizer/${this.version}/data.zip`)
 					.subscribe({
 						next: res,
 						error: rej
@@ -122,7 +124,7 @@ export class LootTableRandomizerViewComponent implements OnInit {
 		this._randomizerService.randomize({
 			seed: seed,
 			dropChance100: submittedData["dropChance100"] === "on",
-			selectedLootTables: submittedData["selection"]
+			selectedLootTables: submittedData["selection[]"]
 		});
 	}
 
@@ -133,22 +135,11 @@ export class LootTableRandomizerViewComponent implements OnInit {
 	public showFAQ() {
 		this._window.createWindow(LootTableRandomizerFAQComponent);
 	}
-}
 
-//For whatever reason, Angular doesn't honor the tsconfig file in utils.ts, so i have to place this here.
-function mapFormData(form: any) {
-	let formData = new FormData(form);
-	let formDataMap: any = {};
 
-	let keys = new Set<string>([...formData].map(x => x[0]));
-	for (const key of keys) {
-		formDataMap[key] = formData.getAll(key);
-		if (formDataMap[key].length === 1) {
-			formDataMap[key] = formDataMap[key][0];
 		}
 	}
 
-	return formDataMap;
 }
 
 interface LootTableSelectionData {

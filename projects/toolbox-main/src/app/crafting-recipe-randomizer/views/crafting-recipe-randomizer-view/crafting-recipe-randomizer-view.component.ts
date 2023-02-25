@@ -1,28 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { strFromU8, unzip } from 'fflate';
-import { EntryGroup } from 'src/app/common/elements/selection/selection.component';
-import { ActivityMonitorService } from 'src/app/common/services/activity-monitor/activity-monitor.service';
-import { AssetManagerService } from 'src/app/common/services/asset-manager/asset-manager.service';
-import { NetRequestService } from 'src/app/common/services/net-request/net-request.service';
-import { PanoramaService } from 'src/app/common/services/panorama-service/panorama.service';
-import { WindowService } from 'src/app/common/services/window-service/window.service';
-import { CraftingRecipeRandomizerService } from 'src/app/crafting-recipe-randomizer/services/crafting-recipe-randomizer/crafting-recipe-randomizer.service';
-import { hashCode, tryParseInt } from 'src/lib/utils';
-import { CraftingRecipeRandomizerFAQComponent } from '../frequently-asked-questions/frequently-asked-questions.component';
-import { CraftingRecipeRandomizerInstructionsComponent } from '../instructions/instructions.component';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { strFromU8, unzip } from "fflate";
+import { EntryGroup } from "src/app/common/elements/selection/selection.component";
+import { ActivityMonitorService } from "src/app/common/services/activity-monitor/activity-monitor.service";
+import { AssetManagerService } from "src/app/common/services/asset-manager/asset-manager.service";
+import { NetRequestService } from "src/app/common/services/net-request/net-request.service";
+import { PanoramaService } from "src/app/common/services/panorama-service/panorama.service";
+import { WindowService } from "src/app/common/services/window-service/window.service";
+import { CraftingRecipeRandomizerService } from "src/app/crafting-recipe-randomizer/services/crafting-recipe-randomizer/crafting-recipe-randomizer.service";
+import { hashCode, mapFormData, tryParseInt } from "src/lib/utils";
+import { CraftingRecipeRandomizerFAQComponent } from "../frequently-asked-questions/frequently-asked-questions.component";
+import { CraftingRecipeRandomizerInstructionsComponent } from "../instructions/instructions.component";
 
 @Component({
-	selector: 'tbx-crafting-recipe-randomizer-view',
-	templateUrl: './crafting-recipe-randomizer-view.component.html',
-	styleUrls: ['./crafting-recipe-randomizer-view.component.scss'],
+	selector: "tbx-crafting-recipe-randomizer-view",
+	templateUrl: "./crafting-recipe-randomizer-view.component.html",
+	styleUrls: ["./crafting-recipe-randomizer-view.component.scss"],
 	providers: [CraftingRecipeRandomizerService]
 })
 export class CraftingRecipeRandomizerViewComponent implements OnInit {
 	public craftingRecipes!: EntryGroup[];
 
 	public seed: string = (() => {
-		let baseNumber = [...Array(19)].map(_ => Math.random() * 10 | 0).join('');
+		let baseNumber = [...Array(19)].map(_ => Math.random() * 10 | 0).join("");
 		return `${Math.random() < 0.5 ? "-" : ""}${baseNumber}`;
 	})();
 
@@ -40,7 +40,7 @@ export class CraftingRecipeRandomizerViewComponent implements OnInit {
 	public async ngOnInit() {
 		await this._randomizerService.ngOnInit();
 
-		let version = this._activatedRoute.snapshot.paramMap.get('version')!;
+		let version = this._activatedRoute.snapshot.paramMap.get("version")!;
 
 		this.panorama.setIndex(version);
 
@@ -121,7 +121,7 @@ export class CraftingRecipeRandomizerViewComponent implements OnInit {
 
 		this._randomizerService.randomize({
 			seed: seed,
-			selectedCraftingRecipes: submittedData["selection"]
+			selectedCraftingRecipes: submittedData["selection[]"]
 		});
 	}
 
@@ -132,22 +132,6 @@ export class CraftingRecipeRandomizerViewComponent implements OnInit {
 	public showFAQ() {
 		this._window.createWindow(CraftingRecipeRandomizerFAQComponent);
 	}
-}
-
-//For whatever reason, Angular doesn't honor the tsconfig file in utils.ts, so i have to place this here.
-function mapFormData(form: any) {
-	let formData = new FormData(form);
-	let formDataMap: any = {};
-
-	let keys = new Set<string>([...formData].map(x => x[0]));
-	for (const key of keys) {
-		formDataMap[key] = formData.getAll(key);
-		if (formDataMap[key].length === 1) {
-			formDataMap[key] = formDataMap[key][0];
-		}
-	}
-
-	return formDataMap;
 }
 
 interface CraftingRecipeSelectionData {

@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-	selector: 'tbx-panorama-generator',
-	templateUrl: './panorama-generator.component.html',
-	styleUrls: ['./panorama-generator.component.scss']
+	selector: "tbx-panorama-generator",
+	templateUrl: "./panorama-generator.component.html",
+	styleUrls: ["./panorama-generator.component.scss"]
 })
 export class PanoramaGeneratorComponent {
 	public finalFile?: string;

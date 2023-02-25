@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, firstValueFrom } from "rxjs";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root"
 })
 export class PanoramaService {
 	private definitions!: PanoramaDefinitions;

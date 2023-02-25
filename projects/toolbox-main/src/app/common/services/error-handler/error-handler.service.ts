@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { serializeError } from 'serialize-error';
-import { ErrorHandlerComponent } from '../../elements/error-handler/error-handler.component';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
+import { serializeError } from "serialize-error";
+import { ErrorHandlerComponent } from "../../elements/error-handler/error-handler.component";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root"
 })
 export class ErrorHandlerService {
 	private _errorHandler!: ErrorHandlerComponent;

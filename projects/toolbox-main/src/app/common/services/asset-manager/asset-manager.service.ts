@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { ActivityMonitorService } from '../activity-monitor/activity-monitor.service';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { ActivityMonitorService } from "../activity-monitor/activity-monitor.service";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root"
 })
 export class AssetManagerService {
 	private _assets: any = {};

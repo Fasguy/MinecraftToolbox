@@ -1,5 +1,5 @@
-import { IItemFunction } from './item_function';
-import { IPool } from './pool';
+import { IItemFunction } from "./item_function";
+import { IPool } from "./pool";
 
 export type ILootTable = ILootTable_Base
 	& (ILootTable_Empty

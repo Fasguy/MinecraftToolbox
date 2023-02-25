@@ -1,12 +1,12 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { firstValueFrom, skip } from 'rxjs';
-import { PanoramaService } from '../../services/panorama-service/panorama.service';
-import { ToolboxSettingsService } from '../../services/toolbox-settings/toolbox-settings.service';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, ViewChild } from "@angular/core";
+import { firstValueFrom, skip } from "rxjs";
+import { PanoramaService } from "../../services/panorama-service/panorama.service";
+import { ToolboxSettingsService } from "../../services/toolbox-settings/toolbox-settings.service";
 
 @Component({
-	selector: 'tbx-panorama',
-	templateUrl: './panorama.component.html',
-	styleUrls: ['./panorama.component.scss'],
+	selector: "tbx-panorama",
+	templateUrl: "./panorama.component.html",
+	styleUrls: ["./panorama.component.scss"],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PanoramaComponent implements AfterViewInit {
@@ -46,9 +46,9 @@ export class PanoramaComponent implements AfterViewInit {
 		private _panorama: PanoramaService,
 		private _toolboxSettings: ToolboxSettingsService,
 	) {
-		this._image.addEventListener('load', () => {
+		this._image.addEventListener("load", () => {
 			this.context.texImage2D(this.context.TEXTURE_2D, 0, this.context.RGBA, this.context.RGBA, this.context.UNSIGNED_BYTE, this._image);
-			this.canvas.nativeElement.style.removeProperty('display');
+			this.canvas.nativeElement.style.removeProperty("display");
 			this.resize();
 			this._firstPanoramaRendered = true;
 		});
@@ -63,9 +63,9 @@ export class PanoramaComponent implements AfterViewInit {
 
 		this._toolboxSettings.Observe.uselessVisualsEnabled
 			.subscribe(uselessVisualsEnabled => {
-				this.canvas.nativeElement.style.display = 'none';
+				this.canvas.nativeElement.style.display = "none";
 				if (uselessVisualsEnabled && this._firstPanoramaRendered) {
-					this.canvas.nativeElement.style.removeProperty('display');
+					this.canvas.nativeElement.style.removeProperty("display");
 				}
 
 				if (uselessVisualsEnabled && this._panoramaSrcCache) {
@@ -188,7 +188,7 @@ export class PanoramaComponent implements AfterViewInit {
 		drawScene(0);
 	}
 
-	@HostListener('window:resize', ['$event'])
+	@HostListener("window:resize", ["$event"])
 	public resize = () => {
 		let canvas = this.canvas.nativeElement;
 

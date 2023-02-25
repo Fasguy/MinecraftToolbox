@@ -1,10 +1,10 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
-import { randomRange } from 'src/lib/utils';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild } from "@angular/core";
+import { randomRange } from "src/lib/utils";
 
 @Component({
-	selector: 'tbx-loading-indicator',
-	templateUrl: './loading-indicator.component.html',
-	styleUrls: ['./loading-indicator.component.scss'],
+	selector: "tbx-loading-indicator",
+	templateUrl: "./loading-indicator.component.html",
+	styleUrls: ["./loading-indicator.component.scss"],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoadingIndicatorComponent implements AfterViewInit {

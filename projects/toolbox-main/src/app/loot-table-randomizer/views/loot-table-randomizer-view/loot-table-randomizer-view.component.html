@@ -1,9 +1,9 @@
-<form (submit)="onSubmit($event)">
+<form #formRef (submit)="onSubmit($event)">
 	<tbx-sub-section header="Randomization Seed">
 		<input standard type="text" name="seed" value="{{seed}}">
 	</tbx-sub-section>
 	<tbx-sub-section header="Loot-Table Selection">
-		<tbx-selection [entries]="lootTables"></tbx-selection>
+		<tbx-selection name="selection[]" [entries]="lootTables"></tbx-selection>
 	</tbx-sub-section>
 	<tbx-sub-section header="Other options">
 		<label class="checkbox">

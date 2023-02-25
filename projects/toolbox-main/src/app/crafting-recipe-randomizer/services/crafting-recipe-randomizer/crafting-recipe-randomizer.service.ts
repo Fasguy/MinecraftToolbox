@@ -1,11 +1,12 @@
-import { Injectable, OnDestroy, OnInit } from '@angular/core';
-import { Remote, transfer, wrap } from 'comlink';
-import { ActivityMonitorService } from 'src/app/common/services/activity-monitor/activity-monitor.service';
-import { CraftingRecipeRandomizerWorker } from '../../workers/crafting-recipe-randomizer/crafting-recipe-randomizer.worker';
+import { Injectable, OnDestroy, OnInit } from "@angular/core";
+import { Remote, transfer, wrap } from "comlink";
+import { ActivityMonitorService } from "src/app/common/services/activity-monitor/activity-monitor.service";
+import { download } from "src/lib/utils";
+import { CraftingRecipeRandomizerWorker } from "../../workers/crafting-recipe-randomizer/crafting-recipe-randomizer.worker";
 
 @Injectable()
 export class CraftingRecipeRandomizerService implements OnInit, OnDestroy {
-	private _realWorker = new Worker(new URL('../../workers/crafting-recipe-randomizer/crafting-recipe-randomizer.worker', import.meta.url));
+	private _realWorker = new Worker(new URL("../../workers/crafting-recipe-randomizer/crafting-recipe-randomizer.worker", import.meta.url));
 	private _worker!: Remote<CraftingRecipeRandomizerWorker>;
 
 	constructor(
@@ -51,12 +52,7 @@ export class CraftingRecipeRandomizerService implements OnInit, OnDestroy {
 
 		await this._activityMonitor.startActivity({
 			text: "Downloading finished data pack...",
-			promise: (async () => {
-				let a = document.createElement("a");
-				a.download = `${finalDatapackData.filename}.zip`;
-				a.href = finalDatapackData.href;
-				a.click();
-			})()
+			promise: (async () => download(`${finalDatapackData.filename}.zip`, finalDatapackData.href))()
 		});
 	}
 }

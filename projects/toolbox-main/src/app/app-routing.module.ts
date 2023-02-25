@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { VersionSelectorViewComponent } from './common/views/version-selector/version-selector.component';
-import { CraftingRecipeRandomizerViewComponent } from './crafting-recipe-randomizer/views/crafting-recipe-randomizer-view/crafting-recipe-randomizer-view.component';
-import { InfoTabViewComponent } from './info-tab/views/info-tab-view/info-tab-view.component';
-import { LootTableRandomizerViewComponent } from './loot-table-randomizer/views/loot-table-randomizer-view/loot-table-randomizer-view.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { VersionSelectorViewComponent } from "./common/views/version-selector/version-selector.component";
+import { CraftingRecipeRandomizerViewComponent } from "./crafting-recipe-randomizer/views/crafting-recipe-randomizer-view/crafting-recipe-randomizer-view.component";
+import { InfoTabViewComponent } from "./info-tab/views/info-tab-view/info-tab-view.component";
+import { LootTableRandomizerViewComponent } from "./loot-table-randomizer/views/loot-table-randomizer-view/loot-table-randomizer-view.component";
 
 const routes: Routes = [
 	{
-		path: 'info',
+		path: "info",
 		component: InfoTabViewComponent,
 		children: [],
 		data: {
@@ -15,17 +15,17 @@ const routes: Routes = [
 		}
 	},
 	{
-		path: 'loot-table-randomizer',
+		path: "loot-table-randomizer",
 		children: [
 			{
-				path: '',
+				path: "",
 				component: VersionSelectorViewComponent,
 				data: {
 					versionInfo: "resources/loot-table-randomizer/data/versions.json",
 				}
 			},
 			{
-				path: ':version',
+				path: ":version",
 				component: LootTableRandomizerViewComponent
 			},
 		],
@@ -34,17 +34,17 @@ const routes: Routes = [
 		}
 	},
 	{
-		path: 'crafting-recipe-randomizer',
+		path: "crafting-recipe-randomizer",
 		children: [
 			{
-				path: '',
+				path: "",
 				component: VersionSelectorViewComponent,
 				data: {
 					versionInfo: "resources/crafting-recipe-randomizer/data/versions.json",
 				}
 			},
 			{
-				path: ':version',
+				path: ":version",
 				component: CraftingRecipeRandomizerViewComponent
 			},
 		],
@@ -53,8 +53,8 @@ const routes: Routes = [
 		}
 	},
 	{
-		path: '**',
-		redirectTo: 'info'
+		path: "**",
+		redirectTo: "info"
 	},
 ];
 
