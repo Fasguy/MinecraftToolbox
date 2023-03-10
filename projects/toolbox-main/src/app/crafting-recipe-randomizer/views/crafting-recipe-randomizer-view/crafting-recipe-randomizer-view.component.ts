@@ -116,10 +116,14 @@ export class CraftingRecipeRandomizerViewComponent implements OnInit, ITool {
 		let parsedSeed = tryParseInt(submittedData["seed"]);
 		let seed: number;
 
-		if (parsedSeed.success) {
+		if (parsedSeed.success && parsedSeed.value !== 0) {
 			seed = parsedSeed.value;
 		} else {
 			seed = hashCode(submittedData["seed"]);
+		}
+
+		if (seed === 0) {
+			seed = parseInt(randomMinecraftSeed());
 		}
 
 		this._randomizerService.randomize({
