@@ -9,7 +9,11 @@ export class WindowService {
 
 	public createWindow<TWindow extends IWindow>(childComponent: Type<TWindow>) {
 		let componentRef = this.windowContainer.createComponent(WindowComponent<TWindow>);
+
+		//Detect changes, to initialize the component immediately.
+		componentRef.changeDetectorRef.detectChanges();
 		componentRef.instance.selfRef = componentRef;
-		componentRef.instance.createChildComponent(childComponent);
+
+		return componentRef.instance.createChildComponent(childComponent);
 	}
 }

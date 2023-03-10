@@ -24,6 +24,7 @@ import { VersionSelectorViewComponent } from "./common/views/version-selector/ve
 import { WindowComponent } from "./common/views/window/window.component";
 import { ChangelogComponent } from "./common/views/windows/changelog/changelog.component";
 import { CreditsComponent } from "./common/views/windows/credits/credits.component";
+import { PresetWarningComponent } from "./common/views/windows/preset-warning/preset-warning.component";
 import { SettingsComponent } from "./common/views/windows/settings/settings.component";
 import { CraftingRecipeRandomizerViewComponent } from "./crafting-recipe-randomizer/views/crafting-recipe-randomizer-view/crafting-recipe-randomizer-view.component";
 import { CraftingRecipeRandomizerFAQComponent } from "./crafting-recipe-randomizer/views/frequently-asked-questions/frequently-asked-questions.component";
@@ -70,7 +71,8 @@ import { ReversePipe } from "./common/pipes/reverse/reverse.pipe";
 		LootTableRandomizerInstructionsComponent,
 		LootTableRandomizerFAQComponent,
 		CraftingRecipeRandomizerInstructionsComponent,
-		CraftingRecipeRandomizerFAQComponent
+		CraftingRecipeRandomizerFAQComponent,
+		PresetWarningComponent
 	],
 	imports: [
 		BrowserModule,
