@@ -87,7 +87,8 @@
 				"The Loot-Table- and Crafting-Recipe-Randomizer are now running in webworkers, to prevent the UI from freezing",
 				"The WebApp now runs on Angular 15",
 				"Minecraft versions are now determined by their lowest supported version (1.19.X -> 1.19.0)",
-				"Windows now display the window title."
+				"Windows now display the window title",
+				"The seeds '' and '0' are now re-rolled automatically"
 			],
 			"removals": []
 		},
