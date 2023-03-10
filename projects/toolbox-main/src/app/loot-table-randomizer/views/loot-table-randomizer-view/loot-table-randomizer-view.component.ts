@@ -21,8 +21,8 @@ import { LootTableRandomizerInstructionsComponent } from "../instructions/instru
 	providers: [LootTableRandomizerService]
 })
 export class LootTableRandomizerViewComponent implements OnInit, ITool {
-	public version: string = "";
-	public tool: string = "loot-table-randomizer";
+	public readonly version: string = "";
+	public readonly tool: string = "loot-table-randomizer";
 
 	protected lootTables!: EntryGroup[];
 
@@ -30,18 +30,17 @@ export class LootTableRandomizerViewComponent implements OnInit, ITool {
 
 	constructor(
 		private _panorama: PanoramaService,
-		private _activatedRoute: ActivatedRoute,
 		private _randomizerService: LootTableRandomizerService,
 		private _activityMonitor: ActivityMonitorService,
 		private _netRequest: NetRequestService,
 		private _assetManagerService: AssetManagerService,
-		public window: WindowService
+		public window: WindowService,
+		activatedRoute: ActivatedRoute,
 	) {
+		this.version = activatedRoute.snapshot.paramMap.get("version")!;
 	}
 
 	public async ngOnInit() {
-		this.version = this._activatedRoute.snapshot.paramMap.get("version")!;
-
 		await this._randomizerService.ngOnInit();
 
 		this._panorama.setIndex(this.version);

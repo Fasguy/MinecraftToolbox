@@ -20,8 +20,8 @@ import { CraftingRecipeRandomizerInstructionsComponent } from "../instructions/i
 	providers: [CraftingRecipeRandomizerService]
 })
 export class CraftingRecipeRandomizerViewComponent implements OnInit, ITool {
-	public version: string = "";
-	public tool: string = "crafting-recipe-randomizer";
+	public readonly version: string = "";
+	public readonly tool: string = "crafting-recipe-randomizer";
 
 	public craftingRecipes!: EntryGroup[];
 
@@ -29,18 +29,17 @@ export class CraftingRecipeRandomizerViewComponent implements OnInit, ITool {
 
 	constructor(
 		private _panorama: PanoramaService,
-		private _activatedRoute: ActivatedRoute,
 		private _netRequest: NetRequestService,
 		private _randomizerService: CraftingRecipeRandomizerService,
 		private _activityMonitor: ActivityMonitorService,
 		private _assetManagerService: AssetManagerService,
-		public window: WindowService
+		public window: WindowService,
+		activatedRoute: ActivatedRoute,
 	) {
+		this.version = activatedRoute.snapshot.paramMap.get("version")!;
 	}
 
 	public async ngOnInit() {
-		this.version = this._activatedRoute.snapshot.paramMap.get("version")!;
-
 		await this._randomizerService.ngOnInit();
 
 		this._panorama.setIndex(this.version);
