@@ -80,7 +80,9 @@
 		"version": "1.2.0",
 		"build_date": "",
 		"changes": {
-			"additions": [],
+			"additions": [
+				"Settings can now be ex- and imported from a file"
+			],
 			"modifications": [
 				"The Loot-Table- and Crafting-Recipe-Randomizer are now running in webworkers, to prevent the UI from freezing",
 				"The WebApp now runs on Angular 15",

@@ -6,6 +6,11 @@
 		<tbx-selection name="selection[]" [entries]="craftingRecipes"></tbx-selection>
 	</tbx-sub-section>
 	<tbx-sub-section>
+		<button standard type="button" (click)="exportSettings(formRef)">Export settings</button>
+		<br>
+		<button standard type="button" (click)="importSettings(formRef)">Import settings</button>
+	</tbx-sub-section>
+	<tbx-sub-section>
 		<button standard type="submit">Start the randomization</button>
 		<br>
 		<button standard type="button" (click)="showInstructions()">Installation instructions</button>

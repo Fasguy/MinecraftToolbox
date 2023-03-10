@@ -1,5 +1,8 @@
 // @ts-nocheck
 
+import { ITool } from "src/app/common/interfaces/tool";
+import { PresetWarningComponent } from "src/app/common/views/windows/preset-warning/preset-warning.component";
+import { deserialize, serialize } from "src/lib/serialize-form";
 import { Datapack } from "./ts-datapack/datapack";
 import { GenericAdvancement } from "./ts-datapack/generic-advancement";
 
@@ -216,4 +219,68 @@ export function download(name: string, href: string) {
 	a.download = name;
 	a.href = href;
 	a.click();
+}
+
+export function exportSettings(this: ITool, form: HTMLFormElement) {
+	let serializedForm = serialize(form);
+
+	let fullPreset = {
+		tool: this.tool,
+		version: this.version,
+		data: serializedForm
+	};
+
+	let presetString = JSON.stringify(fullPreset);
+	let presetBlob = new Blob([presetString], { type: "application/json" });
+	let presetUrl = URL.createObjectURL(presetBlob);
+
+	download(`${this.tool}-preset.json`, presetUrl);
+
+	URL.revokeObjectURL(presetUrl);
+}
+
+export async function importSettings(this: ITool, form: HTMLFormElement) {
+	let fileInput = document.createElement("input");
+	fileInput.type = "file";
+	fileInput.accept = "application/json";
+	fileInput.addEventListener("change", (e) => {
+		let file = (<HTMLInputElement>e.target).files![0];
+
+		if (file) {
+			let reader = new FileReader();
+
+			reader.addEventListener("load", (e) => {
+				let preset = JSON.parse(<string>reader.result);
+
+				if (preset.tool !== this.tool) {
+					let warningWindow = this.window.createWindow(PresetWarningComponent);
+					warningWindow.instance.title = "Failed to load preset";
+					warningWindow.instance.text = `This preset was created for a different tool and could therefore not be loaded here.
+
+						This preset was created for the tool "${preset.tool}".`;
+					return;
+				}
+
+				if (preset.version !== this.version) {
+					let warningWindow = this.window.createWindow(PresetWarningComponent);
+					warningWindow.instance.title = "Version mismatch";
+					warningWindow.instance.text = `This preset was created for Minecraft version ${preset.version}.
+						The preset has been loaded, but the selected settings may not work as expected.
+						Please double-check your settings.`;
+					return;
+				}
+
+				deserialize(form, preset.data);
+			});
+
+			reader.readAsText(file);
+		}
+	});
+
+	fileInput.click();
+}
+
+export function randomMinecraftSeed() {
+	let baseNumber = [...Array(19)].map(_ => Math.random() * 10 | 0).join("");
+	return `${Math.random() < 0.5 ? "-" : ""}${baseNumber}`;
 }

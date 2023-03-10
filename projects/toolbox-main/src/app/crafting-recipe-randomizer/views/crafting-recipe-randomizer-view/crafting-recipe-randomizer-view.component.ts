@@ -2,13 +2,14 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { strFromU8, unzip } from "fflate";
 import { EntryGroup } from "src/app/common/elements/selection/selection.component";
+import { ITool } from "src/app/common/interfaces/tool";
 import { ActivityMonitorService } from "src/app/common/services/activity-monitor/activity-monitor.service";
 import { AssetManagerService } from "src/app/common/services/asset-manager/asset-manager.service";
 import { NetRequestService } from "src/app/common/services/net-request/net-request.service";
 import { PanoramaService } from "src/app/common/services/panorama-service/panorama.service";
 import { WindowService } from "src/app/common/services/window-service/window.service";
 import { CraftingRecipeRandomizerService } from "src/app/crafting-recipe-randomizer/services/crafting-recipe-randomizer/crafting-recipe-randomizer.service";
-import { hashCode, mapFormData, tryParseInt } from "src/lib/utils";
+import { exportSettings, hashCode, importSettings, mapFormData, randomMinecraftSeed, tryParseInt } from "src/lib/utils";
 import { CraftingRecipeRandomizerFAQComponent } from "../frequently-asked-questions/frequently-asked-questions.component";
 import { CraftingRecipeRandomizerInstructionsComponent } from "../instructions/instructions.component";
 
@@ -18,31 +19,33 @@ import { CraftingRecipeRandomizerInstructionsComponent } from "../instructions/i
 	styleUrls: ["./crafting-recipe-randomizer-view.component.scss"],
 	providers: [CraftingRecipeRandomizerService]
 })
-export class CraftingRecipeRandomizerViewComponent implements OnInit {
+export class CraftingRecipeRandomizerViewComponent implements OnInit, ITool {
+	public version: string = "";
+	public tool: string = "crafting-recipe-randomizer";
+
 	public craftingRecipes!: EntryGroup[];
 
-	public seed: string = (() => {
-		let baseNumber = [...Array(19)].map(_ => Math.random() * 10 | 0).join("");
-		return `${Math.random() < 0.5 ? "-" : ""}${baseNumber}`;
-	})();
+	public seed: string = randomMinecraftSeed();
 
 	constructor(
-		private panorama: PanoramaService,
+		private _panorama: PanoramaService,
 		private _activatedRoute: ActivatedRoute,
 		private _netRequest: NetRequestService,
 		private _randomizerService: CraftingRecipeRandomizerService,
 		private _activityMonitor: ActivityMonitorService,
-		private _window: WindowService,
-		private _assetManagerService: AssetManagerService
+		private _assetManagerService: AssetManagerService,
+		public window: WindowService
 	) {
 	}
 
 	public async ngOnInit() {
+		this.version = this._activatedRoute.snapshot.paramMap.get("version")!;
+
 		await this._randomizerService.ngOnInit();
 
 		let version = this._activatedRoute.snapshot.paramMap.get("version")!;
 
-		this.panorama.setIndex(version);
+		this._panorama.setIndex(version);
 
 		let data = await this._activityMonitor.startActivity({
 			text: "Downloading necessary data...",
@@ -126,12 +129,16 @@ export class CraftingRecipeRandomizerViewComponent implements OnInit {
 	}
 
 	public showInstructions() {
-		this._window.createWindow(CraftingRecipeRandomizerInstructionsComponent);
+		this.window.createWindow(CraftingRecipeRandomizerInstructionsComponent);
 	}
 
 	public showFAQ() {
-		this._window.createWindow(CraftingRecipeRandomizerFAQComponent);
+		this.window.createWindow(CraftingRecipeRandomizerFAQComponent);
 	}
+
+	protected exportSettings = exportSettings.bind(this);
+
+	protected importSettings = importSettings.bind(this);
 }
 
 interface CraftingRecipeSelectionData {
