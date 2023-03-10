@@ -43,14 +43,12 @@ export class CraftingRecipeRandomizerViewComponent implements OnInit, ITool {
 
 		await this._randomizerService.ngOnInit();
 
-		let version = this._activatedRoute.snapshot.paramMap.get("version")!;
-
-		this._panorama.setIndex(version);
+		this._panorama.setIndex(this.version);
 
 		let data = await this._activityMonitor.startActivity({
 			text: "Downloading necessary data...",
 			promise: new Promise<ArrayBuffer>((res, rej) => {
-				this._netRequest.binary(`resources/crafting-recipe-randomizer/${version}/data.zip`)
+				this._netRequest.binary(`resources/crafting-recipe-randomizer/${this.version}/data.zip`)
 					.subscribe({
 						next: res,
 						error: rej
