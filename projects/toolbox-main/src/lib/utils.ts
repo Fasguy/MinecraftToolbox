@@ -265,9 +265,10 @@ export async function importSettings(this: ITool, form: HTMLFormElement) {
 					let warningWindow = this.window.createWindow(PresetWarningComponent);
 					warningWindow.instance.title = "Version mismatch";
 					warningWindow.instance.text = `This preset was created for Minecraft version ${preset.version}.
+
 						The preset has been loaded, but the selected settings may not work as expected.
+
 						Please double-check your settings.`;
-					return;
 				}
 
 				deserialize(form, preset.data);
