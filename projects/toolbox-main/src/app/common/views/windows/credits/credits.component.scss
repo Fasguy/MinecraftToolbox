@@ -3,11 +3,8 @@
 }
 
 :host {
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
+	display: block;
+	height: 85vh;
 	overflow: hidden;
 	background-image: url("../../../../../style/images/dirt_block_dark.png");
 	background-size: 48px;
