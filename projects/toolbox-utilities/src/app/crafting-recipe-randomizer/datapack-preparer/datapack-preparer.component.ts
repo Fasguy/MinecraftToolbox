@@ -156,6 +156,14 @@ class DatapackPreparer {
 		let zip = new fflateZip();
 
 		zip.add("data.zip", new Uint8Array(await dataZip.arrayBuffer()));
+
+		//Sorting asset definitions by key alphabetically
+		this._assetDefinitions = Object.keys(this._assetDefinitions)
+			.sort()
+			.reduce((prev, key) => ({
+				...prev, [key]: this._assetDefinitions[key]
+			}), {});
+
 		zip.add("asset_definitions.json", this._assetDefinitions);
 
 		this.finalFile = window.URL.createObjectURL(await zip.finalize());
