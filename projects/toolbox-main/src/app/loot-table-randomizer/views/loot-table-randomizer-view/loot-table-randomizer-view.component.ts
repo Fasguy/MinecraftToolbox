@@ -7,7 +7,7 @@ import { AssetManagerService } from "src/app/common/services/asset-manager/asset
 import { NetRequestService } from "src/app/common/services/net-request/net-request.service";
 import { PanoramaService } from "src/app/common/services/panorama-service/panorama.service";
 import { WindowService } from "src/app/common/services/window-service/window.service";
-import { exportSettings, hashCode, importSettings, mapFormData, randomMinecraftSeed, tryParseInt } from "src/lib/utils";
+import { exportSettings, hashCode, importSettings, mapFormData, mergeDeep, randomMinecraftSeed, tryParseInt } from "src/lib/utils";
 import { EntryGroup } from "../../../common/elements/selection/selection.component";
 import { LootTableRandomizerService } from "../../services/loot-table-randomizer/loot-table-randomizer.service";
 import { LootTableRandomizerFAQComponent } from "../frequently-asked-questions/frequently-asked-questions.component";
@@ -27,6 +27,10 @@ export class LootTableRandomizerViewComponent implements OnInit, ITool {
 	protected lootTables!: EntryGroup[];
 
 	protected seed: string = randomMinecraftSeed();
+
+	protected meta: { additionals: Additional[] } = {
+		additionals: []
+	};
 
 	constructor(
 		private _panorama: PanoramaService,
@@ -76,6 +80,10 @@ export class LootTableRandomizerViewComponent implements OnInit, ITool {
 					if (err) {
 						rej(err);
 						return;
+					}
+
+					if (result["meta.json"] != null) {
+						this.meta = mergeDeep(this.meta, JSON.parse(strFromU8(result["meta.json"])));
 					}
 
 					let dataJson: LootTableSelectionData = JSON.parse(strFromU8(result["selection_menu.json"]));
@@ -160,4 +168,9 @@ interface LootTableSelectionEntry {
 	selected: boolean;
 	assetId: string;
 	value: string;
+}
+
+interface Additional {
+	header: string;
+	content: string;
 }

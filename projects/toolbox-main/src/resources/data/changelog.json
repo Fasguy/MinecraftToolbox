@@ -82,14 +82,15 @@
 		"changes": {
 			"additions": [
 				"Settings can now be ex- and imported from a file",
-				"Added Loot-Table randomizer for Minecraft v1.19.4"
+				"Added Loot-Table randomizer for Minecraft v1.19.4",
+				"Added Crafting-Recipe randomizer for Minecraft v1.19.4"
 			],
 			"modifications": [
 				"The Loot-Table- and Crafting-Recipe-Randomizer are now running in webworkers, to prevent the UI from freezing",
 				"The WebApp now runs on Angular 15",
 				"Minecraft versions are now determined by their lowest supported version (1.19.X -> 1.19.0)",
 				"Windows now display the window title",
-				"Windows are now as tall as they need to be (removing dead space)",
+				"Windows are now only as tall as they need to be (removing dead space)",
 				"The seeds '' and '0' are now re-rolled automatically"
 			],
 			"removals": []

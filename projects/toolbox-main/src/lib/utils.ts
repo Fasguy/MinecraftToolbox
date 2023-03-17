@@ -285,3 +285,26 @@ export function randomMinecraftSeed() {
 	let baseNumber = [...Array(19)].map(_ => Math.random() * 10 | 0).join("");
 	return `${Math.random() < 0.5 ? "-" : ""}${baseNumber}`;
 }
+
+export function isObject(item: any) {
+	return (item && typeof item === 'object' && !Array.isArray(item));
+}
+
+//https://stackoverflow.com/a/34749873
+export function mergeDeep(target: any, ...sources: any): any {
+	if (!sources.length) return target;
+	const source = sources.shift();
+
+	if (isObject(target) && isObject(source)) {
+		for (const key in source) {
+			if (isObject(source[key])) {
+				if (!target[key]) Object.assign(target, { [key]: {} });
+				mergeDeep(target[key], source[key]);
+			} else {
+				Object.assign(target, { [key]: source[key] });
+			}
+		}
+	}
+
+	return mergeDeep(target, ...sources);
+}

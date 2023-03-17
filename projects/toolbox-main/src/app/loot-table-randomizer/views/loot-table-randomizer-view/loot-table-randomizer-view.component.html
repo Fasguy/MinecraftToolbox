@@ -12,6 +12,9 @@
 			Everything has 100% drop chance
 		</label>
 	</tbx-sub-section>
+	<tbx-sub-section *ngFor="let additional of meta.additionals" [header]="additional.header">
+		<span [innerHtml]="additional.content"></span>
+	</tbx-sub-section>
 	<tbx-sub-section>
 		<button standard type="button" (click)="exportSettings(formRef)">Export settings</button>
 		<br>
