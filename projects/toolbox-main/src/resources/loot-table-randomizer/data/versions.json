@@ -3,8 +3,12 @@
 		"title": "Minecraft v1.19",
 		"versions": [
 			{
-				"title": "Minecraft v1.19 (any version)",
-				"id": "1.19.X"
+				"title": "Minecraft v1.19 (1.19.4)",
+				"id": "1.19.4"
+			},
+			{
+				"title": "Minecraft v1.19 (1.19.0 - 1.19.3)",
+				"id": "1.19.0"
 			}
 		]
 	},
@@ -26,7 +30,7 @@
 		"versions": [
 			{
 				"title": "Minecraft v1.17 (any version)",
-				"id": "1.17.X"
+				"id": "1.17.0"
 			}
 		]
 	},
@@ -48,7 +52,7 @@
 		"versions": [
 			{
 				"title": "Minecraft v1.15 (any version)",
-				"id": "1.15.X"
+				"id": "1.15.0"
 			}
 		]
 	},
@@ -57,7 +61,7 @@
 		"versions": [
 			{
 				"title": "Minecraft v1.14 (any version)",
-				"id": "1.14.X"
+				"id": "1.14.0"
 			}
 		]
 	},
@@ -66,7 +70,7 @@
 		"versions": [
 			{
 				"title": "Minecraft v1.13 (any version)",
-				"id": "1.13.X"
+				"id": "1.13.0"
 			}
 		]
 	}

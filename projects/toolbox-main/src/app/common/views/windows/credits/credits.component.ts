@@ -1,27 +1,30 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import credits from "../../../../../resources/data/credits.json";
+import { IWindow } from "../../window/window.component";
 
 @Component({
-	templateUrl: './credits.component.html',
-	styleUrls: ['./credits.component.scss']
+	templateUrl: "./credits.component.html",
+	styleUrls: ["./credits.component.scss"]
 })
-export class CreditsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class CreditsComponent implements OnInit, OnDestroy, AfterViewInit, IWindow {
 	private _animationFrame!: number;
 
 	@ViewChild("text")
 	private _text!: ElementRef<HTMLPreElement>;
 
-	public credits!: Credit[];
+	protected credits!: Credit[];
 
-	ngOnInit(): void {
+	public title: string = "Credits";
+
+	public ngOnInit(): void {
 		this.credits = credits;
 	}
 
-	ngAfterViewInit(): void {
+	public ngAfterViewInit(): void {
 		this.animate();
 	}
 
-	ngOnDestroy(): void {
+	public ngOnDestroy(): void {
 		window.cancelAnimationFrame(this._animationFrame);
 	}
 

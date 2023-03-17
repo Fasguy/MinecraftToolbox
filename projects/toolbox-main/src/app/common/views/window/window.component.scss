@@ -21,6 +21,7 @@ button {
 	height: 30px;
 	border: none;
 	background-color: transparent;
+	user-select: none;
 
 	&:hover {
 		background-color: #AEAEAE;
@@ -37,24 +38,36 @@ button {
 }
 
 .container {
-	margin: 27px -18px -18px;
+	margin: auto -9px -36px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
 	&>.window {
-		margin: auto;
 		position: relative;
-		box-sizing: border-box;
 		background-image: url("../../../../style/images/dirt_block_dark.png");
 		background-size: 48px;
 		border: 54px solid;
 		border-image: url("../../../../style/sprites/window_border.png") 27 repeat;
 		width: 100%;
-		height: 100%;
 		max-width: 1100px;
+		max-height: 85vh;
 		background-clip: content-box;
 
 		&>.content {
 			height: 100%;
+			max-height: inherit;
 			overflow-y: auto;
 		}
 	}
+}
+
+.title {
+	position: absolute;
+	top: -36px;
+	left: 10px;
+	border: none;
+	user-select: none;
+	height: 2em;
+	overflow: hidden;
 }

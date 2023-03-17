@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Title } from "@angular/platform-browser";
+import { NavigationEnd, Router } from "@angular/router";
+import { filter } from "rxjs";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root"
 })
 export class TitleService {
 	constructor(
@@ -18,10 +18,10 @@ export class TitleService {
 
 				do {
 					routeData = router.routerState.root.firstChild?.snapshot?.data;
-				} while (routeData && !routeData['title']);
+				} while (routeData && !routeData["title"]);
 
 				if (routeData) {
-					angularTitleService.setTitle(`Minecraft Toolbox - ${routeData['title']}`);
+					angularTitleService.setTitle(`Minecraft Toolbox - ${routeData["title"]}`);
 				} else {
 					angularTitleService.setTitle(`Minecraft Toolbox`);
 				}

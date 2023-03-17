@@ -1,10 +1,10 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
-import { ErrorHandlerService } from '../../services/error-handler/error-handler.service';
+import { Component, ElementRef, OnInit } from "@angular/core";
+import { ErrorHandlerService } from "../../services/error-handler/error-handler.service";
 
 @Component({
-	selector: 'tbx-error-handler',
-	templateUrl: './error-handler.component.html',
-	styleUrls: ['./error-handler.component.scss']
+	selector: "tbx-error-handler",
+	templateUrl: "./error-handler.component.html",
+	styleUrls: ["./error-handler.component.scss"]
 })
 export class ErrorHandlerComponent implements OnInit {
 	public set enabled(enabled: boolean) {

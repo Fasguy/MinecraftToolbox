@@ -1,4 +1,4 @@
-import { INumberProvider } from './number_provider';
+import { INumberProvider } from "./number_provider";
 
 type IAttributeModifierSlot = "mainhand" | "offhand" | "feet" | "legs" | "chest" | "head";
 

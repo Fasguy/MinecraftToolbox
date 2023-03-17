@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, skip } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { BehaviorSubject, skip } from "rxjs";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root"
 })
 export class ToolboxSettingsService {
 	private static readonly STORAGE_KEY = "tbx_settings";

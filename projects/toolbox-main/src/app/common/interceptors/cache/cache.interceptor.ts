@@ -1,13 +1,13 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable, of, tap } from "rxjs";
 
 @Injectable()
 export class CacheInterceptor implements HttpInterceptor {
 	private cache: Map<string, HttpResponse<any>> = new Map();
 
 	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-		if (req.method !== "GET" || req.headers.get('disable-cache')) {
+		if (req.method !== "GET" || req.headers.get("disable-cache")) {
 			return next.handle(req);
 		}
 

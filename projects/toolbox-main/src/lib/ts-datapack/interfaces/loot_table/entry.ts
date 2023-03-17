@@ -1,5 +1,5 @@
-import { IPredicate } from '../predicate';
-import { IItemFunction } from './item_function';
+import { IPredicate } from "../predicate";
+import { IItemFunction } from "./item_function";
 
 export type IEntry = IEntry_Base
 	& (IEntry_Item

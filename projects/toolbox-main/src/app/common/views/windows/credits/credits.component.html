@@ -1,10 +1,13 @@
-<!-- #14 TODO: This really need to be restructured, to not rely on white-space: pre-line -->
-<pre id="text" #text><ng-container *ngFor="let credit of credits">
-	<p id="credits_header">============
-		<span class="mc_yellow">{{credit.section}}</span>
-		============
-	</p>
-	<p id="credits_main"><ng-container *ngFor="let title of credit.titles"><span class="mc_grey">{{title.title}}</span>
-		<div *ngFor="let name of title.names" class="space">{{name}}</div>
-		</ng-container>
-	</p></ng-container></pre>
+<div class="text-container" #text>
+	<ng-container *ngFor="let credit of credits">
+		<div class="section-header">
+			<div class="mc-yellow shadow">{{credit.section}}</div>
+		</div>
+		<div class="section-content">
+			<ng-container *ngFor="let title of credit.titles">
+				<div class="padded title mc-grey shadow">{{title.title}}</div>
+				<div *ngFor="let name of title.names" class="padded space name">{{name}}</div>
+			</ng-container>
+		</div>
+	</ng-container>
+</div>

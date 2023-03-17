@@ -30,14 +30,14 @@ export class fflateZip {
 
 			this._zipOut.push(dat);
 			if (final) {
-				this._resolve(new Blob(this._zipOut, { type: 'application/zip' }));
+				this._resolve(new Blob(this._zipOut, { type: "application/zip" }));
 			}
 		}
 	}
 
 	public add(name: string, data: string | Uint8Array | object): void {
 		if (this._finalized) {
-			throw new Error('Cannot add data after finalization');
+			throw new Error("Cannot add data after finalization");
 		}
 
 		let file = new ZipDeflate(name, { level: this.compressionLevel });

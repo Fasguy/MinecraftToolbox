@@ -1,9 +1,9 @@
-<form (submit)="onSubmit($event)">
+<form #formRef (submit)="onSubmit($event)">
 	<tbx-sub-section header="Randomization Seed">
-		<input standard type="text" name="seed" value="{{seed}}">
+		<input standard type="text" name="seed" [value]="seed">
 	</tbx-sub-section>
 	<tbx-sub-section header="Loot-Table Selection">
-		<tbx-selection [entries]="lootTables"></tbx-selection>
+		<tbx-selection name="selection[]" [entries]="lootTables"></tbx-selection>
 	</tbx-sub-section>
 	<tbx-sub-section header="Other options">
 		<label class="checkbox">
@@ -11,6 +11,14 @@
 			<span></span>
 			Everything has 100% drop chance
 		</label>
+	</tbx-sub-section>
+	<tbx-sub-section *ngFor="let additional of meta.additionals" [header]="additional.header">
+		<span [innerHtml]="additional.content"></span>
+	</tbx-sub-section>
+	<tbx-sub-section>
+		<button standard type="button" (click)="exportSettings(formRef)">Export settings</button>
+		<br>
+		<button standard type="button" (click)="importSettings(formRef)">Import settings</button>
 	</tbx-sub-section>
 	<tbx-sub-section>
 		<button standard type="submit">Start the randomization</button>

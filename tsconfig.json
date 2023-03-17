@@ -17,13 +17,14 @@
 		"importHelpers": true,
 		"resolveJsonModule": true,
 		"allowSyntheticDefaultImports": true,
-		"target": "es6",
+		"target": "ES2022",
 		"module": "es2020",
 		"lib": [
 			"es2020",
 			"dom",
 			"dom.iterable"
-		]
+		],
+		"useDefineForClassFields": false
 	},
 	"angularCompilerOptions": {
 		"enableI18nLegacyMessageIdFormat": false,

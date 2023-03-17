@@ -49,6 +49,12 @@
 				]
 			},
 			{
+				"title": "dom-form-serializer",
+				"names": [
+					"jefersondaniel"
+				]
+			},
+			{
 				"title": "serialize-error",
 				"names": [
 					"sindresorhus"

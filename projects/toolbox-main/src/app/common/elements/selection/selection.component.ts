@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
-import { AssetManagerService } from 'src/app/common/services/asset-manager/asset-manager.service';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges } from "@angular/core";
+import { AssetManagerService } from "src/app/common/services/asset-manager/asset-manager.service";
 
 @Component({
-	selector: 'tbx-selection',
-	templateUrl: './selection.component.html',
-	styleUrls: ['./selection.component.scss'],
+	selector: "tbx-selection",
+	templateUrl: "./selection.component.html",
+	styleUrls: ["./selection.component.scss"],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectionComponent implements OnChanges {
@@ -19,6 +19,9 @@ export class SelectionComponent implements OnChanges {
 		this._entries = value;
 		this._changeDetectorRef.detectChanges();
 	}
+
+	@Input()
+	public name: string = "";
 
 	constructor(
 		private _changeDetectorRef: ChangeDetectorRef,
@@ -60,7 +63,7 @@ export class SelectionComponent implements OnChanges {
 	*/
 	private _groups: [HTMLElement, HTMLInputElement][] = [];
 
-	public pushGroup(group: HTMLElement, groupCheckbox: HTMLInputElement) {
+	protected pushGroup(group: HTMLElement, groupCheckbox: HTMLInputElement) {
 		this._groups.push([group, groupCheckbox]);
 
 		return false;

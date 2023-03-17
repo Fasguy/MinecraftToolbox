@@ -1,13 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { WindowService } from '../../services/window-service/window.service';
-import { ChangelogComponent } from '../../views/windows/changelog/changelog.component';
-import { CreditsComponent } from '../../views/windows/credits/credits.component';
-import { SettingsComponent } from '../../views/windows/settings/settings.component';
+import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { WindowService } from "../../services/window-service/window.service";
+import { ChangelogComponent } from "../../views/windows/changelog/changelog.component";
+import { CreditsComponent } from "../../views/windows/credits/credits.component";
+import { SettingsComponent } from "../../views/windows/settings/settings.component";
 
 @Component({
-	selector: 'tbx-footer',
-	templateUrl: './footer.component.html',
-	styleUrls: ['./footer.component.scss'],
+	selector: "tbx-footer",
+	templateUrl: "./footer.component.html",
+	styleUrls: ["./footer.component.scss"],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterComponent {
@@ -32,6 +32,10 @@ export class FooterComponent {
 		{
 			text: "Discord",
 			click: () => window.open("https://fasguy.net/discord", "_blank", "noopener,noreferrer")
+		},
+		{
+			text: "Ko-fi",
+			click: () => window.open("https://ko-fi.com/Fasguy", "_blank", "noopener,noreferrer")
 		}
 	];
 

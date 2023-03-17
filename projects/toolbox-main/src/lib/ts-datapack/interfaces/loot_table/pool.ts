@@ -1,7 +1,7 @@
-import { INumberProvider } from '../number_provider';
-import { IPredicate } from '../predicate';
-import { IEntry } from './entry';
-import { IItemFunction } from './item_function';
+import { INumberProvider } from "../number_provider";
+import { IPredicate } from "../predicate";
+import { IEntry } from "./entry";
+import { IItemFunction } from "./item_function";
 
 export type IPool = {
 	conditions: IPredicate[];

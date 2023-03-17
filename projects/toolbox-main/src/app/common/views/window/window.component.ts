@@ -1,38 +1,30 @@
-import { AfterViewInit, Component, ComponentRef, ElementRef, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentRef, Type, ViewChild, ViewContainerRef } from "@angular/core";
 
 @Component({
-	selector: 'tbx-window',
-	templateUrl: './window.component.html',
-	styleUrls: ['./window.component.scss']
+	selector: "tbx-window",
+	templateUrl: "./window.component.html",
+	styleUrls: ["./window.component.scss"]
 })
-export class WindowComponent implements AfterViewInit {
-	private _childComponent!: any;
+export class WindowComponent<TWindow extends IWindow> {
+	@ViewChild("childView", { read: ViewContainerRef })
+	protected childViewTarget!: ViewContainerRef;
 
-	@ViewChild('childView', { read: ViewContainerRef })
-	public childViewTarget!: ViewContainerRef;
+	protected title: string = "";
 
-	public selfRef!: ComponentRef<WindowComponent>;
+	public selfRef!: ComponentRef<WindowComponent<TWindow>>;
 
-	constructor(
-		private _ref: ElementRef<HTMLElement>
-	) {
-	}
+	public createChildComponent(component: Type<TWindow>) {
+		let windowContentRef = this.childViewTarget.createComponent(component);
+		this.title = windowContentRef.instance.title;
 
-	ngAfterViewInit(): void {
-		if (this._childComponent) {
-			this.childViewTarget.createComponent(this._childComponent);
-		}
-	}
-
-	public createChildComponent(component: Type<Component>) {
-		if (this.childViewTarget) {
-			this.childViewTarget.createComponent(component);
-		} else {
-			this._childComponent = component;
-		}
+		return windowContentRef;
 	}
 
 	public close() {
 		this.selfRef.destroy();
 	}
+}
+
+export interface IWindow {
+	title: string;
 }

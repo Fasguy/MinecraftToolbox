@@ -1,6 +1,6 @@
-import { Enchantment } from '../enums/resource_locations/enchantment';
-import { INumberProvider } from './number_provider';
-import { IRange } from './range';
+import { Enchantment } from "../enums/resource_locations/enchantment";
+import { INumberProvider } from "./number_provider";
+import { IRange } from "./range";
 
 export type IPredicate = IPredicate_Alternative
 	| IPredicate_BlockStateProperty

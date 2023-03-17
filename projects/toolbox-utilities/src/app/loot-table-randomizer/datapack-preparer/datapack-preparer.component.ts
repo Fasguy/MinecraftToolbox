@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { strFromU8, unzip } from 'fflate';
-import { fflateZip } from '../../../../../../lib/fflate-zip';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from "@angular/core";
+import { strFromU8, unzip } from "fflate";
+import { fflateZip } from "../../../../../../lib/fflate-zip";
 
 @Component({
-	selector: 'ltr-datapack-preparer',
-	templateUrl: './datapack-preparer.component.html',
-	styleUrls: ['./datapack-preparer.component.scss'],
+	selector: "ltr-datapack-preparer",
+	templateUrl: "./datapack-preparer.component.html",
+	styleUrls: ["./datapack-preparer.component.scss"],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LTR_DatapackPreparerComponent {
@@ -162,6 +162,14 @@ class DatapackPreparer {
 		let zip = new fflateZip();
 
 		zip.add("data.zip", new Uint8Array(await dataZip.arrayBuffer()));
+
+		//Sorting asset definitions by key alphabetically
+		this._assetDefinitions = Object.keys(this._assetDefinitions)
+			.sort()
+			.reduce((prev, key) => ({
+				...prev, [key]: this._assetDefinitions[key]
+			}), {});
+
 		zip.add("asset_definitions.json", this._assetDefinitions);
 
 		this.finalFile = window.URL.createObjectURL(await zip.finalize());

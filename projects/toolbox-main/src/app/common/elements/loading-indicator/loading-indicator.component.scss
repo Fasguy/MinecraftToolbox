@@ -158,12 +158,45 @@
 	height: 8em;
 	background: url("../../../../style/sprites/item_atlas.png");
 	background-size: 400%;
-	animation: throw-vertical 1s infinite, throw-horizontal 1s infinite ease-out;
+	// animation: throw-vertical 1s infinite, throw-horizontal 1s infinite ease-out;
+	animation: throw 1s infinite;
 }
 
-@keyframes throw-vertical {
+// @keyframes throw-vertical {
+// 	0% {
+// 		top: -50px;
+// 		animation-timing-function: ease-out;
+// 		opacity: 0;
+// 	}
+
+// 	50% {
+// 		top: -150px;
+// 		animation-timing-function: ease-in;
+// 	}
+
+// 	100% {
+// 		top: 40px;
+// 		animation-timing-function: linear;
+// 		transform: rotate(720deg);
+// 	}
+// }
+
+// @keyframes throw-horizontal {
+// 	0% {
+// 		left: -500px;
+// 	}
+
+// 	100% {
+// 		left: -25px;
+// 	}
+// }
+
+//Due to a bug in Angular 15, combining multiple animations into one is not feasible.
+//Only the first animation will be applied properly, the second will not have the right name attached to it.
+@keyframes throw {
 	0% {
 		top: -50px;
+		left: -500px;
 		animation-timing-function: ease-out;
 		opacity: 0;
 	}
@@ -175,17 +208,8 @@
 
 	100% {
 		top: 40px;
+		left: -25px;
 		animation-timing-function: linear;
 		transform: rotate(720deg);
-	}
-}
-
-@keyframes throw-horizontal {
-	0% {
-		left: -500px;
-	}
-
-	100% {
-		left: -25px;
 	}
 }
