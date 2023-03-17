@@ -78,7 +78,7 @@
 	},
 	{
 		"version": "1.2.0",
-		"build_date": "",
+		"build_date": "2023-03-17",
 		"changes": {
 			"additions": [
 				"Settings can now be ex- and imported from a file",
