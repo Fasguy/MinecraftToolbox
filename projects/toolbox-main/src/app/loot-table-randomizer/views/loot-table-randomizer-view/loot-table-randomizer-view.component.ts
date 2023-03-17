@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { strFromU8, unzip } from "fflate";
 import { ITool } from "src/app/common/interfaces/tool";
 import { ActivityMonitorService } from "src/app/common/services/activity-monitor/activity-monitor.service";
@@ -36,8 +36,16 @@ export class LootTableRandomizerViewComponent implements OnInit, ITool {
 		private _assetManagerService: AssetManagerService,
 		public window: WindowService,
 		activatedRoute: ActivatedRoute,
+		router: Router
 	) {
 		this.version = activatedRoute.snapshot.paramMap.get("version")!;
+
+		//A simple compatibility rewrite, so that bookmarked links that end in ".X" get turned into ".0"
+		if (this.version.endsWith(".X")) {
+			this.version = this.version.substring(0, this.version.length - 2) + ".0";
+
+			router.navigate([`../${this.version}`], { relativeTo: activatedRoute });
+		}
 	}
 
 	public async ngOnInit() {
