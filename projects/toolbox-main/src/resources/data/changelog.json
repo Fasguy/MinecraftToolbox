@@ -81,7 +81,8 @@
 		"build_date": "",
 		"changes": {
 			"additions": [
-				"Settings can now be ex- and imported from a file"
+				"Settings can now be ex- and imported from a file",
+				"Added Loot-Table randomizer for Minecraft v1.19.4"
 			],
 			"modifications": [
 				"The Loot-Table- and Crafting-Recipe-Randomizer are now running in webworkers, to prevent the UI from freezing",
