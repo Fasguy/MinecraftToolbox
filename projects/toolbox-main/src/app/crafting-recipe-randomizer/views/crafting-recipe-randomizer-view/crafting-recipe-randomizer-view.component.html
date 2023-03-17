@@ -1,6 +1,6 @@
 <form #formRef (submit)="onSubmit($event)">
 	<tbx-sub-section header="Randomization Seed">
-		<input standard type="text" name="seed" value="{{seed}}">
+		<input standard type="text" name="seed" [value]="seed">
 	</tbx-sub-section>
 	<tbx-sub-section header="Crafting-Recipe Selection">
 		<tbx-selection name="selection[]" [entries]="craftingRecipes"></tbx-selection>

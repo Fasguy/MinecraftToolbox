@@ -11,7 +11,7 @@
 	<br>
 	<div *ngFor="let item of missingAssetDefinitions | keyvalue">
 		<span>Missing asset definition for {{item.key}}</span>
-		<input type="text" name="missing_asset_definitions" data-id="{{item.key}}" value="{{item.value}}">
+		<input type="text" name="missing_asset_definitions" data-id="{{item.key}}" [value]="item.value">
 	</div>
 	<button type="submit">Prepare</button>
 </form>

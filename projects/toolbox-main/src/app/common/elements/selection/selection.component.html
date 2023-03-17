@@ -12,7 +12,7 @@
 			<div class="entries collapsed" #entriesRef>
 				<div class="entry" *ngFor="let entry of entryGroup.entries">
 					<label tabindex="0" class="checkbox">
-						<input type="checkbox" name="{{name}}" value="{{entry.value}}" [checked]="entry.checked" (change)="groupItemChanged(entryGroupRef, groupCheckboxRef)">
+						<input type="checkbox" [name]="name" [value]="entry.value" [checked]="entry.checked" (change)="groupItemChanged(entryGroupRef, groupCheckboxRef)">
 						<span></span>
 						{{entry.text}}
 					</label>
