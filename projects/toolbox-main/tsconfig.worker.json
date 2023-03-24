@@ -4,8 +4,8 @@
 	"compilerOptions": {
 		"outDir": "../../out-tsc/worker",
 		"lib": [
-			"es2018",
-			"webworker"
+			"ES2017",
+			"WebWorker"
 		],
 		"types": []
 	},
