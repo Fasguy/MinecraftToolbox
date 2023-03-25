@@ -15,7 +15,8 @@ import { ErrorHandlerComponent } from "./common/elements/error-handler/error-han
 import { ErrorIndicatorComponent } from "./common/elements/error-indicator/error-indicator.component";
 import { FooterComponent } from "./common/elements/footer/footer.component";
 import { HeaderComponent } from "./common/elements/header/header.component";
-import { InputComponent } from "./common/elements/input/input.component";
+import { InputCheckboxComponent } from "./common/elements/input-checkbox/input-checkbox.component";
+import { InputTextComponent } from "./common/elements/input-text/input-text.component";
 import { LoadingIndicatorComponent } from "./common/elements/loading-indicator/loading-indicator.component";
 import { PanoramaComponent } from "./common/elements/panorama/panorama.component";
 import { SelectionComponent } from "./common/elements/selection/selection.component";
@@ -63,7 +64,8 @@ import { ReversePipe } from "./common/pipes/reverse/reverse.pipe";
 		ReversePipe,
 		SplashComponent,
 		ButtonComponent,
-		InputComponent,
+		InputTextComponent,
+		InputCheckboxComponent,
 		SubSectionComponent,
 		LoadingIndicatorComponent,
 		ErrorIndicatorComponent,

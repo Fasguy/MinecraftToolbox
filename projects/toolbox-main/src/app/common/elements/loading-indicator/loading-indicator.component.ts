@@ -9,13 +9,14 @@ import { randomRange } from "src/lib/utils";
 })
 export class LoadingIndicatorComponent implements AfterViewInit {
 	@ViewChild("item")
-	private item!: ElementRef<HTMLDivElement>;
+	private item!: ElementRef<HTMLElement>;
 
 	public ngAfterViewInit(): void {
 		let animationListener = (e: AnimationEvent) => {
-			(<HTMLDivElement>e.target).style.backgroundPositionX = `calc(100% * ${randomRange(0, 3)})`;
+			(<HTMLElement>e.target).style.backgroundPositionX = `calc(100% * ${randomRange(0, 3)})`;
 		};
 
+		animationListener(<AnimationEvent><unknown>{ target: this.item.nativeElement });
 		this.item.nativeElement.addEventListener("animationstart", animationListener);
 		this.item.nativeElement.addEventListener("animationiteration", animationListener);
 	}
