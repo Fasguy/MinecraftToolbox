@@ -7,6 +7,7 @@ import { Datapack } from "./ts-datapack/datapack";
 import { GenericAdvancement } from "./ts-datapack/generic-advancement";
 
 export function flatten(obj: any, prefix: string, separator: string, dict: any) {
+	debugger;
 	for (const key in obj) {
 		let newKey: string;
 		if (prefix != "") {
@@ -307,4 +308,29 @@ export function mergeDeep(target: any, ...sources: any): any {
 	}
 
 	return mergeDeep(target, ...sources);
+}
+
+export function seedHelper(submittedSeed: string) {
+	//There's one thing to note about how seeds work here:
+	//I wanted to emulate how Minecraft handles seeds as much as possible.
+	//Therefore, the seed input is a string. If i can parse it to a Number, I'll use that.
+	//Otherwise, i'll use the hash code of the string.
+	//A problem arises with how JavaScript handles numbers.
+	//We have a maximum safe integer precision of 53 bits, so we can't use the full range of numbers, that Minecraft would normally allow.
+	//This means, that if we actually *have* a number that's outside those bounds, the last 3 digits will essentially be dropped.
+
+	let parsedSeed = tryParseInt(submittedSeed);
+	let seed: number;
+
+	if (parsedSeed.success && parsedSeed.value !== 0) {
+		seed = parsedSeed.value;
+	} else {
+		seed = hashCode(submittedSeed);
+	}
+
+	if (seed === 0) {
+		seed = parseInt(randomMinecraftSeed());
+	}
+
+	return seed;
 }

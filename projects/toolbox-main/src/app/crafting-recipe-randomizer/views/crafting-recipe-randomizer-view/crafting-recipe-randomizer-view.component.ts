@@ -9,7 +9,7 @@ import { NetRequestService } from "src/app/common/services/net-request/net-reque
 import { PanoramaService } from "src/app/common/services/panorama-service/panorama.service";
 import { WindowService } from "src/app/common/services/window-service/window.service";
 import { CraftingRecipeRandomizerService } from "src/app/crafting-recipe-randomizer/services/crafting-recipe-randomizer/crafting-recipe-randomizer.service";
-import { exportSettings, hashCode, importSettings, mapFormData, randomMinecraftSeed, tryParseInt } from "src/lib/utils";
+import { exportSettings, importSettings, mapFormData, randomMinecraftSeed, seedHelper } from "src/lib/utils";
 import { CraftingRecipeRandomizerFAQComponent } from "../frequently-asked-questions/frequently-asked-questions.component";
 import { CraftingRecipeRandomizerInstructionsComponent } from "../instructions/instructions.component";
 
@@ -110,26 +110,7 @@ export class CraftingRecipeRandomizerViewComponent implements OnInit, ITool {
 
 		let submittedData = mapFormData(<HTMLFormElement>e.target);
 
-		//There's one thing to note about how seeds work here:
-		//I wanted to emulate how Minecraft handles seeds as much as possible.
-		//Therefore, the seed input is a string. If i can parse it to a Number, I'll use that.
-		//Otherwise, i'll use the hash code of the string.
-		//A problem arises with how JavaScript handles numbers.
-		//We have a maximum safe integer precision of 53 bits, so we can't use the full range of numbers, that Minecraft would normally allow.
-		//This means, that if we actually *have* a number that's outside those bounds, the last 3 digits will essentially be dropped.
-
-		let parsedSeed = tryParseInt(submittedData["seed"]);
-		let seed: number;
-
-		if (parsedSeed.success && parsedSeed.value !== 0) {
-			seed = parsedSeed.value;
-		} else {
-			seed = hashCode(submittedData["seed"]);
-		}
-
-		if (seed === 0) {
-			seed = parseInt(randomMinecraftSeed());
-		}
+		let seed = seedHelper(submittedData["seed"]);
 
 		this._randomizerService.randomize({
 			seed: seed,
