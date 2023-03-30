@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from "@angular/core";
 import changelogJson from "../../../../../resources/data/changelog.json";
 import { IWindow } from "../../window/window.component";
 
@@ -7,19 +7,18 @@ import { IWindow } from "../../window/window.component";
 	styleUrls: ["./changelog.component.scss"],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChangelogComponent implements OnInit, IWindow {
+export class ChangelogComponent implements AfterViewInit, IWindow {
 	public changelog: ChangelogEntry[] = changelogJson;
 
 	public title: string = "Changelog";
 
-	constructor(
+	public constructor(
 		private _changeDetector: ChangeDetectorRef,
 	) {
-		_changeDetector.detach();
 	}
 
-	public ngOnInit(): void {
-		this._changeDetector.detectChanges();
+	public ngAfterViewInit(): void {
+		this._changeDetector.detach();
 	}
 }
 

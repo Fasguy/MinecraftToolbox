@@ -1,23 +1,27 @@
 import { HttpClient } from "@angular/common/http";
-import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild } from "@angular/core";
 import { ToolboxSettingsService } from "src/app/common/services/toolbox-settings/toolbox-settings.service";
 
 @Component({
 	selector: "tbx-splash",
 	templateUrl: "./splash.component.html",
-	styleUrls: ["./splash.component.scss"]
+	styleUrls: ["./splash.component.scss"],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SplashComponent implements AfterViewInit {
 	@ViewChild("splashText")
 	private _splashText!: ElementRef<HTMLElement>
 
-	constructor(
+	public constructor(
 		private _httpClient: HttpClient,
-		private _toolboxSettings: ToolboxSettingsService
+		private _toolboxSettings: ToolboxSettingsService,
+		private _changeDetector: ChangeDetectorRef
 	) {
 	}
 
-	ngAfterViewInit(): void {
+	public ngAfterViewInit(): void {
+		this._changeDetector.detach();
+
 		this._toolboxSettings.Observe.uselessVisualsEnabled
 			.subscribe(uselessVisualsEnabled => {
 				if (uselessVisualsEnabled) {

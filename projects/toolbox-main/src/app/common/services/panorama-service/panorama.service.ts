@@ -6,26 +6,26 @@ import { BehaviorSubject, firstValueFrom } from "rxjs";
 	providedIn: "root"
 })
 export class PanoramaService {
-	private definitions!: PanoramaDefinitions;
-	private panoramaImageSource = new BehaviorSubject("newest");
+	private _definitions!: PanoramaDefinitions;
+	private _panoramaImageSource = new BehaviorSubject("newest");
 
-	constructor(
+	public constructor(
 		private _http: HttpClient
 	) {
 	}
 
 	public async setIndex(id: string) {
-		let def = this.definitions ?? (this.definitions = await firstValueFrom(this._http.get<PanoramaDefinitions>("resources/data/panorama.json")));
+		let def = this._definitions ?? (this._definitions = await firstValueFrom(this._http.get<PanoramaDefinitions>("resources/data/panorama.json")));
 
 		if (!def[id]) {
 			console.warn(`Panorama with the id '${id}' not found.`);
 		}
 
-		this.panoramaImageSource.next(def[id] ?? def["newest"]);
+		this._panoramaImageSource.next(def[id] ?? def["newest"]);
 	}
 
 	public Observe = {
-		panoramaImage: this.panoramaImageSource.asObservable()
+		panoramaImage: this._panoramaImageSource.asObservable()
 	}
 }
 

@@ -9,7 +9,7 @@ export class LootTableRandomizerService implements OnDestroy, OnInit {
 	private _realWorker = new Worker(new URL("../../workers/loot-table-randomizer/loot-table-randomizer.worker", import.meta.url));
 	private _worker!: Remote<LootTableRandomizerWorker>;
 
-	constructor(
+	public constructor(
 		private _activityMonitor: ActivityMonitorService
 	) {
 	}

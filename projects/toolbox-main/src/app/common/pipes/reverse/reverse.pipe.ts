@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 	name: "reverse"
 })
 export class ReversePipe implements PipeTransform {
-	transform<TArray>(value: TArray[]): TArray[] {
+	public transform<TArray>(value: TArray[]): TArray[] {
 		return [...value].reverse();
 	}
 }

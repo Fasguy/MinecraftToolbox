@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, ViewChild } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild } from "@angular/core";
 import { randomRange } from "src/lib/utils";
 
 @Component({
@@ -9,15 +9,22 @@ import { randomRange } from "src/lib/utils";
 })
 export class LoadingIndicatorComponent implements AfterViewInit {
 	@ViewChild("item")
-	private item!: ElementRef<HTMLElement>;
+	private _item!: ElementRef<HTMLElement>;
+
+	public constructor(
+		private _changeDetector: ChangeDetectorRef
+	) {
+	}
 
 	public ngAfterViewInit(): void {
+		this._changeDetector.detach();
+
 		let animationListener = (e: AnimationEvent) => {
 			(<HTMLElement>e.target).style.backgroundPositionX = `calc(100% * ${randomRange(0, 3)})`;
 		};
 
-		animationListener(<AnimationEvent><unknown>{ target: this.item.nativeElement });
-		this.item.nativeElement.addEventListener("animationstart", animationListener);
-		this.item.nativeElement.addEventListener("animationiteration", animationListener);
+		animationListener(<AnimationEvent><unknown>{ target: this._item.nativeElement });
+		this._item.nativeElement.addEventListener("animationstart", animationListener);
+		this._item.nativeElement.addEventListener("animationiteration", animationListener);
 	}
 }

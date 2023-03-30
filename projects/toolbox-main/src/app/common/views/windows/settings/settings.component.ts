@@ -9,29 +9,28 @@ import { IWindow } from "../../window/window.component";
 export class SettingsComponent implements AfterViewInit, IWindow {
 	public title: string = "Settings";
 
-	public get options(): ToolboxOption[] {
+	protected get options(): ToolboxOption[] {
 		return Object.values<ToolboxOption>(this._settings.options);
 	}
 
-	constructor(
+	public constructor(
 		private _settings: ToolboxSettingsService,
 		private _changeDetector: ChangeDetectorRef
 	) {
-		_changeDetector.detach();
 	}
 
-	ngAfterViewInit(): void {
-		this._changeDetector.detectChanges();
+	public ngAfterViewInit(): void {
+		this._changeDetector.detach();
 	}
 
-	public getOptionValue(option: ToolboxOption): string {
+	protected getOptionValue(option: ToolboxOption): string {
 		return option.behaviourSubject.getValue();
 	}
 
-	public setOptionValue(option: ToolboxOption, event: Event): void {
-		if(!(event.target instanceof HTMLInputElement)) return;
+	protected setOptionValue(option: ToolboxOption, event: Event): void {
+		if (!(event.target instanceof HTMLInputElement)) return;
 
-		switch(event.target.type) {
+		switch (event.target.type) {
 			case "checkbox":
 				option.behaviourSubject.next(event.target.checked);
 				break;

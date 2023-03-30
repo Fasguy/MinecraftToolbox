@@ -11,14 +11,14 @@ export class ActivityMonitorComponent implements OnInit {
 		return this._activityMonitor.activities;
 	}
 
+	public set enabled(enabled: boolean) {
+		this._ref.nativeElement.style.display = enabled ? "block" : "none";
+	}
+
 	public constructor(
 		private _ref: ElementRef<HTMLElement>,
 		private _activityMonitor: ActivityMonitorService
 	) {
-	}
-
-	public set enabled(enabled: boolean) {
-		this._ref.nativeElement.style.display = enabled ? "block" : "none";
 	}
 
 	public ngOnInit(): void {

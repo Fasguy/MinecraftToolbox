@@ -9,7 +9,7 @@ export class CraftingRecipeRandomizerService implements OnInit, OnDestroy {
 	private _realWorker = new Worker(new URL("../../workers/crafting-recipe-randomizer/crafting-recipe-randomizer.worker", import.meta.url));
 	private _worker!: Remote<CraftingRecipeRandomizerWorker>;
 
-	constructor(
+	public constructor(
 		private _activityMonitor: ActivityMonitorService
 	) {
 	}

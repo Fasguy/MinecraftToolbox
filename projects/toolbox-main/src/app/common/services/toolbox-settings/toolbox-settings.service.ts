@@ -23,12 +23,12 @@ export class ToolboxSettingsService {
 		return this._options;
 	}
 
-	constructor(
-		private route: ActivatedRoute
+	public constructor(
+		route: ActivatedRoute
 	) {
 		this.load();
 
-		this.route.queryParams
+		route.queryParams
 			.pipe(skip(1))
 			.subscribe(params => {
 				//Blame JavaScript for this garbage.

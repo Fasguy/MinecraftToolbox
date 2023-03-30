@@ -23,7 +23,7 @@ export class SelectionComponent implements OnChanges {
 	@Input()
 	public name: string = "";
 
-	constructor(
+	public constructor(
 		private _changeDetectorRef: ChangeDetectorRef,
 		public assetManagerService: AssetManagerService
 	) {

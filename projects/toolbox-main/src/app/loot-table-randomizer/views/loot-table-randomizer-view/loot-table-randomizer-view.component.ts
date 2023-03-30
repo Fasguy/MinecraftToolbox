@@ -21,7 +21,7 @@ import { LootTableRandomizerInstructionsComponent } from "../instructions/instru
 	providers: [LootTableRandomizerService]
 })
 export class LootTableRandomizerViewComponent implements OnInit, ITool {
-	public readonly version: string = "";
+	public readonly version: string;
 	public readonly tool: string = "loot-table-randomizer";
 
 	protected lootTables!: EntryGroup[];
@@ -32,7 +32,7 @@ export class LootTableRandomizerViewComponent implements OnInit, ITool {
 		additionals: []
 	};
 
-	constructor(
+	public constructor(
 		private _panorama: PanoramaService,
 		private _randomizerService: LootTableRandomizerService,
 		private _activityMonitor: ActivityMonitorService,
@@ -113,7 +113,7 @@ export class LootTableRandomizerViewComponent implements OnInit, ITool {
 		});
 	}
 
-	public onSubmit(e: SubmitEvent) {
+	protected onSubmit(e: SubmitEvent) {
 		e.preventDefault();
 		e.stopPropagation();
 
@@ -129,11 +129,11 @@ export class LootTableRandomizerViewComponent implements OnInit, ITool {
 		});
 	}
 
-	public showInstructions() {
+	protected showInstructions() {
 		this.window.createWindow(LootTableRandomizerInstructionsComponent);
 	}
 
-	public showFAQ() {
+	protected showFAQ() {
 		this.window.createWindow(LootTableRandomizerFAQComponent);
 	}
 

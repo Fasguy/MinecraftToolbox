@@ -1,14 +1,13 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from "@angular/core";
 import credits from "../../../../../resources/data/credits.json";
 import { IWindow } from "../../window/window.component";
 
 @Component({
 	templateUrl: "./credits.component.html",
-	styleUrls: ["./credits.component.scss"]
+	styleUrls: ["./credits.component.scss"],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CreditsComponent implements OnInit, OnDestroy, AfterViewInit, IWindow {
-	private _animationFrame!: number;
-
+export class CreditsComponent implements OnInit, AfterViewInit, IWindow {
 	@ViewChild("text")
 	private _text!: ElementRef<HTMLPreElement>;
 
@@ -16,20 +15,23 @@ export class CreditsComponent implements OnInit, OnDestroy, AfterViewInit, IWind
 
 	public title: string = "Credits";
 
+	public constructor(
+		private _changeDetector: ChangeDetectorRef,
+	) {
+	}
+
 	public ngOnInit(): void {
 		this.credits = credits;
 	}
 
 	public ngAfterViewInit(): void {
+		this._changeDetector.detach();
+
 		this.animate();
 	}
 
-	public ngOnDestroy(): void {
-		window.cancelAnimationFrame(this._animationFrame);
-	}
-
 	@HostListener("window:resize")
-	public animate() {
+	private animate() {
 		const textContainer = this._text.nativeElement;
 		const speed = 30;
 		textContainer.style.animationDuration = `${textContainer.clientHeight / speed}s`;

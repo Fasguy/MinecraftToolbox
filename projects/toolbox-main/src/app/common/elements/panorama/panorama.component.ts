@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, HostListener, ViewChild } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild } from "@angular/core";
 import { firstValueFrom, skip } from "rxjs";
 import { PanoramaService } from "../../services/panorama-service/panorama.service";
 import { ToolboxSettingsService } from "../../services/toolbox-settings/toolbox-settings.service";
@@ -13,16 +13,15 @@ export class PanoramaComponent implements AfterViewInit {
 	private _panoramaSrcCache: string | undefined;
 	private _firstPanoramaRendered = false;
 	private _image = document.createElement("img");
-
 	@ViewChild("panorama")
-	private canvas!: ElementRef<HTMLCanvasElement>;
-	private context!: WebGLRenderingContext;
-	private fieldOfViewRadians = this.degToRad(90);
-	private projectionMatrix = [
-		1, 0, 0, 0,
-		0, 1, 0, 0,
+	private _canvas!: ElementRef<HTMLCanvasElement>;
+	private _context!: WebGLRenderingContext;
+	private _fieldOfViewRadians = this.degToRad(90);
+	private _projectionMatrix = [
+		1, 0,  0,  0,
+		0, 1,  0,  0,
 		0, 0, -1, -1,
-		0, 0, 0, 0
+		0, 0,  0,  0
 	];
 	//projectionMatrix calculation
 	/*
@@ -45,27 +44,30 @@ export class PanoramaComponent implements AfterViewInit {
 	public constructor(
 		private _panorama: PanoramaService,
 		private _toolboxSettings: ToolboxSettingsService,
+		private _changeDetector: ChangeDetectorRef
 	) {
 		this._image.addEventListener("load", () => {
-			this.context.texImage2D(this.context.TEXTURE_2D, 0, this.context.RGBA, this.context.RGBA, this.context.UNSIGNED_BYTE, this._image);
-			this.canvas.nativeElement.style.removeProperty("display");
+			this._context.texImage2D(this._context.TEXTURE_2D, 0, this._context.RGBA, this._context.RGBA, this._context.UNSIGNED_BYTE, this._image);
+			this._canvas.nativeElement.style.removeProperty("display");
 			this.resize();
 			this._firstPanoramaRendered = true;
 		});
 	}
 
 	public ngAfterViewInit(): void {
-		this.context = this.canvas.nativeElement.getContext("webgl")!;
-		if (!this.context) {
-			this.canvas.nativeElement.remove();
+		this._changeDetector.detach();
+
+		this._context = this._canvas.nativeElement.getContext("webgl")!;
+		if (!this._context) {
+			this._canvas.nativeElement.remove();
 			return;
 		}
 
 		this._toolboxSettings.Observe.uselessVisualsEnabled
 			.subscribe(uselessVisualsEnabled => {
-				this.canvas.nativeElement.style.display = "none";
+				this._canvas.nativeElement.style.display = "none";
 				if (uselessVisualsEnabled && this._firstPanoramaRendered) {
-					this.canvas.nativeElement.style.removeProperty("display");
+					this._canvas.nativeElement.style.removeProperty("display");
 				}
 
 				if (uselessVisualsEnabled && this._panoramaSrcCache) {
@@ -95,25 +97,25 @@ export class PanoramaComponent implements AfterViewInit {
 	private run = () => {
 		const program = this.createProgram();
 
-		this.context.bindTexture(this.context.TEXTURE_2D, this.context.createTexture());
-		this.context.texParameteri(this.context.TEXTURE_2D, this.context.TEXTURE_WRAP_S, this.context.CLAMP_TO_EDGE);
-		this.context.texParameteri(this.context.TEXTURE_2D, this.context.TEXTURE_WRAP_T, this.context.CLAMP_TO_EDGE);
-		this.context.texParameteri(this.context.TEXTURE_2D, this.context.TEXTURE_MIN_FILTER, this.context.LINEAR);
+		this._context.bindTexture(this._context.TEXTURE_2D, this._context.createTexture());
+		this._context.texParameteri(this._context.TEXTURE_2D, this._context.TEXTURE_WRAP_S, this._context.CLAMP_TO_EDGE);
+		this._context.texParameteri(this._context.TEXTURE_2D, this._context.TEXTURE_WRAP_T, this._context.CLAMP_TO_EDGE);
+		this._context.texParameteri(this._context.TEXTURE_2D, this._context.TEXTURE_MIN_FILTER, this._context.LINEAR);
 
 		//Panorama Cube
-		this.context.bindBuffer(this.context.ARRAY_BUFFER, this.context.createBuffer());
-		this.context.bufferData(this.context.ARRAY_BUFFER, new Float32Array([
-			-1, 1, -1, 1, 1, -1, 1, -1, -1, -1, -1, -1, // Front
-			1, 1, 1, -1, 1, 1, -1, -1, 1, 1, -1, 1, // Back
-			-1, 1, 1, 1, 1, 1, 1, 1, -1, -1, 1, -1, // Top
-			-1, -1, -1, 1, -1, -1, 1, -1, 1, -1, -1, 1, // Bottom
-			1, 1, -1, 1, 1, 1, 1, -1, 1, 1, -1, -1, // Right
-			-1, 1, 1, -1, 1, -1, -1, -1, -1, -1, -1, 1, // Left
-		]), this.context.STATIC_DRAW);
+		this._context.bindBuffer(this._context.ARRAY_BUFFER, this._context.createBuffer());
+		this._context.bufferData(this._context.ARRAY_BUFFER, new Float32Array([
+			-1,  1, -1,  1,  1, -1,  1, -1, -1, -1, -1, -1, // Front
+			 1,  1,  1, -1,  1,  1, -1, -1,  1,  1, -1,  1, // Back
+			-1,  1,  1,  1,  1,  1,  1,  1, -1, -1,  1, -1, // Top
+			-1, -1, -1,  1, -1, -1,  1, -1,  1, -1, -1,  1, // Bottom
+			 1,  1, -1,  1,  1,  1,  1, -1,  1,  1, -1, -1, // Right
+			-1,  1,  1, -1,  1, -1, -1, -1, -1, -1, -1,  1, // Left
+		]), this._context.STATIC_DRAW);
 
-		const vertexPosition = this.context.getAttribLocation(program, "a_vpos");
-		this.context.vertexAttribPointer(vertexPosition, 3, this.context.FLOAT, false, 0, 0);
-		this.context.enableVertexAttribArray(vertexPosition);
+		const vertexPosition = this._context.getAttribLocation(program, "a_vpos");
+		this._context.vertexAttribPointer(vertexPosition, 3, this._context.FLOAT, false, 0, 0);
+		this._context.enableVertexAttribArray(vertexPosition);
 
 		//Texture Coordinates
 		const getTextureCoordinates = (face: number) => {
@@ -124,10 +126,10 @@ export class PanoramaComponent implements AfterViewInit {
 			const secondFraction = 1 / 2;
 
 			let result = [
-				thirdFraction * x, secondFraction * y, // Top-Left
-				thirdFraction + (thirdFraction * x), secondFraction * y, // Top-Right
+				thirdFraction *					  x, secondFraction * 					 y, // Top-Left
+				thirdFraction + (thirdFraction * x), secondFraction * 					 y, // Top-Right
 				thirdFraction + (thirdFraction * x), secondFraction + (secondFraction * y), // Bottom-Right
-				thirdFraction * x, secondFraction + (secondFraction * y) // Bottom-Left
+				thirdFraction * 				  x, secondFraction + (secondFraction * y), // Bottom-Left
 			];
 
 			const margin = 0.0003;
@@ -135,40 +137,40 @@ export class PanoramaComponent implements AfterViewInit {
 				result[0] + margin, result[1] + margin,
 				result[2] - margin, result[3] + margin,
 				result[4] - margin, result[5] - margin,
-				result[6] + margin, result[7] - margin
+				result[6] + margin, result[7] - margin,
 			];
 		}
 
-		this.context.bindBuffer(this.context.ARRAY_BUFFER, this.context.createBuffer());
-		this.context.bufferData(this.context.ARRAY_BUFFER, new Float32Array([
+		this._context.bindBuffer(this._context.ARRAY_BUFFER, this._context.createBuffer());
+		this._context.bufferData(this._context.ARRAY_BUFFER, new Float32Array([
 			...getTextureCoordinates(0), // Front
 			...getTextureCoordinates(1), // Back
 			...getTextureCoordinates(2), // Top
 			...getTextureCoordinates(3), // Bottom
 			...getTextureCoordinates(4), // Right
 			...getTextureCoordinates(5), // Left
-		]), this.context.STATIC_DRAW);
+		]), this._context.STATIC_DRAW);
 
-		const textureCoord = this.context.getAttribLocation(program, "a_texcoord");
-		this.context.vertexAttribPointer(textureCoord, 2, this.context.FLOAT, false, 0, 0);
-		this.context.enableVertexAttribArray(textureCoord);
+		const textureCoord = this._context.getAttribLocation(program, "a_texcoord");
+		this._context.vertexAttribPointer(textureCoord, 2, this._context.FLOAT, false, 0, 0);
+		this._context.enableVertexAttribArray(textureCoord);
 
 		//Indices
-		this.context.bindBuffer(this.context.ELEMENT_ARRAY_BUFFER, this.context.createBuffer());
-		this.context.bufferData(this.context.ELEMENT_ARRAY_BUFFER, new Uint16Array([
-			0, 1, 2, 0, 2, 3, // Front
-			4, 5, 6, 4, 6, 7, // Back
-			8, 9, 10, 8, 10, 11, // Top
+		this._context.bindBuffer(this._context.ELEMENT_ARRAY_BUFFER, this._context.createBuffer());
+		this._context.bufferData(this._context.ELEMENT_ARRAY_BUFFER, new Uint16Array([
+			 0,  1,  2,  0,  2,  3, // Front
+			 4,  5,  6,  4,  6,  7, // Back
+			 8,  9, 10,  8, 10, 11, // Top
 			12, 13, 14, 12, 14, 15, // Bottom
 			16, 17, 18, 16, 18, 19, // Right
 			20, 21, 22, 20, 22, 23, // Left
-		]), this.context.STATIC_DRAW);
+		]), this._context.STATIC_DRAW);
 
-		this.context.uniformMatrix4fv(this.context.getUniformLocation(program, "u_modelmatrix"), false, [
+		this._context.uniformMatrix4fv(this._context.getUniformLocation(program, "u_modelmatrix"), false, [
 			0, 0, -1, 0,
-			0, 1, 0, 0,
-			1, 0, 0, 0,
-			0, 0, 0, 1
+			0, 1,  0, 0,
+			1, 0,  0, 0,
+			0, 0,  0, 1,
 		]);
 
 		const up = [0, 1, 0];
@@ -178,10 +180,10 @@ export class PanoramaComponent implements AfterViewInit {
 			let cameraPosition = [Math.cos(rotFactor), (-Math.cos(rotFactor * 2.1) + 1) * 0.5, Math.sin(rotFactor)];
 			let cameraMatrix = this.lookAt(cameraPosition, up);
 			let viewMatrix = this.inverse(cameraMatrix);
-			let viewDirectionProjectionMatrix = this.multiply(this.projectionMatrix, viewMatrix);
+			let viewDirectionProjectionMatrix = this.multiply(this._projectionMatrix, viewMatrix);
 
-			this.context.uniformMatrix4fv(this.context.getUniformLocation(program, "u_projectionmatrix"), false, viewDirectionProjectionMatrix);
-			this.context.drawElements(this.context.TRIANGLES, 36, this.context.UNSIGNED_SHORT, 0);
+			this._context.uniformMatrix4fv(this._context.getUniformLocation(program, "u_projectionmatrix"), false, viewDirectionProjectionMatrix);
+			this._context.drawElements(this._context.TRIANGLES, 36, this._context.UNSIGNED_SHORT, 0);
 
 			requestAnimationFrame(drawScene);
 		}
@@ -190,34 +192,34 @@ export class PanoramaComponent implements AfterViewInit {
 
 	@HostListener("window:resize", ["$event"])
 	public resize = () => {
-		let canvas = this.canvas.nativeElement;
+		let canvas = this._canvas.nativeElement;
 
 		let zoomFactor = window.devicePixelRatio || window.screen.availWidth / document.documentElement.clientWidth;
 
 		canvas.width = window.innerWidth * zoomFactor;
 		canvas.height = window.innerHeight * zoomFactor;
-		this.context.viewport(0, 0, canvas.width, canvas.height);
+		this._context.viewport(0, 0, canvas.width, canvas.height);
 		let aspect = canvas.clientWidth / canvas.clientHeight;
-		let f = Math.tan(Math.PI * 0.5 - 0.5 * this.fieldOfViewRadians);
-		this.projectionMatrix[0] = f / aspect;
-		this.projectionMatrix[5] = f;
+		let f = Math.tan(Math.PI * 0.5 - 0.5 * this._fieldOfViewRadians);
+		this._projectionMatrix[0] = f / aspect;
+		this._projectionMatrix[5] = f;
 	}
 
 	private createProgram() {
-		const program = this.context.createProgram()!;
+		const program = this._context.createProgram()!;
 
-		let vertex = this.context.createShader(this.context.VERTEX_SHADER)!;
-		this.context.shaderSource(vertex, `attribute vec4 a_vpos;attribute vec2 a_texcoord;uniform mat4 u_modelmatrix;uniform mat4 u_projectionmatrix;varying highp vec2 v_texcoord;void main(void){gl_Position=u_projectionmatrix*u_modelmatrix*a_vpos;v_texcoord=a_texcoord;}`);
-		this.context.compileShader(vertex);
-		this.context.attachShader(program, vertex);
+		let vertex = this._context.createShader(this._context.VERTEX_SHADER)!;
+		this._context.shaderSource(vertex, `attribute vec4 a_vpos;attribute vec2 a_texcoord;uniform mat4 u_modelmatrix;uniform mat4 u_projectionmatrix;varying highp vec2 v_texcoord;void main(void){gl_Position=u_projectionmatrix*u_modelmatrix*a_vpos;v_texcoord=a_texcoord;}`);
+		this._context.compileShader(vertex);
+		this._context.attachShader(program, vertex);
 
-		let fragment = this.context.createShader(this.context.FRAGMENT_SHADER)!;
-		this.context.shaderSource(fragment, `varying highp vec2 v_texcoord;uniform sampler2D u_sampler;void main(void){gl_FragColor=texture2D(u_sampler,v_texcoord);}`);
-		this.context.compileShader(fragment);
-		this.context.attachShader(program, fragment);
+		let fragment = this._context.createShader(this._context.FRAGMENT_SHADER)!;
+		this._context.shaderSource(fragment, `varying highp vec2 v_texcoord;uniform sampler2D u_sampler;void main(void){gl_FragColor=texture2D(u_sampler,v_texcoord);}`);
+		this._context.compileShader(fragment);
+		this._context.attachShader(program, fragment);
 
-		this.context.linkProgram(program);
-		this.context.useProgram(program);
+		this._context.linkProgram(program);
+		this._context.useProgram(program);
 
 		return program;
 	}
@@ -232,7 +234,7 @@ export class PanoramaComponent implements AfterViewInit {
 			return [
 				v[0] / length,
 				v[1] / length,
-				v[2] / length
+				v[2] / length,
 			];
 		}
 		return v;
@@ -255,16 +257,16 @@ export class PanoramaComponent implements AfterViewInit {
 		let m31 = m[3 * 4 + 1];
 		let m32 = m[3 * 4 + 2];
 		let m33 = m[3 * 4 + 3];
-		let tmp_0 = m22 * m33;
-		let tmp_1 = m32 * m23;
-		let tmp_2 = m12 * m33;
-		let tmp_3 = m32 * m13;
-		let tmp_4 = m12 * m23;
-		let tmp_5 = m22 * m13;
-		let tmp_6 = m02 * m33;
-		let tmp_7 = m32 * m03;
-		let tmp_8 = m02 * m23;
-		let tmp_9 = m22 * m03;
+		let tmp_00 = m22 * m33;
+		let tmp_01 = m32 * m23;
+		let tmp_02 = m12 * m33;
+		let tmp_03 = m32 * m13;
+		let tmp_04 = m12 * m23;
+		let tmp_05 = m22 * m13;
+		let tmp_06 = m02 * m33;
+		let tmp_07 = m32 * m03;
+		let tmp_08 = m02 * m23;
+		let tmp_09 = m22 * m03;
 		let tmp_10 = m02 * m13;
 		let tmp_11 = m12 * m03;
 		let tmp_12 = m20 * m31;
@@ -281,13 +283,13 @@ export class PanoramaComponent implements AfterViewInit {
 		let tmp_23 = m10 * m01;
 
 		return [
-			(tmp_0 * m11 + tmp_3 * m21 + tmp_4 * m31) - (tmp_1 * m11 + tmp_2 * m21 + tmp_5 * m31),
-			(tmp_1 * m01 + tmp_6 * m21 + tmp_9 * m31) - (tmp_0 * m01 + tmp_7 * m21 + tmp_8 * m31),
-			(tmp_2 * m01 + tmp_7 * m11 + tmp_10 * m31) - (tmp_3 * m01 + tmp_6 * m11 + tmp_11 * m31),
+			(tmp_00 * m11 + tmp_03 * m21 + tmp_04 * m31) - (tmp_01 * m11 + tmp_02 * m21 + tmp_05 * m31),
+			(tmp_01 * m01 + tmp_06 * m21 + tmp_09 * m31) - (tmp_00 * m01 + tmp_07 * m21 + tmp_08 * m31),
+			(tmp_02 * m01 + tmp_07 * m11 + tmp_10 * m31) - (tmp_03 * m01 + tmp_06 * m11 + tmp_11 * m31),
 			0,
-			(tmp_1 * m10 + tmp_2 * m20 + tmp_5 * m30) - (tmp_0 * m10 + tmp_3 * m20 + tmp_4 * m30),
-			(tmp_0 * m00 + tmp_7 * m20 + tmp_8 * m30) - (tmp_1 * m00 + tmp_6 * m20 + tmp_9 * m30),
-			(tmp_3 * m00 + tmp_6 * m10 + tmp_11 * m30) - (tmp_2 * m00 + tmp_7 * m10 + tmp_10 * m30),
+			(tmp_01 * m10 + tmp_02 * m20 + tmp_05 * m30) - (tmp_00 * m10 + tmp_03 * m20 + tmp_04 * m30),
+			(tmp_00 * m00 + tmp_07 * m20 + tmp_08 * m30) - (tmp_01 * m00 + tmp_06 * m20 + tmp_09 * m30),
+			(tmp_03 * m00 + tmp_06 * m10 + tmp_11 * m30) - (tmp_02 * m00 + tmp_07 * m10 + tmp_10 * m30),
 			0,
 			(tmp_12 * m13 + tmp_15 * m23 + tmp_16 * m33) - (tmp_13 * m13 + tmp_14 * m23 + tmp_17 * m33),
 			(tmp_13 * m03 + tmp_18 * m23 + tmp_21 * m33) - (tmp_12 * m03 + tmp_19 * m23 + tmp_20 * m33),
@@ -296,7 +298,7 @@ export class PanoramaComponent implements AfterViewInit {
 			(tmp_14 * m22 + tmp_17 * m32 + tmp_13 * m12) - (tmp_16 * m32 + tmp_12 * m12 + tmp_15 * m22),
 			(tmp_20 * m32 + tmp_12 * m02 + tmp_19 * m22) - (tmp_18 * m22 + tmp_21 * m32 + tmp_13 * m02),
 			(tmp_18 * m12 + tmp_23 * m32 + tmp_15 * m02) - (tmp_22 * m32 + tmp_14 * m02 + tmp_19 * m12),
-			(tmp_22 * m22 + tmp_16 * m02 + tmp_21 * m12) - (tmp_20 * m12 + tmp_23 * m22 + tmp_17 * m02)
+			(tmp_22 * m22 + tmp_16 * m02 + tmp_21 * m12) - (tmp_20 * m12 + tmp_23 * m22 + tmp_17 * m02),
 		];
 	}
 
@@ -350,7 +352,7 @@ export class PanoramaComponent implements AfterViewInit {
 			b30 * a00 + b31 * a10 + b32 * a20 + b33 * a30,
 			b30 * a01 + b31 * a11 + b32 * a21 + b33 * a31,
 			b30 * a02 + b31 * a12 + b32 * a22 + b33 * a32,
-			b30 * a03 + b31 * a13 + b32 * a23 + b33 * a33
+			b30 * a03 + b31 * a13 + b32 * a23 + b33 * a33,
 		];
 	}
 
@@ -358,7 +360,7 @@ export class PanoramaComponent implements AfterViewInit {
 		return [
 			a[1] * b[2] - a[2] * b[1],
 			a[2] * b[0] - a[0] * b[2],
-			a[0] * b[1] - a[1] * b[0]
+			a[0] * b[1] - a[1] * b[0],
 		];
 	}
 
@@ -371,7 +373,7 @@ export class PanoramaComponent implements AfterViewInit {
 			xAxis[0], xAxis[1], xAxis[2], 0,
 			yAxis[0], yAxis[1], yAxis[2], 0,
 			zAxis[0], zAxis[1], zAxis[2], 0,
-			0, 0, 0, 1
+			       0,        0,        0, 1,
 		];
 	}
 }

@@ -20,14 +20,14 @@ import { CraftingRecipeRandomizerInstructionsComponent } from "../instructions/i
 	providers: [CraftingRecipeRandomizerService]
 })
 export class CraftingRecipeRandomizerViewComponent implements OnInit, ITool {
-	public readonly version: string = "";
+	public readonly version: string;
 	public readonly tool: string = "crafting-recipe-randomizer";
 
-	public craftingRecipes!: EntryGroup[];
+	protected craftingRecipes!: EntryGroup[];
 
-	public seed: string = randomMinecraftSeed();
+	protected seed: string = randomMinecraftSeed();
 
-	constructor(
+	public constructor(
 		private _panorama: PanoramaService,
 		private _netRequest: NetRequestService,
 		private _randomizerService: CraftingRecipeRandomizerService,
@@ -104,7 +104,7 @@ export class CraftingRecipeRandomizerViewComponent implements OnInit, ITool {
 		});
 	}
 
-	public onSubmit(e: SubmitEvent) {
+	protected onSubmit(e: SubmitEvent) {
 		e.preventDefault();
 		e.stopPropagation();
 
@@ -118,11 +118,11 @@ export class CraftingRecipeRandomizerViewComponent implements OnInit, ITool {
 		});
 	}
 
-	public showInstructions() {
+	protected showInstructions() {
 		this.window.createWindow(CraftingRecipeRandomizerInstructionsComponent);
 	}
 
-	public showFAQ() {
+	protected showFAQ() {
 		this.window.createWindow(CraftingRecipeRandomizerFAQComponent);
 	}
 

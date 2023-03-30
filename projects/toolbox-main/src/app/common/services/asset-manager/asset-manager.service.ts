@@ -13,7 +13,7 @@ export class AssetManagerService {
 		return this._loadingPromise;
 	}
 
-	constructor(
+	public constructor(
 		private _http: HttpClient,
 		activityMonitor: ActivityMonitorService
 	) {
