@@ -35,8 +35,10 @@ export class LootTableFile implements IFile {
 	public getConditions(condition: string) {
 		let finalConditions: ConditionKit[] = [];
 
-		function pushConditions(conditions: IPredicate[]) {
-			for (const predicate of spreadOrEmpty(conditions)) {
+		function pushConditions(conditions?: IPredicate[]) {
+			if (!conditions) return;
+
+			for (const predicate of [...conditions]) {
 				if (predicate.condition === condition) {
 					finalConditions.push({
 						data: predicate,
@@ -88,8 +90,10 @@ export class LootTableFile implements IFile {
 	public getFunctions(functionDefinition: string) {
 		let finalFunctions: FunctionKit[] = [];
 
-		function pushFunctions(functions: IItemFunction[]) {
-			for (const itemFunction of spreadOrEmpty(functions)) {
+		function pushFunctions(functions?: IItemFunction[]) {
+			if (!functions) return;
+
+			for (const itemFunction of [...functions]) {
 				if (itemFunction.function === functionDefinition) {
 					finalFunctions.push({
 						data: itemFunction,

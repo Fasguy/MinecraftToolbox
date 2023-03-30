@@ -38,7 +38,7 @@ export type IItemFunction = IItemFunction_Base
 		| IItemFunction_SetStewEffect);
 
 type IItemFunction_Base = {
-	conditions: IPredicate[];
+	conditions?: IPredicate[];
 }
 
 type IItemFunction_ApplyBonus = IItemFunction_ApplyBonus_Base
@@ -200,14 +200,14 @@ type IItemFunction_SetLootTable = {
 type IItemFunction_SetLore = {
 	function: "minecraft:set_lore";
 	lore: IRawJSONText[];
-	entity: "this" | "killer" | "killer_player" | "direct_killer";
+	entity?: "this" | "killer" | "killer_player" | "direct_killer";
 	replace?: boolean; //Default: false
 }
 
 type IItemFunction_SetName = {
 	function: "minecraft:set_name";
 	name: IRawJSONText;
-	entity: "this" | "killer" | "killer_player" | "direct_killer";
+	entity?: "this" | "killer" | "killer_player" | "direct_killer";
 }
 
 type IItemFunction_SetNBT = {

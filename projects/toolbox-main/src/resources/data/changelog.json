@@ -96,5 +96,17 @@
 			"removals": []
 		},
 		"notes": ""
+	},
+	{
+		"version": "1.3.0",
+		"build_date": "",
+		"changes": {
+			"additions": [
+				"New option for the Loot-Table randomizer, that allows empty loot-tables to output a dead end indicator item"
+			],
+			"modifications": [],
+			"removals": []
+		},
+		"notes": ""
 	}
 ]

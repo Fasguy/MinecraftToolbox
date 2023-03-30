@@ -124,6 +124,7 @@ export class LootTableRandomizerViewComponent implements OnInit, ITool {
 		this._randomizerService.randomize({
 			seed: seed,
 			dropChance100: submittedData["dropChance100"] === "on",
+			deadEndIndicator: submittedData["deadEndIndicator"] === "on",
 			selectedLootTables: submittedData["selection[]"]
 		});
 	}

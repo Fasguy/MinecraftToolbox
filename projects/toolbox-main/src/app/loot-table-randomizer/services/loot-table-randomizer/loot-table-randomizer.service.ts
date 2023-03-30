@@ -57,6 +57,13 @@ export class LootTableRandomizerService implements OnDestroy, OnInit {
 			});
 		}
 
+		if (options.deadEndIndicator) {
+			await this._activityMonitor.startActivity({
+				text: "Replacing empty loot-tables with dead end indicator item...",
+				promise: this._worker.replaceEmptyWithDummy()
+			});
+		}
+
 		let finalDatapackData = await this._activityMonitor.startActivity({
 			text: "Generating final data pack...",
 			promise: this._worker.finalize()
@@ -72,5 +79,6 @@ export class LootTableRandomizerService implements OnDestroy, OnInit {
 type RandomizeOptions = {
 	seed: number;
 	dropChance100: boolean;
+	deadEndIndicator: boolean;
 	selectedLootTables: string[];
 }

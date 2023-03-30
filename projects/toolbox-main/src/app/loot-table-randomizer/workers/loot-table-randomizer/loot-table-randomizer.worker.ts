@@ -185,6 +185,63 @@ export class LootTableRandomizerWorker {
 		}
 	}
 
+	public async replaceEmptyWithDummy() {
+		let deadEnd = new LootTableFile("data/fasguys_toolbox/loot_tables/generic/dead_end.json", {
+			type: "minecraft:block",
+			pools: [
+				{
+					rolls: 1,
+					entries: [
+						{
+							type: "minecraft:item",
+							name: "minecraft:clock",
+							functions: [
+								{
+									function: "minecraft:set_name",
+									name: {
+										text: "Time-waster",
+										italic: false
+									}
+								},
+								{
+									function: "minecraft:set_lore",
+									lore: [
+										{
+											text: "This loot-table chain ends here.",
+											color: "#ffffff",
+											italic: false
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		});
+		this._finalDatapack.set(deadEnd);
+
+		for (const entry of this._defaultLootTableFilePaths) {
+			let file = this._finalDatapack.get<LootTableFile>(entry)!;
+
+			if (file.data.pools == null || file.data.pools.length === 0) {
+				file.data = {
+					pools: [
+						{
+							rolls: 1,
+							entries: [
+								{
+									type: "minecraft:loot_table",
+									name: "fasguys_toolbox:generic/dead_end"
+								}
+							]
+						}
+					]
+				}
+			}
+		}
+	}
+
 	public async finalize() {
 		return {
 			href: URL.createObjectURL(await DatapackSerializer.packUp(this._finalDatapack)),

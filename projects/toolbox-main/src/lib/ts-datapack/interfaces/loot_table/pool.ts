@@ -4,9 +4,9 @@ import { IEntry } from "./entry";
 import { IItemFunction } from "./item_function";
 
 export type IPool = {
-	conditions: IPredicate[];
-	functions: IItemFunction[];
+	conditions?: IPredicate[];
+	functions?: IItemFunction[];
 	rolls: INumberProvider; //Integer
-	bonus_rolls: INumberProvider; //Float, Default: 0.0
+	bonus_rolls?: INumberProvider; //Float, Default: 0.0
 	entries: IEntry[];
 }

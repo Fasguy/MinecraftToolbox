@@ -7,7 +7,6 @@ import { Datapack } from "./ts-datapack/datapack";
 import { GenericAdvancement } from "./ts-datapack/generic-advancement";
 
 export function flatten(obj: any, prefix: string, separator: string, dict: any) {
-	debugger;
 	for (const key in obj) {
 		let newKey: string;
 		if (prefix != "") {
@@ -196,7 +195,7 @@ export function filenameWithoutExtension(path: string) {
 	return path;
 }
 
-export function spreadOrEmpty<T>(array: T[]) {
+export function spreadOrEmpty<T>(array?: T[]) {
 	return [...(array ?? [])];
 }
 
