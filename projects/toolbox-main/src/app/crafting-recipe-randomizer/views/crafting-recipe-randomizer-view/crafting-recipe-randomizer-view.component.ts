@@ -55,7 +55,7 @@ export class CraftingRecipeRandomizerViewComponent implements OnInit, ITool {
 		let data = await this._activityMonitor.startActivity({
 			text: "Downloading necessary data...",
 			promise: new Promise<ArrayBuffer>((res, rej) => {
-				this._netRequest.binary(`resources/crafting-recipe-randomizer/${this.version}/data.zip`)
+				this._netRequest.uncachedBinary(`resources/crafting-recipe-randomizer/${this.version}/data.zip`)
 					.subscribe({
 						next: res,
 						error: rej

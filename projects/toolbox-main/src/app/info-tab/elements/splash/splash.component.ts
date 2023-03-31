@@ -1,5 +1,5 @@
-import { HttpClient } from "@angular/common/http";
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild } from "@angular/core";
+import { NetRequestService } from "src/app/common/services/net-request/net-request.service";
 import { ToolboxSettingsService } from "src/app/common/services/toolbox-settings/toolbox-settings.service";
 
 @Component({
@@ -13,7 +13,7 @@ export class SplashComponent implements AfterViewInit {
 	private _splashText!: ElementRef<HTMLElement>
 
 	public constructor(
-		private _httpClient: HttpClient,
+		private _netRequest: NetRequestService,
 		private _toolboxSettings: ToolboxSettingsService,
 		private _changeDetector: ChangeDetectorRef
 	) {
@@ -27,8 +27,8 @@ export class SplashComponent implements AfterViewInit {
 				if (uselessVisualsEnabled) {
 					this._splashText.nativeElement.style.removeProperty("display");
 
-					this._httpClient
-						.get("resources/data/splashes.txt", { responseType: "text" })
+					this._netRequest
+						.get<string>("resources/data/splashes.txt", { responseType: "text" })
 						.subscribe(text => {
 							let lines = text.split("\n").map(line => line.trim());
 							let splash = lines[Math.floor(Math.random() * lines.length)];

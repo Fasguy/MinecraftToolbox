@@ -1,6 +1,6 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ActivityMonitorService } from "../activity-monitor/activity-monitor.service";
+import { NetRequestService } from "../net-request/net-request.service";
 
 @Injectable({
 	providedIn: "root"
@@ -14,13 +14,13 @@ export class AssetManagerService {
 	}
 
 	public constructor(
-		private _http: HttpClient,
+		private _netRequest: NetRequestService,
 		activityMonitor: ActivityMonitorService
 	) {
 		this._loadingPromise = activityMonitor.startActivity({
 			text: "Loading asset definitions...",
 			promise: new Promise<void>((res, rej) => {
-				this._http.get<any>(`resources/data/asset_definitions.json`)
+				this._netRequest.get<any>(`resources/data/asset_definitions.json`)
 					.subscribe({
 						next: assets => {
 							this._assets = assets;

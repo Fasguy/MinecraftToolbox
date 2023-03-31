@@ -5,6 +5,7 @@
 	"scripts": {
 		"ng": "ng",
 		"start": "ng serve toolbox-main",
+		"start-net": "ng serve toolbox-main --host 0.0.0.0",
 		"start-utilities": "ng serve toolbox-utilities --port 4201",
 		"prebuild": "node --inspect -r ts-node/register projects/toolbox-main/prebuild.ts",
 		"build": "ng build toolbox-main",
