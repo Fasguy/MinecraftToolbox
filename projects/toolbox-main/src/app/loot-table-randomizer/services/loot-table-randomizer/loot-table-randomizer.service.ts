@@ -60,7 +60,7 @@ export class LootTableRandomizerService implements OnDestroy, OnInit {
 		if (options.deadEndIndicator) {
 			await this._activityMonitor.startActivity({
 				text: "Replacing empty loot-tables with dead end indicator item...",
-				promise: this._worker.replaceEmptyWithDummy()
+				promise: this._worker.replaceEmptyWithIndicator()
 			});
 		}
 

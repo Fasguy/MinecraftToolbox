@@ -185,7 +185,7 @@ export class LootTableRandomizerWorker {
 		}
 	}
 
-	public async replaceEmptyWithDummy() {
+	public async replaceEmptyWithIndicator() {
 		let deadEnd = new LootTableFile("data/fasguys_toolbox/loot_tables/generic/dead_end.json", {
 			type: "minecraft:block",
 			pools: [
