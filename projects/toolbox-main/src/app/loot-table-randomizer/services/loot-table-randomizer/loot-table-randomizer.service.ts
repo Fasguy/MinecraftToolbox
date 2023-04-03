@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, OnInit } from "@angular/core";
-import { Remote, transfer, wrap } from "comlink";
+import { Remote, wrap } from "comlink";
 import { ActivityMonitorService } from "src/app/common/services/activity-monitor/activity-monitor.service";
 import { download } from "src/lib/utils";
 import { LootTableRandomizerWorker } from "../../workers/loot-table-randomizer/loot-table-randomizer.worker";
@@ -25,8 +25,8 @@ export class LootTableRandomizerService implements OnDestroy, OnInit {
 		this._realWorker.terminate();
 	}
 
-	public async loadDatapackFiles(binaryDataPack: Uint8Array) {
-		return this._worker.loadDatapackData(transfer(binaryDataPack, [binaryDataPack.buffer]));
+	public async loadDataFromBlob(blob: Blob) {
+		return this._worker.loadDataFromBlob(blob);
 	}
 
 	public async randomize(options: RandomizeOptions) {
@@ -36,13 +36,13 @@ export class LootTableRandomizerService implements OnDestroy, OnInit {
 		});
 
 		await this._activityMonitor.startActivity({
-			text: "Generating cheatsheet...",
-			promise: this._worker.generateCheatsheet()
+			text: "Shuffling loot tables...",
+			promise: this._worker.shuffleLootTables()
 		});
 
 		await this._activityMonitor.startActivity({
-			text: "Shuffling loot tables...",
-			promise: this._worker.shuffleLootTables()
+			text: "Generating cheatsheet...",
+			promise: this._worker.generateCheatsheet()
 		});
 
 		await this._activityMonitor.startActivity({

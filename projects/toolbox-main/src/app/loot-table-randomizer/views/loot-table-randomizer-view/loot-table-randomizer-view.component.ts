@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { strFromU8, unzip } from "fflate";
 import { ITool } from "src/app/common/interfaces/tool";
 import { ActivityMonitorService } from "src/app/common/services/activity-monitor/activity-monitor.service";
 import { AssetManagerService } from "src/app/common/services/asset-manager/asset-manager.service";
@@ -59,8 +58,8 @@ export class LootTableRandomizerViewComponent implements OnInit, ITool {
 
 		let data = await this._activityMonitor.startActivity({
 			text: "Downloading necessary data...",
-			promise: new Promise<ArrayBuffer>((res, rej) => {
-				this._netRequest.uncachedBinary(`resources/loot-table-randomizer/${this.version}/data.zip`)
+			promise: new Promise<Blob>((res, rej) => {
+				this._netRequest.uncachedBlob(`resources/loot-table-randomizer/${this.version}/data.zip`)
 					.subscribe({
 						next: res,
 						error: rej
@@ -68,47 +67,33 @@ export class LootTableRandomizerViewComponent implements OnInit, ITool {
 			})
 		});
 
-		let dataCopy = new Uint8Array(new ArrayBuffer(data.byteLength));
-		dataCopy.set(new Uint8Array(data));
-
-		await this._assetManagerService.loading;
-
 		await this._activityMonitor.startActivity({
 			text: "Preparing necessary data pack data...",
 			promise: new Promise<void>(async (res, rej) => {
-				unzip(dataCopy, (err, result) => {
-					if (err) {
-						rej(err);
-						return;
-					}
+				let blobMetaData = await this._randomizerService.loadDataFromBlob(data);
 
-					if (result["meta.json"] != null) {
-						this.meta = mergeDeep(this.meta, JSON.parse(strFromU8(result["meta.json"])));
-					}
+				this.meta = mergeDeep(this.meta, blobMetaData.meta);
 
-					let dataJson: LootTableSelectionData = JSON.parse(strFromU8(result["selection_menu.json"]));
+				let entries: EntryGroup[] = [];
 
-					let entries: EntryGroup[] = [];
+				await this._assetManagerService.loading;
 
-					for (const group of Object.keys(dataJson)) {
-						entries.push({
-							title: this._assetManagerService.getString(group),
-							entries: dataJson[group].map(x => {
-								return {
-									text: this._assetManagerService.getString(x.assetId),
-									value: x.value,
-									checked: x.selected
-								}
-							})
-						});
-					}
+				for (const group of Object.keys(blobMetaData.selection)) {
+					entries.push({
+						title: this._assetManagerService.getString(group),
+						entries: blobMetaData.selection[group].map(x => {
+							return {
+								text: this._assetManagerService.getString(x.assetId),
+								value: x.value,
+								checked: x.selected
+							}
+						})
+					});
+				}
 
-					this.lootTables = entries;
+				this.lootTables = entries;
 
-					res();
-				});
-
-				await this._randomizerService.loadDatapackFiles(dataCopy);
+				res();
 			})
 		});
 	}
@@ -140,16 +125,6 @@ export class LootTableRandomizerViewComponent implements OnInit, ITool {
 	protected exportSettings = exportSettings.bind(this);
 
 	protected importSettings = importSettings.bind(this);
-}
-
-interface LootTableSelectionData {
-	[group: string]: LootTableSelectionEntry[];
-}
-
-interface LootTableSelectionEntry {
-	selected: boolean;
-	assetId: string;
-	value: string;
 }
 
 interface Additional {

@@ -75,6 +75,7 @@
 		border: none;
 		background: transparent;
 		width: 100%;
+		overflow: hidden;
 
 		&::before {
 			content: "⯅ Collapse list";

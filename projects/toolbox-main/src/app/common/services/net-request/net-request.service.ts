@@ -20,8 +20,12 @@ export class NetRequestService {
 	) {
 	}
 
-	public uncachedBinary(url: string) {
+	public uncachedArrayBuffer(url: string) {
 		return this._http.get(url, { responseType: "arraybuffer", headers: this._uncachedHeaders });
+	}
+
+	public uncachedBlob(url: string) {
+		return this._http.get(url, { responseType: "blob", headers: this._uncachedHeaders });
 	}
 
 	/**
