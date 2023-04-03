@@ -10,6 +10,7 @@ import { ToolboxSettingsService } from "../../services/toolbox-settings/toolbox-
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PanoramaComponent implements AfterViewInit {
+	private _enabled = false;
 	private _panoramaSrcCache: string | undefined;
 	private _firstPanoramaRendered = false;
 	private _image = document.createElement("img");
@@ -66,13 +67,19 @@ export class PanoramaComponent implements AfterViewInit {
 		this._toolboxSettings.Observe.uselessVisualsEnabled
 			.subscribe(uselessVisualsEnabled => {
 				this._canvas.nativeElement.style.display = "none";
-				if (uselessVisualsEnabled && this._firstPanoramaRendered) {
-					this._canvas.nativeElement.style.removeProperty("display");
-				}
+				this._enabled = false;
 
-				if (uselessVisualsEnabled && this._panoramaSrcCache) {
-					this._image.src = this._panoramaSrcCache;
-					this._panoramaSrcCache = undefined;
+				if (uselessVisualsEnabled) {
+					this._enabled = true;
+
+					if (this._firstPanoramaRendered) {
+						this._canvas.nativeElement.style.removeProperty("display");
+					}
+
+					if (this._panoramaSrcCache) {
+						this._image.src = this._panoramaSrcCache;
+						this._panoramaSrcCache = undefined;
+					}
 				}
 
 				this.resize();
@@ -176,14 +183,16 @@ export class PanoramaComponent implements AfterViewInit {
 		const up = [0, 1, 0];
 
 		let drawScene = (time: number) => {
-			let rotFactor = time / 1000 * .035;
-			let cameraPosition = [Math.cos(rotFactor), (-Math.cos(rotFactor * 2.1) + 1) * 0.5, Math.sin(rotFactor)];
-			let cameraMatrix = this.lookAt(cameraPosition, up);
-			let viewMatrix = this.inverse(cameraMatrix);
-			let viewDirectionProjectionMatrix = this.multiply(this._projectionMatrix, viewMatrix);
+			if (this._enabled) {
+				let rotFactor = time / 1000 * .035;
+				let cameraPosition = [Math.cos(rotFactor), (-Math.cos(rotFactor * 2.1) + 1) * 0.5, Math.sin(rotFactor)];
+				let cameraMatrix = this.lookAt(cameraPosition, up);
+				let viewMatrix = this.inverse(cameraMatrix);
+				let viewDirectionProjectionMatrix = this.multiply(this._projectionMatrix, viewMatrix);
 
-			this._context.uniformMatrix4fv(this._context.getUniformLocation(program, "u_projectionmatrix"), false, viewDirectionProjectionMatrix);
-			this._context.drawElements(this._context.TRIANGLES, 36, this._context.UNSIGNED_SHORT, 0);
+				this._context.uniformMatrix4fv(this._context.getUniformLocation(program, "u_projectionmatrix"), false, viewDirectionProjectionMatrix);
+				this._context.drawElements(this._context.TRIANGLES, 36, this._context.UNSIGNED_SHORT, 0);
+			}
 
 			requestAnimationFrame(drawScene);
 		}
@@ -192,6 +201,8 @@ export class PanoramaComponent implements AfterViewInit {
 
 	@HostListener("window:resize", ["$event"])
 	public resize = () => {
+		if (!this._enabled) return;
+
 		let canvas = this._canvas.nativeElement;
 
 		let zoomFactor = window.devicePixelRatio || window.screen.availWidth / document.documentElement.clientWidth;
