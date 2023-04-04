@@ -69,7 +69,7 @@ export class LootTableRandomizerViewComponent implements OnInit, ITool {
 
 		await this._activityMonitor.startActivity({
 			text: "Preparing necessary data pack data...",
-			promise: new Promise<void>(async (res, rej) => {
+			promise: (async () => {
 				let blobMetaData = await this._randomizerService.loadDataFromBlob(data);
 
 				this.meta = mergeDeep(this.meta, blobMetaData.meta);
@@ -92,9 +92,7 @@ export class LootTableRandomizerViewComponent implements OnInit, ITool {
 				}
 
 				this.lootTables = entries;
-
-				res();
-			})
+			})()
 		});
 	}
 

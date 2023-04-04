@@ -104,7 +104,9 @@
 			"additions": [
 				"New option for the Loot-Table randomizer, that allows empty loot-tables to output a dead end indicator item"
 			],
-			"modifications": [],
+			"modifications": [
+				"Template data packs now use the vanilla game file structure"
+			],
 			"removals": []
 		},
 		"notes": ""
