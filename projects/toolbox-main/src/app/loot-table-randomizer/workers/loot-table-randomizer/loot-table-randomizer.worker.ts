@@ -216,6 +216,20 @@ export class LootTableRandomizerWorker {
 						break;
 				}
 			}
+
+			let conditions = [
+				...originalFile.getConditions("minecraft:random_chance"),
+				...originalFile.getConditions("minecraft:random_chance_with_looting"),
+			];
+
+			for (const conditionKit of conditions) {
+				if (conditionKit.data.condition !== "minecraft:random_chance"
+					&& conditionKit.data.condition !== "minecraft:random_chance_with_looting") {
+					continue;
+				}
+
+				conditionKit.data.chance = 1;
+			}
 		}
 	}
 

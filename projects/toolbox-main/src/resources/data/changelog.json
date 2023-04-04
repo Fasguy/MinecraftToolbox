@@ -105,7 +105,9 @@
 				"New option for the Loot-Table randomizer, that allows empty loot-tables to output a dead end indicator item"
 			],
 			"modifications": [
-				"Template data packs now use the vanilla game file structure"
+				"Template data packs now use the vanilla game file structure",
+				"Blocks like tall grass and large ferns drop properly now (location_check condition gets removed)",
+				"Additional drops that use a random_chance condition are now guaranteed to drop, when the '100% drops' option is enabled"
 			],
 			"removals": []
 		},
