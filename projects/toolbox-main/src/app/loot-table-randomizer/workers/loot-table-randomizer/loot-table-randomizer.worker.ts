@@ -20,10 +20,10 @@ export class LootTableRandomizerWorker {
 
 	public async loadDataFromBlob(blob: Blob) {
 		const textDecoder = new TextDecoder();
-		const uz = new Unzip(async (file) => {
+		const uz = new Unzip((file) => {
 			const filePath = file.name.toLowerCase();
 			if ((file.originalSize || 0) > 0) {
-				const dataArrays: any[] = [];
+				const dataArrays: Uint8Array[] = [];
 
 				file.ondata = (err, data, final) => {
 					dataArrays.push(data);
@@ -56,7 +56,7 @@ export class LootTableRandomizerWorker {
 							}
 							break;
 						default:
-							console.log("The file " + filePath + " is not supported.");
+							console.log(`The file ${filePath} is not supported.`);
 							return;
 
 					}
