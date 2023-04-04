@@ -1,6 +1,7 @@
 import { expose } from "comlink";
 import { Unzip, UnzipInflate } from "fflate";
 import { LootTableFile } from "../../../../lib/ts-datapack-extensions/loot_table_file";
+import "../../../../lib/ts-datapack-extensions/loot_table_file_ex";
 import { DatapackSerializer } from "../../../../lib/ts-datapack-fflate/datapack-serializer";
 import { Datapack } from "../../../../lib/ts-datapack/datapack";
 import { GenericAdvancement } from "../../../../lib/ts-datapack/generic-advancement";
@@ -175,7 +176,8 @@ export class LootTableRandomizerWorker {
 			let conditions = [
 				...originalFile.getConditions("minecraft:killed_by_player"),
 				...originalFile.getConditions("minecraft:block_state_property"),
-			]
+				...originalFile.getConditionsWhenSiblingsExist("minecraft:location_check", "minecraft:block_state_property"),
+			];
 
 			for (const condition of conditions) {
 				condition.remove();
