@@ -1,16 +1,13 @@
 :host {
 	z-index: -1;
-}
-
-* {
-	font-size: 8px;
-}
-
-.isometric-container {
 	position: relative;
 	height: 312px;
 	display: flex;
 	flex-direction: column;
+}
+
+* {
+	font-size: 8px;
 }
 
 .scene,

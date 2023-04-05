@@ -10,6 +10,8 @@
 	<div class="content">
 		<router-outlet></router-outlet>
 	</div>
+
+	<tbx-music-area *ngIf="musicPlayerEnabled"></tbx-music-area>
 </div>
 
 <tbx-footer></tbx-footer>

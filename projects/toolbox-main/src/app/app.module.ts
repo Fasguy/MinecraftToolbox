@@ -2,7 +2,7 @@ import angularJson from "../../../../angular.json";
 
 //Base Angular Modules
 import { APP_BASE_HREF } from "@angular/common";
-import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "./app-routing.module";
@@ -18,6 +18,7 @@ import { HeaderComponent } from "./common/elements/header/header.component";
 import { InputCheckboxComponent } from "./common/elements/input-checkbox/input-checkbox.component";
 import { InputTextComponent } from "./common/elements/input-text/input-text.component";
 import { LoadingIndicatorComponent } from "./common/elements/loading-indicator/loading-indicator.component";
+import { MusicAreaComponent } from './common/elements/music-area/music-area.component';
 import { PanoramaComponent } from "./common/elements/panorama/panorama.component";
 import { SelectionComponent } from "./common/elements/selection/selection.component";
 import { SubSectionComponent } from "./common/elements/sub-section/sub-section.component";
@@ -74,7 +75,8 @@ import { ReversePipe } from "./common/pipes/reverse/reverse.pipe";
 		LootTableRandomizerFAQComponent,
 		CraftingRecipeRandomizerInstructionsComponent,
 		CraftingRecipeRandomizerFAQComponent,
-		PresetWarningComponent
+		PresetWarningComponent,
+		MusicAreaComponent
 	],
 	imports: [
 		BrowserModule,

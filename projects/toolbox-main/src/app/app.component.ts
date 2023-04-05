@@ -11,10 +11,11 @@ import { WindowService } from "./common/services/window-service/window.service";
 	styleUrls: ["./app.component.scss"],
 })
 export class AppComponent implements AfterViewInit {
-	protected version = packageJson.version;
+	protected readonly version = packageJson.version;
 
 	@ViewChild("windowContainer", { read: ViewContainerRef })
 	protected windowContainerTarget!: ViewContainerRef;
+	protected musicPlayerEnabled = false;
 
 	public constructor(
 		private _window: WindowService,
@@ -24,6 +25,8 @@ export class AppComponent implements AfterViewInit {
 		panorama: PanoramaService,
 		titleService: TitleService
 	) {
+		toolboxSettings.Observe.musicPlayerEnabled
+			.subscribe(musicPlayerEnabled => this.musicPlayerEnabled = musicPlayerEnabled);
 	}
 
 	public ngAfterViewInit() {

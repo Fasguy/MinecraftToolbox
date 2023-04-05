@@ -18,7 +18,7 @@ body {
 }
 
 body {
-	background: url("style/images/stone.png") repeat 0 0 / 48px 48px;
+	background: url("style/images/stone.png") repeat 0 0 / 3em 3em;
 }
 
 input {
@@ -28,7 +28,8 @@ input {
 a,
 u {
 	text-decoration: none;
-	border-bottom: 2px solid white;
+	border-bottom: 2px solid;
+	box-shadow: 1px 3px 0 -1px #3f3f3f;
 }
 
 .loading-logo {

@@ -40,6 +40,17 @@
 		]
 	},
 	{
+		"section": "Audio",
+		"titles": [
+			{
+				"title": "Music composed by",
+				"names": [
+					"Daniel Rosenfeld"
+				]
+			}
+		]
+	},
+	{
 		"section": "Tools, Libraries, etc.",
 		"titles": [
 			{

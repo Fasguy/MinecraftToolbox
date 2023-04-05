@@ -1,14 +1,11 @@
 :host {
 	z-index: -1;
+	position: relative;
+	height: 312px;
 }
 
 * {
 	font-size: 8px;
-}
-
-.isometric-container {
-	position: relative;
-	height: 312px;
 }
 
 .empty {

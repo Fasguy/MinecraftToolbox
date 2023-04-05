@@ -1,0 +1,7 @@
+<div *ngIf="playingAudio" class="now-playing">
+	Now playing: <a style="color:inherit" [href]="playingAudio.link" target="_blank">{{playingAudio.artist}} - {{playingAudio.title}}</a>
+</div>
+<div class="jukebox-container">
+	<div class="jukebox" (click)="jukeboxClick()"></div>
+	<div #note class="note" [style.display]="!!playingAudio ? 'block' : 'none'"></div>
+</div>

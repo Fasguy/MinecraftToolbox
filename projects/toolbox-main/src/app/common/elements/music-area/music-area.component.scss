@@ -1,0 +1,96 @@
+:host {
+	padding-top: 0.5em;
+	margin: auto 0 -0.5em;
+	display: flex;
+	flex-direction: row-reverse;
+	overflow: visible;
+	width: 100%;
+	position: relative;
+}
+
+.jukebox-container {
+	position: relative;
+}
+
+.jukebox {
+	width: 3em;
+	height: 3em;
+	background: url("../../../../style/sprites/jukebox_side.png");
+	background-size: cover;
+	cursor: pointer;
+}
+
+.note {
+	width: 1.5em;
+	height: 1.5em;
+	background: url("../../../../style/sprites/note.png");
+	background-size: cover;
+	position: absolute;
+	bottom: 100%;
+	margin: auto;
+	left: 0;
+	right: 0;
+	background-blend-mode: multiply;
+	mask-image: url("../../../../style/sprites/note.png");
+	mask-mode: alpha;
+	mask-size: cover;
+	animation: note 1s infinite;
+}
+
+.now-playing {
+	animation: rainbow 5s infinite linear;
+	position: absolute;
+	bottom: 0;
+	text-align: center;
+	width: 100%;
+	margin-bottom: 1em;
+}
+
+@keyframes note {
+	0% {
+		bottom: 100%;
+	}
+
+	0% {
+		animation-timing-function: steps(1);
+		opacity: 1;
+	}
+
+	20%,
+	100% {
+		bottom: 150%;
+		opacity: 0;
+	}
+}
+
+@keyframes rainbow {
+
+	0%,
+	100% {
+		color: red;
+	}
+
+	14% {
+		color: orange;
+	}
+
+	29% {
+		color: yellow;
+	}
+
+	43% {
+		color: green;
+	}
+
+	57% {
+		color: blue;
+	}
+
+	71% {
+		color: indigo;
+	}
+
+	86% {
+		color: violet;
+	}
+}
