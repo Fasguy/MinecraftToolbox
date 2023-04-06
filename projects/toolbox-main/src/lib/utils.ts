@@ -6,26 +6,6 @@ import { deserialize, serialize } from "src/lib/serialize-form";
 import { Datapack } from "./ts-datapack/datapack";
 import { GenericAdvancement } from "./ts-datapack/generic-advancement";
 
-export function flatten(obj: any, prefix: string, separator: string, dict: any) {
-	for (const key in obj) {
-		let newKey: string;
-		if (prefix != "") {
-			newKey = prefix + separator + key;
-		} else {
-			newKey = key;
-		}
-
-		let value = obj[key];
-		if (typeof value === "object" && !isArrayOrTypedArray(value)) {
-			flatten(value, newKey, separator, dict);
-		} else {
-			dict[newKey] = value;
-		}
-	}
-
-	return dict;
-}
-
 export function duckCheck(obj: any, ...properties: any[]) {
 	for (const property of properties) {
 		if (typeof obj[property] === "undefined") {
@@ -78,10 +58,6 @@ export function trimEnd(str: string, text: string) {
 	return str;
 }
 
-export function trim(str: string, text: string) {
-	return trimStart(trimEnd(str, text), text);
-}
-
 export function shuffle<T>(array: T[], random = Math.random) {
 	//Preventing a potential infinite loop
 	if (array.length < 2) return array;
@@ -95,15 +71,6 @@ export function shuffle<T>(array: T[], random = Math.random) {
 		}
 		while (j === i);
 
-		[array[i], array[j]] = [array[j], array[i]];
-	}
-
-	return array;
-}
-
-export function shuffleSattolo<T>(array: T[], random = Math.random) {
-	for (let i = array.length; i-- > 1;) {
-		let j = Math.floor(random() * i);
 		[array[i], array[j]] = [array[j], array[i]];
 	}
 
@@ -136,10 +103,6 @@ export function hashCode(input: string) {
 
 	return hash;
 };
-
-export function isArrayOrTypedArray(arg: any) {
-	return Boolean(arg && (typeof arg === "object") && (Array.isArray(arg) || (ArrayBuffer.isView(arg) && !(arg instanceof DataView))));
-}
 
 export function addMainDatapackAdvancement(datapack: Datapack) {
 	let advancement = new GenericAdvancement("data/fasguys_toolbox/advancements/root.json");
