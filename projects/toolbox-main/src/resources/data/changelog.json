@@ -105,7 +105,8 @@
 				"New option for the Loot-Table randomizer, that allows empty loot-tables to output a dead end indicator item",
 				"Added a togglable music player, that plays the Minecraft soundtrack",
 				"Added Loot-Table randomizer for Minecraft v1.20",
-				"Added Crafting-Recipe randomizer for Minecraft v1.20"
+				"Added Crafting-Recipe randomizer for Minecraft v1.20",
+				"Drops requiring a specific tool can now be obtained in more circumstances. Entities drop them when the appropriate tool is used. Blocks require the tool to be either in the main- or offhand."
 			],
 			"modifications": [
 				"Template data packs now use the vanilla game file structure",
