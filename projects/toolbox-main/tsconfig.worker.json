@@ -4,7 +4,7 @@
 	"compilerOptions": {
 		"outDir": "../../out-tsc/worker",
 		"lib": [
-			"ES2017",
+			"ES2020",
 			"WebWorker"
 		],
 		"types": []

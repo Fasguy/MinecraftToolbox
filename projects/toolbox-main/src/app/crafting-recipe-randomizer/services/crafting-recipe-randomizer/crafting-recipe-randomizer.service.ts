@@ -55,6 +55,10 @@ export class CraftingRecipeRandomizerService implements OnInit, OnDestroy {
 			promise: (async () => download(`${finalDatapackData.filename}.zip`, finalDatapackData.href))()
 		});
 	}
+
+	public async generateSelectionData() {
+		return this._worker.generateSelectionData();
+	}
 }
 
 type RandomizeOptions = {

@@ -85,7 +85,6 @@ export class CraftingRecipeRandomizerWorker {
 		}
 
 		return {
-			selection: <CraftingRecipeSelectionData>(this._loadedDatapack.get<GenericFile>(".fasguystoolbox/selection.json")?.data ?? {}),
 			meta: this._loadedDatapack.get<GenericFile>(".fasguystoolbox/meta.json")?.data ?? {}
 		}
 	}
@@ -191,18 +190,61 @@ export class CraftingRecipeRandomizerWorker {
 			filename: this._finalDatapack.name
 		}
 	}
+
+	public async generateSelectionData() {
+		let selection = <CraftingRecipeSelectionData>(this._loadedDatapack.get<GenericFile>(".fasguystoolbox/selection.json")?.data ?? {});
+		let selectionRegex = /^data\/[^\/\n]*\/recipes\/[^\/\n]*\.json$/gm;
+		let recipesInLoadedFiles = this._loadedDatapack.allFilePaths.join("\n").matchAll(selectionRegex);
+
+		function getGroupDefinition(type: string) {
+			type = type.split(":")[1] ?? type;
+			if (type.startsWith("crafting")) {
+				//Any kind of general crafting is just grouped together under the "crafting" group.
+				type = "crafting";
+			}
+
+			return `toolbox:crafting_recipes_randomizer_group_${type}`;
+		}
+
+		function getResultingItem(recipe: any) {
+			if (typeof recipe["result"] === "string") {
+				return recipe["result"];
+			} else if (typeof recipe["result"] === "object") {
+				return recipe["result"]["item"];
+			} else {
+				return "";
+			}
+		}
+
+		let selectionMenu: Indexable = {};
+
+		for (const loadedFile of recipesInLoadedFiles) {
+			let filePath = loadedFile[0];
+			let data = <Indexable>this._loadedDatapack.get<GenericFile>(filePath)!.data;
+
+			let resultingItem = getResultingItem(data);
+
+			if (resultingItem === "") continue;
+
+			let optGroup = getGroupDefinition(data["type"]);
+
+			selectionMenu[optGroup] = selectionMenu[optGroup] ?? [];
+
+			selectionMenu[optGroup].push({
+				selected: !selection.unselected.includes(filePath),
+				assetId: resultingItem,
+				value: filePath
+			});
+		}
+
+		return selectionMenu;
+	}
 }
 
 expose(CraftingRecipeRandomizerWorker);
 
 type Indexable = { [key: string]: any };
 
-interface CraftingRecipeSelectionData {
-	[group: string]: CraftingRecipeSelectionEntry[];
-}
-
-interface CraftingRecipeSelectionEntry {
-	selected: boolean;
-	assetId: string;
-	value: string;
+export type CraftingRecipeSelectionData = {
+	unselected: string[];
 }

@@ -69,18 +69,20 @@ export class CraftingRecipeRandomizerViewComponent implements OnInit, ITool {
 		await this._activityMonitor.startActivity({
 			text: "Preparing necessary data pack data...",
 			promise: (async () => {
-				let blobMetaData = await this._randomizerService.loadDataFromBlob(data);
+				let { meta } = await this._randomizerService.loadDataFromBlob(data);
 
-				this.meta = mergeDeep(this.meta, blobMetaData.meta);
+				this.meta = mergeDeep(this.meta, meta);
 
 				let entries: EntryGroup[] = [];
 
 				await this._assetManagerService.loading;
 
-				for (const group of Object.keys(blobMetaData.selection)) {
+				let selection = await this._randomizerService.generateSelectionData();
+
+				for (const group of Object.keys(selection)) {
 					entries.push({
 						title: this._assetManagerService.getString(group),
-						entries: blobMetaData.selection[group].map(x => {
+						entries: selection[group].map((x: any) => {
 							return {
 								text: this._assetManagerService.getString(x.assetId),
 								value: x.value,
