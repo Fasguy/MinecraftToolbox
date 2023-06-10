@@ -7,6 +7,7 @@ import { Datapack } from "../../../../lib/ts-datapack/datapack";
 import { GenericAdvancement } from "../../../../lib/ts-datapack/generic-advancement";
 import { GenericFile } from "../../../../lib/ts-datapack/genericfile";
 import { IFolder } from "../../../../lib/ts-datapack/interfaces/folder";
+import { IPredicate_EntityProperties } from "../../../../lib/ts-datapack/interfaces/predicate";
 import { Pack_MCMeta } from "../../../../lib/ts-datapack/pack_mcmeta";
 import { addMainDatapackAdvancement, filenameWithoutExtension, seededRandom, shuffle } from "../../../../lib/utils";
 
@@ -230,6 +231,67 @@ export class LootTableRandomizerWorker {
 				}
 
 				conditionKit.data.chance = 1;
+			}
+		}
+	}
+
+	public async fixMatchTool() {
+		for (let i = 0; i < this._defaultLootTableFilePaths.length; i++) {
+			let originalFile = this._finalDatapack.get<LootTableFile>(this._defaultLootTableFilePaths[i])!;
+
+			let conditions = originalFile.getConditions("minecraft:match_tool");
+
+			if (this._defaultLootTableFilePaths[i].split("/")[3] === "entities") {
+				fixEntity(conditions);
+			} else {
+				fixBlock(conditions);
+			}
+		}
+
+		function fixEntity(conditions: any[]) {
+			for (const conditionKit of conditions) {
+				let data = conditionKit.data as IPredicate_EntityProperties;
+				data.condition = "minecraft:entity_properties";
+				data.entity = "killer";
+
+				data.predicate = {
+					equipment: {
+						mainhand: {
+							...data.predicate
+						}
+					}
+				};
+			}
+		}
+
+		function fixBlock(conditions: any[]) {
+			for (const conditionKit of conditions) {
+				conditionKit.data.condition = "minecraft:any_of";
+				conditionKit.data.terms = [
+					{
+						condition: "minecraft:entity_properties",
+						entity: "this",
+						predicate: {
+							equipment: {
+								mainhand: {
+									...conditionKit.data.predicate
+								}
+							}
+						}
+					},
+					{
+						condition: "minecraft:entity_properties",
+						entity: "this",
+						predicate: {
+							equipment: {
+								offhand: {
+									...conditionKit.data.predicate
+								}
+							}
+						}
+					}
+				];
+				delete conditionKit.data.predicate;
 			}
 		}
 	}

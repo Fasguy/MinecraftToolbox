@@ -50,6 +50,11 @@ export class LootTableRandomizerService implements OnDestroy, OnInit {
 			promise: this._worker.removeConditions()
 		});
 
+		await this._activityMonitor.startActivity({
+			text: "Fixing match_tool conditions...",
+			promise: this._worker.fixMatchTool()
+		});
+
 		if (options.dropChance100) {
 			await this._activityMonitor.startActivity({
 				text: "Manipulating drop chances...",
