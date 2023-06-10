@@ -2,7 +2,7 @@ import { Enchantment } from "../enums/resource_locations/enchantment";
 import { INumberProvider } from "./number_provider";
 import { IRange } from "./range";
 
-export type IPredicate = IPredicate_Alternative
+export type IPredicate = IPredicate_AnyOf
 	| IPredicate_BlockStateProperty
 	| IPredicate_DamageSourceProperties
 	| IPredicate_EntityProperties
@@ -20,8 +20,8 @@ export type IPredicate = IPredicate_Alternative
 	| IPredicate_ValueCheck
 	| IPredicate_WeatherCheck;
 
-type IPredicate_Alternative = {
-	condition: "minecraft:alternative";
+export type IPredicate_AnyOf = {
+	condition: "minecraft:alternative" | "minecraft:any_of";
 	terms: IPredicate[];
 }
 
@@ -51,7 +51,7 @@ type IPredicate_DamageSourceProperties_Predicate_Base = {
 	source_entity: any; //TODO: Implement this
 }
 
-type IPredicate_EntityProperties = {
+export type IPredicate_EntityProperties = {
 	condition: "minecraft:entity_properties";
 	entity: "this" | "killer" | "killer_player" | "direct_killer";
 	predicate: any; //TODO: Implement this

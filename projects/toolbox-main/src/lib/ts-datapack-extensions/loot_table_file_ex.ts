@@ -29,6 +29,15 @@ function getConditions(this: LootTableFile, condition: string) {
 		if (!conditions) return;
 
 		for (const predicate of [...conditions]) {
+			//TODO: This should either bail after a certain amount of recursions, or be turned into a loop instead.
+			if (predicate.condition === "minecraft:any_of" || predicate.condition === "minecraft:alternative") {
+				pushConditions(predicate.terms);
+			}
+
+			if (predicate.condition === "minecraft:inverted") {
+				pushConditions([predicate.term]);
+			}
+
 			if (predicate.condition === condition) {
 				finalConditions.push({
 					data: predicate,
