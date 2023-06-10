@@ -1,4 +1,5 @@
 import angularJson from "../../../../angular.json";
+import "./prototype/array.prototype";
 
 //Base Angular Modules
 import { APP_BASE_HREF } from "@angular/common";

@@ -103,7 +103,9 @@
 		"changes": {
 			"additions": [
 				"New option for the Loot-Table randomizer, that allows empty loot-tables to output a dead end indicator item",
-				"Added a togglable music player, that plays the Minecraft soundtrack"
+				"Added a togglable music player, that plays the Minecraft soundtrack",
+				"Added Loot-Table randomizer for Minecraft v1.20",
+				"Added Crafting-Recipe randomizer for Minecraft v1.20"
 			],
 			"modifications": [
 				"Template data packs now use the vanilla game file structure",
