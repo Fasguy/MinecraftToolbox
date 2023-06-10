@@ -87,8 +87,9 @@ export class LootTableRandomizerWorker {
 		}
 
 		return {
+			meta: this._loadedDatapack.get<GenericFile>(".fasguystoolbox/meta.json")?.data ?? {},
 			selection: <LootTableSelectionData>(this._loadedDatapack.get<GenericFile>(".fasguystoolbox/selection.json")?.data ?? {}),
-			meta: this._loadedDatapack.get<GenericFile>(".fasguystoolbox/meta.json")?.data ?? {}
+			loadedFiles: this._loadedDatapack.allFilePaths
 		}
 	}
 
@@ -300,12 +301,12 @@ export class LootTableRandomizerWorker {
 
 expose(LootTableRandomizerWorker);
 
-interface LootTableSelectionData {
-	[group: string]: LootTableSelectionEntry[];
+export type LootTableSelectionData = {
+	groups: Groups;
+	unselected: string[];
 }
 
-interface LootTableSelectionEntry {
-	selected: boolean;
-	assetId: string;
-	value: string;
+export type Groups = {
+	regex: string;
+	asset_definition_template: string;
 }

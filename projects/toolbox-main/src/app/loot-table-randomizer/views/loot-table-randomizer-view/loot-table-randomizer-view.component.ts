@@ -70,23 +70,32 @@ export class LootTableRandomizerViewComponent implements OnInit, ITool {
 		await this._activityMonitor.startActivity({
 			text: "Preparing necessary data pack data...",
 			promise: (async () => {
-				let blobMetaData = await this._randomizerService.loadDataFromBlob(data);
+				let { meta, selection, loadedFiles } = await this._randomizerService.loadDataFromBlob(data);
 
-				this.meta = mergeDeep(this.meta, blobMetaData.meta);
+				this.meta = mergeDeep(this.meta, meta);
 
 				let entries: EntryGroup[] = [];
 
 				await this._assetManagerService.loading;
 
-				for (const group of Object.keys(blobMetaData.selection)) {
+				let selectionRegex = new RegExp(selection.groups.regex, "gm");
+				let groupsInLoadedFiles = loadedFiles.join("\n").matchAll(selectionRegex);
+				let selectionList = [...groupsInLoadedFiles].groupBy(x => x[2]);
+
+				for (const [key, entry] of selectionList) {
+					let groupAssetDefinition = selection.groups.asset_definition_template.replace("$1", key);
+
 					entries.push({
-						title: this._assetManagerService.getString(group),
-						entries: blobMetaData.selection[group].map(x => {
+						title: this._assetManagerService.getString(groupAssetDefinition),
+						entries: entry.map(x => {
+							let namespace = x[1];
+							let assetId = x[3].replace("/", "_");
+
 							return {
-								text: this._assetManagerService.getString(x.assetId),
-								value: x.value,
-								checked: x.selected
-							}
+								text: this._assetManagerService.getString(`${namespace}:${assetId}`),
+								value: x[0],
+								checked: !selection.unselected.includes(x[0])
+							};
 						})
 					});
 				}
