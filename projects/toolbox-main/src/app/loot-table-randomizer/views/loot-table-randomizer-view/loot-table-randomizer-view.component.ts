@@ -78,12 +78,17 @@ export class LootTableRandomizerViewComponent implements OnInit, ITool {
 
 				await this._assetManagerService.loading;
 
-				let selectionRegex = new RegExp(selection.groups.regex, "gm");
+				/*
+					Match1: Namespace
+					Match2: Group
+					Match3: Loot-Table
+				*/
+				let selectionRegex = /^data\/([^\/\n]*)\/loot_tables\/([^\/\n]*)\/([^\n]*)\.json$/gm;
 				let groupsInLoadedFiles = loadedFiles.join("\n").matchAll(selectionRegex);
 				let selectionList = [...groupsInLoadedFiles].groupBy(x => x[2]);
 
 				for (const [key, entry] of selectionList) {
-					let groupAssetDefinition = selection.groups.asset_definition_template.replace("$1", key);
+					let groupAssetDefinition = `toolbox:loot_table_randomizer_group_${key}`;
 
 					entries.push({
 						title: this._assetManagerService.getString(groupAssetDefinition),

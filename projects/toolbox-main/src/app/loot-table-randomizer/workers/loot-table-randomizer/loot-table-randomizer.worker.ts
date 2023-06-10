@@ -302,11 +302,5 @@ export class LootTableRandomizerWorker {
 expose(LootTableRandomizerWorker);
 
 export type LootTableSelectionData = {
-	groups: Groups;
 	unselected: string[];
-}
-
-export type Groups = {
-	regex: string;
-	asset_definition_template: string;
 }
