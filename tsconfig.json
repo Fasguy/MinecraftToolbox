@@ -18,11 +18,11 @@
 		"resolveJsonModule": true,
 		"allowSyntheticDefaultImports": true,
 		"target": "ES2022",
-		"module": "es2020",
+		"module": "ES2020",
 		"lib": [
-			"es2020",
-			"dom",
-			"dom.iterable"
+			"ES2017",
+			"DOM",
+			"DOM.Iterable"
 		],
 		"useDefineForClassFields": false
 	},

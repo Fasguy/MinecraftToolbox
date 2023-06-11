@@ -11,7 +11,7 @@ export class ActivityMonitorService {
 	private _activityMonitor!: ActivityMonitorComponent;
 	private _activities = new ObservableActivities();
 
-	constructor(
+	public constructor(
 		errorHandler: ErrorHandlerService
 	) {
 		this._activities.errorHandler = errorHandler;

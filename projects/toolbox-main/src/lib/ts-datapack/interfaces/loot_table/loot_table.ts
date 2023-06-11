@@ -16,8 +16,8 @@ export type ILootTable = ILootTable_Base
 		| ILootTable_Block);
 
 type ILootTable_Base = {
-	functions: IItemFunction[];
-	pools: IPool[];
+	functions?: IItemFunction[];
+	pools?: IPool[];
 }
 
 type ILootTable_Empty = {

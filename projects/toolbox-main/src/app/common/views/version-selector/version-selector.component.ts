@@ -1,30 +1,33 @@
-import { HttpClient } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { catchError, of } from "rxjs";
 import { ActivityMonitorService } from "../../services/activity-monitor/activity-monitor.service";
+import { NetRequestService } from "../../services/net-request/net-request.service";
 
 @Component({
 	selector: "tbx-version-selector",
 	templateUrl: "./version-selector.component.html",
-	styleUrls: ["./version-selector.component.scss"]
+	styleUrls: ["./version-selector.component.scss"],
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VersionSelectorViewComponent implements OnInit {
 	public versionGroups: VersionGroup[] = [];
 
-	constructor(
+	public constructor(
 		private _activatedRoute: ActivatedRoute,
-		private _http: HttpClient,
-		private _activityMonitor: ActivityMonitorService
+		private _netRequest: NetRequestService,
+		private _activityMonitor: ActivityMonitorService,
+		private _changeDetector: ChangeDetectorRef
 	) {
+		this._changeDetector.detach();
 	}
 
-	ngOnInit(): void {
-		this._activatedRoute.data.subscribe(data => {
-			this._activityMonitor.startActivity({
+	public ngOnInit(): void {
+		this._activatedRoute.data.subscribe(async data => {
+			await this._activityMonitor.startActivity({
 				text: "Loading versionlist...",
 				promise: new Promise<void>((res, rej) => {
-					this._http.get<VersionGroup[]>(data["versionInfo"])
+					this._netRequest.get<VersionGroup[]>(data["versionInfo"])
 						.pipe(catchError(error => {
 							rej(error);
 
@@ -36,6 +39,8 @@ export class VersionSelectorViewComponent implements OnInit {
 						});
 				})
 			});
+
+			this._changeDetector.detectChanges();
 		});
 	}
 }

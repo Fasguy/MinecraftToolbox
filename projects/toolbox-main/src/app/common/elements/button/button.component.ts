@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from "@angular/core";
 
 @Component({
 	selector: "button[standard]",
@@ -7,4 +7,7 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ButtonComponent {
+	public constructor(changeDetector: ChangeDetectorRef) {
+		changeDetector.detach();
+	}
 }

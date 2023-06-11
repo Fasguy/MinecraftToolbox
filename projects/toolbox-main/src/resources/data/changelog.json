@@ -96,5 +96,25 @@
 			"removals": []
 		},
 		"notes": ""
+	},
+	{
+		"version": "1.3.0",
+		"build_date": "2023-06-11",
+		"changes": {
+			"additions": [
+				"New option for the Loot-Table randomizer, that allows empty loot-tables to output a dead end indicator item",
+				"Added a togglable music player, that plays the Minecraft soundtrack",
+				"Added Loot-Table randomizer for Minecraft v1.20",
+				"Added Crafting-Recipe randomizer for Minecraft v1.20",
+				"Drops requiring a specific tool can now be obtained in more circumstances. Entities drop them when the appropriate tool is used. Blocks require the tool to be either in the main- or offhand."
+			],
+			"modifications": [
+				"Template data packs now use the vanilla game file structure",
+				"Blocks like tall grass and large ferns drop properly now (location_check condition gets removed)",
+				"Additional drops that use a random_chance condition are now guaranteed to drop, when the '100% drops' option is enabled"
+			],
+			"removals": []
+		},
+		"notes": ""
 	}
 ]

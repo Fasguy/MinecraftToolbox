@@ -7,7 +7,7 @@ import { filter } from "rxjs";
 	providedIn: "root"
 })
 export class TitleService {
-	constructor(
+	public constructor(
 		angularTitleService: Title,
 		router: Router
 	) {

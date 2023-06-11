@@ -11,6 +11,19 @@ export class GenericFile implements IFile {
 		this.data = data;
 	}
 
+	public clone() {
+		switch (this.type) {
+			case "string":
+				return new GenericFile(this.name, this.type, <string>this.data);
+			case "json":
+				return new GenericFile(this.name, this.type, JSON.parse(JSON.stringify(this.data)));
+			case "binary":
+				return new GenericFile(this.name, this.type, new Uint8Array(<Uint8Array>this.data));
+			default:
+				throw new Error(`Unknown file type: ${this.type}`);
+		}
+	}
+
 	public serialize(): DataType {
 		switch (this.type) {
 			case "string":

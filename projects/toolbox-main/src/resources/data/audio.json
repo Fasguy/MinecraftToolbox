@@ -1,0 +1,409 @@
+[
+	{
+		"collection": "Volume Alpha",
+		"type": "music",
+		"audio": [
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=1660675500&ts=1680638147&t=2cd6827dac89878a758a770aaeb4bcc86b567a44",
+				"artist": "C418",
+				"title": "Key",
+				"link": "https://c418.bandcamp.com/track/key",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=3581762746&ts=1680638147&t=828bc270c5cf98978bd3c1b338efbb96776adb06",
+				"artist": "C418",
+				"title": "Door",
+				"link": "https://c418.bandcamp.com/track/door",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=3682947588&ts=1680638147&t=c3841a80f11657a92a32505b8cd4b42107239c67",
+				"artist": "C418",
+				"title": "Subwoofer Lullaby",
+				"link": "https://c418.bandcamp.com/track/subwoofer-lullaby",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=2089797526&ts=1680638147&t=de7476295c7e0e55c146eb9080c9758c2a294bc6",
+				"artist": "C418",
+				"title": "Death",
+				"link": "https://c418.bandcamp.com/track/death",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=2964017241&ts=1680638147&t=61cd7598eccd97231ccdf980ec19e0c83304e6c0",
+				"artist": "C418",
+				"title": "Living Mice",
+				"link": "https://c418.bandcamp.com/track/living-mice",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=1892225414&ts=1680638147&t=d193b3766c9d0113941b4640a792920c2a39c07f",
+				"artist": "C418",
+				"title": "Moog City",
+				"link": "https://c418.bandcamp.com/track/moog-city",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=1150244227&ts=1680638147&t=1aff317b1e661ff8745a918e4da3cf0303a161c3",
+				"artist": "C418",
+				"title": "Haggstrom",
+				"link": "https://c418.bandcamp.com/track/haggstrom",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=1691975503&ts=1680638147&t=05f41dfa93087d17736fda3200951e120d662b4a",
+				"artist": "C418",
+				"title": "Minecraft",
+				"link": "https://c418.bandcamp.com/track/minecraft",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=189485533&ts=1680638147&t=8cb98b111839d6a8ab2a759c58bb01af9c55c02f",
+				"artist": "C418",
+				"title": "Oxygène",
+				"link": "https://c418.bandcamp.com/track/oxyg-ne",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=1567840571&ts=1680638147&t=988ddf6e8c072b823e83d1d39411d6cdd932ac47",
+				"artist": "C418",
+				"title": "Équinoxe",
+				"link": "https://c418.bandcamp.com/track/quinoxe",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=1757138908&ts=1680638147&t=9e42137919c37b75f2b1290a9908440e619f18b8",
+				"artist": "C418",
+				"title": "Mice on Venus",
+				"link": "https://c418.bandcamp.com/track/mice-on-venus",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=4284425828&ts=1680638147&t=a322c87c121f44a03fbad274449168e0093f0d2f",
+				"artist": "C418",
+				"title": "Dry Hands",
+				"link": "https://c418.bandcamp.com/track/dry-hands",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=3833157147&ts=1680638147&t=82b86e3e2047581736da404452059b5fdeb84e44",
+				"artist": "C418",
+				"title": "Wet Hands",
+				"link": "https://c418.bandcamp.com/track/wet-hands",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=3353184611&ts=1680638147&t=3086b3392c9de5e7010566811f21e18bb0be3fa4",
+				"artist": "C418",
+				"title": "Clark",
+				"link": "https://c418.bandcamp.com/track/clark",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=3442039193&ts=1680638147&t=7a9854993bd42fc13ba211ec65b8d3f2181f2296",
+				"artist": "C418",
+				"title": "Chris",
+				"link": "https://c418.bandcamp.com/track/chris",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=3873474589&ts=1680638147&t=42204d62e338184fe5b61272b495ea66d6df247b",
+				"artist": "C418",
+				"title": "Thirteen",
+				"link": "https://c418.bandcamp.com/track/thirteen",
+				"tags": [
+					"never"
+				]
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=1623241920&ts=1680638147&t=a653b76cb52b3d91bf74c3a00f1c380b0893a209",
+				"artist": "C418",
+				"title": "Excuse",
+				"link": "https://c418.bandcamp.com/track/excuse",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=890894942&ts=1680638147&t=5fda41e54c5132e5f9e9e0d9db9278ff14025523",
+				"artist": "C418",
+				"title": "Sweden",
+				"link": "https://c418.bandcamp.com/track/sweden",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=49118418&ts=1680638147&t=b5e32a93c3ea417dc1985ce0297cf1629c5dda1c",
+				"artist": "C418",
+				"title": "Cat",
+				"link": "https://c418.bandcamp.com/track/cat",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=777244641&ts=1680638147&t=3b97b5288e5dd06b35cd1c1db926a1150587acc5",
+				"artist": "C418",
+				"title": "Dog",
+				"link": "https://c418.bandcamp.com/track/dog",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=2267453503&ts=1680638147&t=cc3c8fc35b299890b6994e37e14b50721c607bab",
+				"artist": "C418",
+				"title": "Danny",
+				"link": "https://c418.bandcamp.com/track/danny",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=350976086&ts=1680638147&t=3a33c5faf6f1c0825ceefa74678ef8a37c05aa40",
+				"artist": "C418",
+				"title": "Beginning",
+				"link": "https://c418.bandcamp.com/track/beginning",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=3952850782&ts=1680638147&t=848512b8d18f89386b49896cb8cde97714d5acd4",
+				"artist": "C418",
+				"title": "Droopy likes ricochet",
+				"link": "https://c418.bandcamp.com/track/droopy-likes-ricochet-2",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=1122137027&ts=1680638147&t=91c5a8907f1d61cfd4cf3a0a122919ac8349c8ed",
+				"artist": "C418",
+				"title": "Droopy likes your face",
+				"link": "https://c418.bandcamp.com/track/droopy-likes-your-face-2",
+				"tags": []
+			}
+		]
+	},
+	{
+		"collection": "Volume Beta",
+		"type": "music",
+		"audio": [
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=709916271&ts=1680638708&t=d0ddba20471d79aa44096696beb46368df5d11c8",
+				"artist": "C418",
+				"title": "Ki",
+				"link": "https://c418.bandcamp.com/track/ki",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=823733515&ts=1680638708&t=38d990a75b0151426f51feabfb128e03ec9f89e1",
+				"artist": "C418",
+				"title": "Alpha",
+				"link": "https://c418.bandcamp.com/track/alpha",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=2875488615&ts=1680638708&t=b41b9bc97856d5ea44d6b1b5c915dccb175feb3c",
+				"artist": "C418",
+				"title": "Dead Voxel",
+				"link": "https://c418.bandcamp.com/track/dead-voxel",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=1422510759&ts=1680638708&t=c2f0c2b34fe07bbffbc2769ab0559a95be9df7cd",
+				"artist": "C418",
+				"title": "Blind Spots",
+				"link": "https://c418.bandcamp.com/track/blind-spots",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=3670026940&ts=1680638708&t=003528a271752e4d959329426f0e1de11cf06992",
+				"artist": "C418",
+				"title": "Flake",
+				"link": "https://c418.bandcamp.com/track/flake",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=830438521&ts=1680638708&t=0d890f3601212cf4107e8d876be469548d3e0fd6",
+				"artist": "C418",
+				"title": "Moog City 2",
+				"link": "https://c418.bandcamp.com/track/moog-city-2",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=1802280563&ts=1680638708&t=ffad96faed4dfc8461d276569922a6b7b393ab28",
+				"artist": "C418",
+				"title": "Concrete Halls",
+				"link": "https://c418.bandcamp.com/track/concrete-halls",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=1120475145&ts=1680638708&t=8fba8c47f6a274fabd6dd51f7aabf1858a6320f9",
+				"artist": "C418",
+				"title": "Biome Fest",
+				"link": "https://c418.bandcamp.com/track/biome-fest",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=3599992614&ts=1680638708&t=05307fd66420c29be6c1532a3e07facb3304f6a6",
+				"artist": "C418",
+				"title": "Mutation",
+				"link": "https://c418.bandcamp.com/track/mutation",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=644556515&ts=1680638708&t=5fe51efbebe080ec0e9af725cadd3f8acce60b9b",
+				"artist": "C418",
+				"title": "Haunt Muskie",
+				"link": "https://c418.bandcamp.com/track/haunt-muskie",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=340335505&ts=1680638708&t=e199bf046dedb900fa703edb16561522da9b5008",
+				"artist": "C418",
+				"title": "Warmth",
+				"link": "https://c418.bandcamp.com/track/warmth",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=2790843423&ts=1680638708&t=c9f9bad82c6081826005551cd4eb1e8cb9eef587",
+				"artist": "C418",
+				"title": "Floating Trees",
+				"link": "https://c418.bandcamp.com/track/floating-trees",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=2143258278&ts=1680638708&t=0a8f61950151ebc9a73f56e9260f56a1f819e9dd",
+				"artist": "C418",
+				"title": "Aria Math",
+				"link": "https://c418.bandcamp.com/track/aria-math",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=1477198843&ts=1680638708&t=c9e67505b23777170a58f565cfeaf6a8dd2d7276",
+				"artist": "C418",
+				"title": "Kyoto",
+				"link": "https://c418.bandcamp.com/track/kyoto",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=947383831&ts=1680638708&t=4f32f59fd9464386f1a1ba7d5a410452a0b7e846",
+				"artist": "C418",
+				"title": "Ballad of the Cats",
+				"link": "https://c418.bandcamp.com/track/ballad-of-the-cats",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=3408875764&ts=1680638708&t=3e05f1c4b4ed62b33eec1bcbfc5fefa0c02b18a3",
+				"artist": "C418",
+				"title": "Taswell",
+				"link": "https://c418.bandcamp.com/track/taswell",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=4081292059&ts=1680638708&t=a25bbcdd009038bf305fe865c62434706a456b86",
+				"artist": "C418",
+				"title": "Beginning 2",
+				"link": "https://c418.bandcamp.com/track/beginning-2",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=1017088019&ts=1680638708&t=e8ad30639b14ca309b4d316aa90b0ee168727134",
+				"artist": "C418",
+				"title": "Dreiton",
+				"link": "https://c418.bandcamp.com/track/dreiton",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=1757510275&ts=1680638708&t=1337bb5256d3052922157a0bea7b3e8085e6f9ca",
+				"artist": "C418",
+				"title": "The End",
+				"link": "https://c418.bandcamp.com/track/the-end",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=781906637&ts=1680638708&t=760a5ec188a2e70cc3db594026755ca518c22a7f",
+				"artist": "C418",
+				"title": "Chirp",
+				"link": "https://c418.bandcamp.com/track/chirp",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=220421599&ts=1680638708&t=037777009217a2fd031444a645d202e52b9be7ad",
+				"artist": "C418",
+				"title": "Wait",
+				"link": "https://c418.bandcamp.com/track/wait",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=2061045000&ts=1680638708&t=5c0d23ddbb6cb0f1c871339b4f7834b90987a8fa",
+				"artist": "C418",
+				"title": "Mellohi",
+				"link": "https://c418.bandcamp.com/track/mellohi",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=2380902705&ts=1680638708&t=e8a28c4e4376026020f7f50a5cd9706e1bb0d5be",
+				"artist": "C418",
+				"title": "Stal",
+				"link": "https://c418.bandcamp.com/track/stal",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=2954539567&ts=1680638708&t=a3806ab2b1f8fa43db25fb62e50698fc0a6df9f3",
+				"artist": "C418",
+				"title": "Strad",
+				"link": "https://c418.bandcamp.com/track/strad",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=2881350916&ts=1680638708&t=142b3d782a45f994c92cd873eb975073a82879bd",
+				"artist": "C418",
+				"title": "Eleven",
+				"link": "https://c418.bandcamp.com/track/eleven",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=1858497929&ts=1680638708&t=f170cf3ccb54d15be6ff11ca132626fe8cce1e19",
+				"artist": "C418",
+				"title": "Ward",
+				"link": "https://c418.bandcamp.com/track/ward",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=3841536112&ts=1680638708&t=c927b311b09edb3ebb98aced3dda18ca4a4f7536",
+				"artist": "C418",
+				"title": "Mall",
+				"link": "https://c418.bandcamp.com/track/mall",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=2802812003&ts=1680638708&t=b4a3b3ef85f8b8cf93bb0b530cc81de24f344b98",
+				"artist": "C418",
+				"title": "Blocks",
+				"link": "https://c418.bandcamp.com/track/blocks",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=2274526044&ts=1680638708&t=113738dec591ee71926b429416adef0bfe220bea",
+				"artist": "C418",
+				"title": "Far",
+				"link": "https://c418.bandcamp.com/track/far",
+				"tags": []
+			},
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=2109897186&ts=1680638708&t=803c20b7d5c48122403159f6ed574bc367da2b76",
+				"artist": "C418",
+				"title": "Intro",
+				"link": "https://c418.bandcamp.com/track/intro",
+				"tags": []
+			}
+		]
+	},
+	{
+		"collection": "Remixes",
+		"type": "music",
+		"audio": [
+			{
+				"file": "https://bandcamp.com/stream_redirect?enc=mp3-128&track_id=3953380279&ts=1680710354&t=7d4a13562d24e050cfa3660260f9e994cd1dde3f",
+				"artist": "C418",
+				"title": "Aria Math (Protostar Remix)",
+				"link": "https://protostarmusic.bandcamp.com/track/c418-aria-math-protostar-remix",
+				"tags": [
+					"rare"
+				]
+			}
+		]
+	}
+]

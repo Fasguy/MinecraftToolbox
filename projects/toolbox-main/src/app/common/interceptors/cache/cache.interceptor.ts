@@ -4,16 +4,16 @@ import { Observable, of, tap } from "rxjs";
 
 @Injectable()
 export class CacheInterceptor implements HttpInterceptor {
-	private cache: Map<string, HttpResponse<any>> = new Map();
+	private _cache: Map<string, HttpResponse<any>> = new Map();
 
-	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+	public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		if (req.method !== "GET" || req.headers.get("disable-cache")) {
 			return next.handle(req);
 		}
 
 		const cacheKey = req.urlWithParams;
 
-		const cachedResponse: HttpResponse<any> | undefined = this.cache.get(cacheKey);
+		const cachedResponse: HttpResponse<any> | undefined = this._cache.get(cacheKey);
 
 		if (cachedResponse) {
 			return of(cachedResponse.clone());
@@ -21,7 +21,7 @@ export class CacheInterceptor implements HttpInterceptor {
 			return next.handle(req).pipe(
 				tap(stateEvent => {
 					if (stateEvent instanceof HttpResponse) {
-						this.cache.set(cacheKey, stateEvent.clone());
+						this._cache.set(cacheKey, stateEvent.clone());
 					}
 				})
 			);

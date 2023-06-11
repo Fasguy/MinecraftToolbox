@@ -1,0 +1,33 @@
+:host {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+	margin: 5px;
+
+	&>input {
+		display: none;
+
+		&+span {
+			display: inline-block;
+			min-width: 18px;
+			height: 18px;
+			margin-right: 5px;
+
+			border: 1px solid #000;
+			background-image: url("../../../../style/sprites/checkbox.png");
+		}
+
+		&:checked+span {
+			background-position: 0 -18px;
+		}
+
+		&:indeterminate+span {
+			background-position: 0 -36px;
+		}
+	}
+
+	&:hover>input+span {
+		border-color: #fff;
+	}
+}

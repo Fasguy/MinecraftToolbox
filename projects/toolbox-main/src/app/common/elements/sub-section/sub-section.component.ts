@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from "@angular/core";
 
 @Component({
 	selector: "tbx-sub-section",
@@ -6,7 +6,16 @@ import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 	styleUrls: ["./sub-section.component.scss"],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SubSectionComponent {
+export class SubSectionComponent implements AfterViewInit {
 	@Input()
-	header!: string;
+	public header!: string;
+
+	public constructor(
+		private _changeDetector: ChangeDetectorRef
+	) {
+	}
+
+	public ngAfterViewInit(): void {
+		this._changeDetector.detach();
+	}
 }

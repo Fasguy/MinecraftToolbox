@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { strFromU8, unzip } from "fflate";
 import { EntryGroup } from "src/app/common/elements/selection/selection.component";
 import { ITool } from "src/app/common/interfaces/tool";
 import { ActivityMonitorService } from "src/app/common/services/activity-monitor/activity-monitor.service";
@@ -9,7 +8,7 @@ import { NetRequestService } from "src/app/common/services/net-request/net-reque
 import { PanoramaService } from "src/app/common/services/panorama-service/panorama.service";
 import { WindowService } from "src/app/common/services/window-service/window.service";
 import { CraftingRecipeRandomizerService } from "src/app/crafting-recipe-randomizer/services/crafting-recipe-randomizer/crafting-recipe-randomizer.service";
-import { exportSettings, hashCode, importSettings, mapFormData, randomMinecraftSeed, tryParseInt } from "src/lib/utils";
+import { exportSettings, importSettings, mapFormData, mergeDeep, randomMinecraftSeed, seedHelper } from "src/lib/utils";
 import { CraftingRecipeRandomizerFAQComponent } from "../frequently-asked-questions/frequently-asked-questions.component";
 import { CraftingRecipeRandomizerInstructionsComponent } from "../instructions/instructions.component";
 
@@ -20,14 +19,18 @@ import { CraftingRecipeRandomizerInstructionsComponent } from "../instructions/i
 	providers: [CraftingRecipeRandomizerService]
 })
 export class CraftingRecipeRandomizerViewComponent implements OnInit, ITool {
-	public readonly version: string = "";
+	public readonly version: string;
 	public readonly tool: string = "crafting-recipe-randomizer";
 
-	public craftingRecipes!: EntryGroup[];
+	protected craftingRecipes!: EntryGroup[];
 
-	public seed: string = randomMinecraftSeed();
+	protected seed: string = randomMinecraftSeed();
 
-	constructor(
+	protected meta: { additionals: Additional[] } = {
+		additionals: []
+	};
+
+	public constructor(
 		private _panorama: PanoramaService,
 		private _netRequest: NetRequestService,
 		private _randomizerService: CraftingRecipeRandomizerService,
@@ -54,8 +57,8 @@ export class CraftingRecipeRandomizerViewComponent implements OnInit, ITool {
 
 		let data = await this._activityMonitor.startActivity({
 			text: "Downloading necessary data...",
-			promise: new Promise<ArrayBuffer>((res, rej) => {
-				this._netRequest.binary(`resources/crafting-recipe-randomizer/${this.version}/data.zip`)
+			promise: new Promise<Blob>((res, rej) => {
+				this._netRequest.uncachedBlob(`resources/crafting-recipe-randomizer/${this.version}/data.zip`)
 					.subscribe({
 						next: res,
 						error: rej
@@ -63,73 +66,44 @@ export class CraftingRecipeRandomizerViewComponent implements OnInit, ITool {
 			})
 		});
 
-		let dataCopy = new Uint8Array(new ArrayBuffer(data.byteLength));
-		dataCopy.set(new Uint8Array(data));
-
-		await this._assetManagerService.loading;
-
 		await this._activityMonitor.startActivity({
 			text: "Preparing necessary data pack data...",
-			promise: new Promise<void>(async (res, rej) => {
-				unzip(dataCopy, (err, result) => {
-					if (err) {
-						rej(err);
-						return;
-					}
+			promise: (async () => {
+				let { meta } = await this._randomizerService.loadDataFromBlob(data);
 
-					let dataJson: CraftingRecipeSelectionData = JSON.parse(strFromU8(result["selection_menu.json"]));
+				this.meta = mergeDeep(this.meta, meta);
 
-					let selectionList: EntryGroup[] = [];
+				let entries: EntryGroup[] = [];
 
-					for (const group of Object.keys(dataJson)) {
-						selectionList.push({
-							title: this._assetManagerService.getString(group),
-							entries: dataJson[group].map(x => {
-								return {
-									text: this._assetManagerService.getString(x.assetId),
-									value: x.value,
-									checked: x.selected
-								}
-							})
-						});
-					}
+				await this._assetManagerService.loading;
 
-					this.craftingRecipes = selectionList;
+				let selection = await this._randomizerService.generateSelectionData();
 
-					res();
-				});
+				for (const group of Object.keys(selection)) {
+					entries.push({
+						title: this._assetManagerService.getString(group),
+						entries: selection[group].map((x: any) => {
+							return {
+								text: this._assetManagerService.getString(x.assetId),
+								value: x.value,
+								checked: x.selected
+							}
+						})
+					});
+				}
 
-				await this._randomizerService.loadDatapackFiles(dataCopy);
-			})
+				this.craftingRecipes = entries;
+			})()
 		});
 	}
 
-	public onSubmit(e: SubmitEvent) {
+	protected onSubmit(e: SubmitEvent) {
 		e.preventDefault();
 		e.stopPropagation();
 
 		let submittedData = mapFormData(<HTMLFormElement>e.target);
 
-		//There's one thing to note about how seeds work here:
-		//I wanted to emulate how Minecraft handles seeds as much as possible.
-		//Therefore, the seed input is a string. If i can parse it to a Number, I'll use that.
-		//Otherwise, i'll use the hash code of the string.
-		//A problem arises with how JavaScript handles numbers.
-		//We have a maximum safe integer precision of 53 bits, so we can't use the full range of numbers, that Minecraft would normally allow.
-		//This means, that if we actually *have* a number that's outside those bounds, the last 3 digits will essentially be dropped.
-
-		let parsedSeed = tryParseInt(submittedData["seed"]);
-		let seed: number;
-
-		if (parsedSeed.success && parsedSeed.value !== 0) {
-			seed = parsedSeed.value;
-		} else {
-			seed = hashCode(submittedData["seed"]);
-		}
-
-		if (seed === 0) {
-			seed = parseInt(randomMinecraftSeed());
-		}
+		let seed = seedHelper(submittedData["seed"]);
 
 		this._randomizerService.randomize({
 			seed: seed,
@@ -137,11 +111,11 @@ export class CraftingRecipeRandomizerViewComponent implements OnInit, ITool {
 		});
 	}
 
-	public showInstructions() {
+	protected showInstructions() {
 		this.window.createWindow(CraftingRecipeRandomizerInstructionsComponent);
 	}
 
-	public showFAQ() {
+	protected showFAQ() {
 		this.window.createWindow(CraftingRecipeRandomizerFAQComponent);
 	}
 
@@ -150,12 +124,7 @@ export class CraftingRecipeRandomizerViewComponent implements OnInit, ITool {
 	protected importSettings = importSettings.bind(this);
 }
 
-interface CraftingRecipeSelectionData {
-	[group: string]: CraftingRecipeSelectionEntry[];
-}
-
-interface CraftingRecipeSelectionEntry {
-	selected: boolean;
-	assetId: string;
-	value: string;
+interface Additional {
+	header: string;
+	content: string;
 }

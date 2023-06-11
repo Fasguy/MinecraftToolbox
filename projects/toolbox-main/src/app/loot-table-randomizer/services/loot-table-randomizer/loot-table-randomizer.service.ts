@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, OnInit } from "@angular/core";
-import { Remote, transfer, wrap } from "comlink";
+import { Remote, wrap } from "comlink";
 import { ActivityMonitorService } from "src/app/common/services/activity-monitor/activity-monitor.service";
 import { download } from "src/lib/utils";
 import { LootTableRandomizerWorker } from "../../workers/loot-table-randomizer/loot-table-randomizer.worker";
@@ -9,7 +9,7 @@ export class LootTableRandomizerService implements OnDestroy, OnInit {
 	private _realWorker = new Worker(new URL("../../workers/loot-table-randomizer/loot-table-randomizer.worker", import.meta.url));
 	private _worker!: Remote<LootTableRandomizerWorker>;
 
-	constructor(
+	public constructor(
 		private _activityMonitor: ActivityMonitorService
 	) {
 	}
@@ -25,8 +25,8 @@ export class LootTableRandomizerService implements OnDestroy, OnInit {
 		this._realWorker.terminate();
 	}
 
-	public async loadDatapackFiles(binaryDataPack: Uint8Array) {
-		return this._worker.loadDatapackData(transfer(binaryDataPack, [binaryDataPack.buffer]));
+	public async loadDataFromBlob(blob: Blob) {
+		return this._worker.loadDataFromBlob(blob);
 	}
 
 	public async randomize(options: RandomizeOptions) {
@@ -36,13 +36,13 @@ export class LootTableRandomizerService implements OnDestroy, OnInit {
 		});
 
 		await this._activityMonitor.startActivity({
-			text: "Generating cheatsheet...",
-			promise: this._worker.generateCheatsheet()
+			text: "Shuffling loot tables...",
+			promise: this._worker.shuffleLootTables()
 		});
 
 		await this._activityMonitor.startActivity({
-			text: "Shuffling loot tables...",
-			promise: this._worker.shuffleLootTables()
+			text: "Generating cheatsheet...",
+			promise: this._worker.generateCheatsheet()
 		});
 
 		await this._activityMonitor.startActivity({
@@ -50,10 +50,22 @@ export class LootTableRandomizerService implements OnDestroy, OnInit {
 			promise: this._worker.removeConditions()
 		});
 
+		await this._activityMonitor.startActivity({
+			text: "Fixing match_tool conditions...",
+			promise: this._worker.fixMatchTool()
+		});
+
 		if (options.dropChance100) {
 			await this._activityMonitor.startActivity({
 				text: "Manipulating drop chances...",
 				promise: this._worker.manipulateDropChances()
+			});
+		}
+
+		if (options.deadEndIndicator) {
+			await this._activityMonitor.startActivity({
+				text: "Replacing empty loot-tables with dead end indicator item...",
+				promise: this._worker.replaceEmptyWithIndicator()
 			});
 		}
 
@@ -72,5 +84,6 @@ export class LootTableRandomizerService implements OnDestroy, OnInit {
 type RandomizeOptions = {
 	seed: number;
 	dropChance100: boolean;
+	deadEndIndicator: boolean;
 	selectedLootTables: string[];
 }

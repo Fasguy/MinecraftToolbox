@@ -6,11 +6,8 @@
 		<tbx-selection name="selection[]" [entries]="lootTables"></tbx-selection>
 	</tbx-sub-section>
 	<tbx-sub-section header="Other options">
-		<label class="checkbox">
-			<input type="checkbox" name="dropChance100">
-			<span></span>
-			Everything has 100% drop chance
-		</label>
+		<input standard type="checkbox" name="dropChance100" text="Everything has 100% drop chance">
+		<input standard type="checkbox" name="deadEndIndicator" text="Replace empty loot-tables with a dead end indicator item">
 	</tbx-sub-section>
 	<tbx-sub-section *ngFor="let additional of meta.additionals" [header]="additional.header">
 		<span [innerHtml]="additional.content"></span>

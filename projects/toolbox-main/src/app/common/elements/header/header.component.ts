@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from "@angular/core";
 import { Route, Router, Routes } from "@angular/router";
 
 @Component({
@@ -7,22 +7,21 @@ import { Route, Router, Routes } from "@angular/router";
 	styleUrls: ["./header.component.scss"],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements AfterViewInit {
 	protected routes: Routes = [];
 
 	@Input()
 	public version!: string;
 
-	constructor(
+	public constructor(
 		private _changeDetector: ChangeDetectorRef,
 		router: Router
 	) {
-		_changeDetector.detach();
 		this.routes.push(...router.config);
 	}
 
-	public ngOnInit(): void {
-		this._changeDetector.detectChanges();
+	public ngAfterViewInit(): void {
+		this._changeDetector.detach();
 	}
 
 	protected filterTitledRoutes(t: Route): boolean {

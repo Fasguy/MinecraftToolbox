@@ -5,7 +5,7 @@
 	padding: 10px 5px;
 	background:
 		linear-gradient(#000000B0, transparent),
-		url("../../../../style/images/spruce_planks.png") repeat 0 0 / 48px 48px;
+		url("../../../../style/images/spruce_planks.png") repeat 0 0 / 3em 3em;
 
 	&>div {
 		margin: 5px 0;
@@ -14,7 +14,6 @@
 
 a {
 	margin: 0 5px;
-	border-bottom: 2px solid white;
 }
 
 .is-active {

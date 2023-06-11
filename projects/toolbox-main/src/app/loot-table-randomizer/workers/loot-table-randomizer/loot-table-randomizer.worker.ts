@@ -1,78 +1,113 @@
 import { expose } from "comlink";
-import { strFromU8, unzip } from "fflate";
+import { Unzip, UnzipInflate } from "fflate";
 import { LootTableFile } from "../../../../lib/ts-datapack-extensions/loot_table_file";
+import "../../../../lib/ts-datapack-extensions/loot_table_file_ex";
 import { DatapackSerializer } from "../../../../lib/ts-datapack-fflate/datapack-serializer";
 import { Datapack } from "../../../../lib/ts-datapack/datapack";
-import { PackFormat } from "../../../../lib/ts-datapack/enums/packformat";
 import { GenericAdvancement } from "../../../../lib/ts-datapack/generic-advancement";
 import { GenericFile } from "../../../../lib/ts-datapack/genericfile";
-import { IFile } from "../../../../lib/ts-datapack/interfaces/file";
 import { IFolder } from "../../../../lib/ts-datapack/interfaces/folder";
-import { ILootTable } from "../../../../lib/ts-datapack/interfaces/loot_table/loot_table";
+import { IPredicate_EntityProperties } from "../../../../lib/ts-datapack/interfaces/predicate";
+import { Pack_MCMeta } from "../../../../lib/ts-datapack/pack_mcmeta";
 import { addMainDatapackAdvancement, filenameWithoutExtension, seededRandom, shuffle } from "../../../../lib/utils";
 
 export class LootTableRandomizerWorker {
-	private _dataPackData = {
-		packFormat: PackFormat.Invalid,
-		packPng: <IFile | undefined>undefined,
-		loadedLootTables: <{ [key: string]: ILootTable }>{}
-	}
-
 	private _defaultLootTableFilePaths!: string[];
 	private _shuffledLootTableFilePaths!: string[];
-
+	private _loadedDatapack: Datapack = new Datapack();
 	private _intermediaryDatapack!: Datapack;
 	private _finalDatapack!: Datapack;
 
-	public async loadDatapackData(data: Uint8Array) {
-		return new Promise<void>((res, rej) => {
-			unzip(data, (err, result) => {
-				function flatten(obj: any, prefix: string, separator: string, dict: any) {
-					for (const key in obj) {
-						let newKey: string;
-						if (prefix != "") {
-							newKey = prefix + separator + key;
-						} else {
-							newKey = key;
-						}
+	private _seed!: number;
 
-						if (!key.endsWith(".json") && typeof obj[key] === "object") {
-							flatten(obj[key], newKey, separator, dict);
-						} else {
-							dict[newKey] = obj[key];
-						}
+	public async loadDataFromBlob(blob: Blob) {
+		const textDecoder = new TextDecoder();
+		const uz = new Unzip((file) => {
+			const filePath = file.name.toLowerCase();
+			if ((file.originalSize || 0) > 0) {
+				const dataArrays: Uint8Array[] = [];
+
+				file.ondata = (err, data, final) => {
+					dataArrays.push(data);
+
+					if (!final) return;
+
+					let length = 0;
+					for (const item of dataArrays) {
+						length += item.length;
+					}
+
+					const fileBytes = new Uint8Array(length);
+
+					let offset = 0;
+					for (const item of dataArrays) {
+						fileBytes.set(item, offset);
+						offset += item.length;
+					}
+
+					switch (filePath.substring(filePath.lastIndexOf(".") + 1).toLowerCase()) {
+						case "json":
+							this._loadedDatapack.set(new LootTableFile(filePath, JSON.parse(textDecoder.decode(fileBytes))));
+							break;
+						case "png":
+							this._loadedDatapack.set(new GenericFile(filePath, "binary", fileBytes));
+							break;
+						case "mcmeta":
+							if (filePath === "pack.mcmeta") {
+								this._loadedDatapack.set(new Pack_MCMeta(JSON.parse(textDecoder.decode(fileBytes))));
+							}
+							break;
+						default:
+							console.log(`The file ${filePath} is not supported.`);
+							return;
+
 					}
 				}
 
-				if (err) {
-					rej(err);
-					return;
+				if (filePath === "pack.mcmeta"
+					|| filePath === "pack.png"
+					|| filePath.startsWith(".fasguystoolbox/")
+					|| filePath.startsWith("data/minecraft/loot_tables/")) {
+					file.start();
 				}
-
-				this._dataPackData.packFormat = JSON.parse(strFromU8(result["info.json"])).packFormat;
-				this._dataPackData.packPng = new GenericFile("pack.png", "binary", result["pack.png"]);
-
-
-				let flattenedLootTables: { [key: string]: ILootTable } = {};
-				flatten(JSON.parse(strFromU8(result["loot_tables.json"])), "", "/", flattenedLootTables);
-				this._dataPackData.loadedLootTables = flattenedLootTables;
-
-				res();
-			});
+			}
 		});
+		uz.register(UnzipInflate);
+
+		const reader: ReadableStreamDefaultReader<Uint8Array> = blob.stream().getReader();
+		while (true) {
+			const { done, value } = await reader.read();
+			if (done) {
+				uz.push(new Uint8Array(0), true);
+				break;
+			}
+
+			for (let i = 0; i < value!.length; i += 65536) {
+				uz.push(value!.subarray(i, i + 65536));
+			}
+		}
+
+		return {
+			meta: this._loadedDatapack.get<GenericFile>(".fasguystoolbox/meta.json")?.data ?? {},
+			selection: <LootTableSelectionData>(this._loadedDatapack.get<GenericFile>(".fasguystoolbox/selection.json")?.data ?? {}),
+			loadedFiles: this._loadedDatapack.allFilePaths
+		}
 	}
 
 	public async prepareDataPack(seed: number, selectedLootTables: string[]) {
+		this._seed = seed;
+
 		this._intermediaryDatapack = new Datapack();
 		this._finalDatapack = new Datapack();
 
 		this._finalDatapack.name = `random_loot_${seed}`;
 		this._finalDatapack["pack.mcmeta"].description = `Loot-Table Randomizer\nSeed: ${seed}`;
-		this._finalDatapack["pack.mcmeta"].packFormat = this._dataPackData.packFormat;
-		this._finalDatapack.set(this._dataPackData.packPng);
+		this._finalDatapack["pack.mcmeta"].packFormat = this._loadedDatapack["pack.mcmeta"].packFormat;
+		this._finalDatapack.set(this._loadedDatapack.get("pack.png")!);
 
-		for (const [key, value] of Object.entries(this._dataPackData.loadedLootTables)) {
-			let lootTableFile = new LootTableFile(key, value);
+		for (const lootTablePath of this._loadedDatapack.allFilePaths.filter(x => x.startsWith("data/minecraft/loot_tables/"))) {
+			let lootTableFile = this._loadedDatapack.get<LootTableFile>(lootTablePath)!.clone();
+			lootTableFile.name = lootTablePath;
 			this._intermediaryDatapack.set(lootTableFile);
 		}
 
@@ -110,9 +145,6 @@ export class LootTableRandomizerWorker {
 			}
 		});
 		this._finalDatapack.set(advancement);
-
-		this._defaultLootTableFilePaths = this._intermediaryDatapack.allFilePaths.filter(x => x.startsWith("data/minecraft/loot_tables/"));
-		this._shuffledLootTableFilePaths = shuffle([...this._defaultLootTableFilePaths], seededRandom(seed));
 	}
 
 	public async generateCheatsheet() {
@@ -125,6 +157,9 @@ export class LootTableRandomizerWorker {
 	}
 
 	public async shuffleLootTables() {
+		this._defaultLootTableFilePaths = this._intermediaryDatapack.allFilePaths.filter(x => x.startsWith("data/minecraft/loot_tables/"));
+		this._shuffledLootTableFilePaths = shuffle([...this._defaultLootTableFilePaths], seededRandom(this._seed));
+
 		for (let i = 0; i < this._defaultLootTableFilePaths.length; i++) {
 			let originalFile = this._intermediaryDatapack.get<LootTableFile>(this._defaultLootTableFilePaths[i])!;
 
@@ -143,7 +178,8 @@ export class LootTableRandomizerWorker {
 			let conditions = [
 				...originalFile.getConditions("minecraft:killed_by_player"),
 				...originalFile.getConditions("minecraft:block_state_property"),
-			]
+				...originalFile.getConditionsWhenSiblingsExist("minecraft:location_check", "minecraft:block_state_property"),
+			];
 
 			for (const condition of conditions) {
 				condition.remove();
@@ -182,6 +218,138 @@ export class LootTableRandomizerWorker {
 						break;
 				}
 			}
+
+			let conditions = [
+				...originalFile.getConditions("minecraft:random_chance"),
+				...originalFile.getConditions("minecraft:random_chance_with_looting"),
+			];
+
+			for (const conditionKit of conditions) {
+				if (conditionKit.data.condition !== "minecraft:random_chance"
+					&& conditionKit.data.condition !== "minecraft:random_chance_with_looting") {
+					continue;
+				}
+
+				conditionKit.data.chance = 1;
+			}
+		}
+	}
+
+	public async fixMatchTool() {
+		for (let i = 0; i < this._defaultLootTableFilePaths.length; i++) {
+			let originalFile = this._finalDatapack.get<LootTableFile>(this._defaultLootTableFilePaths[i])!;
+
+			let conditions = originalFile.getConditions("minecraft:match_tool");
+
+			if (this._defaultLootTableFilePaths[i].split("/")[3] === "entities") {
+				fixEntity(conditions);
+			} else {
+				fixBlock(conditions);
+			}
+		}
+
+		function fixEntity(conditions: any[]) {
+			for (const conditionKit of conditions) {
+				let data = conditionKit.data as IPredicate_EntityProperties;
+				data.condition = "minecraft:entity_properties";
+				data.entity = "killer";
+
+				data.predicate = {
+					equipment: {
+						mainhand: {
+							...data.predicate
+						}
+					}
+				};
+			}
+		}
+
+		function fixBlock(conditions: any[]) {
+			for (const conditionKit of conditions) {
+				conditionKit.data.condition = "minecraft:any_of";
+				conditionKit.data.terms = [
+					{
+						condition: "minecraft:entity_properties",
+						entity: "this",
+						predicate: {
+							equipment: {
+								mainhand: {
+									...conditionKit.data.predicate
+								}
+							}
+						}
+					},
+					{
+						condition: "minecraft:entity_properties",
+						entity: "this",
+						predicate: {
+							equipment: {
+								offhand: {
+									...conditionKit.data.predicate
+								}
+							}
+						}
+					}
+				];
+				delete conditionKit.data.predicate;
+			}
+		}
+	}
+
+	public async replaceEmptyWithIndicator() {
+		let deadEnd = new LootTableFile("data/fasguys_toolbox/loot_tables/generic/dead_end.json", {
+			type: "minecraft:block",
+			pools: [
+				{
+					rolls: 1,
+					entries: [
+						{
+							type: "minecraft:item",
+							name: "minecraft:clock",
+							functions: [
+								{
+									function: "minecraft:set_name",
+									name: {
+										text: "Time-waster",
+										italic: false
+									}
+								},
+								{
+									function: "minecraft:set_lore",
+									lore: [
+										{
+											text: "This loot-table chain ends here.",
+											color: "#ffffff",
+											italic: false
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		});
+		this._finalDatapack.set(deadEnd);
+
+		for (const entry of this._defaultLootTableFilePaths) {
+			let file = this._finalDatapack.get<LootTableFile>(entry)!;
+
+			if (file.data.pools == null || file.data.pools.length === 0) {
+				file.data = {
+					pools: [
+						{
+							rolls: 1,
+							entries: [
+								{
+									type: "minecraft:loot_table",
+									name: "fasguys_toolbox:generic/dead_end"
+								}
+							]
+						}
+					]
+				}
+			}
 		}
 	}
 
@@ -194,3 +362,7 @@ export class LootTableRandomizerWorker {
 }
 
 expose(LootTableRandomizerWorker);
+
+export type LootTableSelectionData = {
+	unselected: string[];
+}

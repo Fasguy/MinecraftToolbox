@@ -6,26 +6,6 @@ import { deserialize, serialize } from "src/lib/serialize-form";
 import { Datapack } from "./ts-datapack/datapack";
 import { GenericAdvancement } from "./ts-datapack/generic-advancement";
 
-export function flatten(obj: any, prefix: string, separator: string, dict: any) {
-	for (const key in obj) {
-		let newKey: string;
-		if (prefix != "") {
-			newKey = prefix + separator + key;
-		} else {
-			newKey = key;
-		}
-
-		let value = obj[key];
-		if (typeof value === "object" && !isArrayOrTypedArray(value)) {
-			flatten(value, newKey, separator, dict);
-		} else {
-			dict[newKey] = value;
-		}
-	}
-
-	return dict;
-}
-
 export function duckCheck(obj: any, ...properties: any[]) {
 	for (const property of properties) {
 		if (typeof obj[property] === "undefined") {
@@ -78,10 +58,6 @@ export function trimEnd(str: string, text: string) {
 	return str;
 }
 
-export function trim(str: string, text: string) {
-	return trimStart(trimEnd(str, text), text);
-}
-
 export function shuffle<T>(array: T[], random = Math.random) {
 	//Preventing a potential infinite loop
 	if (array.length < 2) return array;
@@ -95,15 +71,6 @@ export function shuffle<T>(array: T[], random = Math.random) {
 		}
 		while (j === i);
 
-		[array[i], array[j]] = [array[j], array[i]];
-	}
-
-	return array;
-}
-
-export function shuffleSattolo<T>(array: T[], random = Math.random) {
-	for (let i = array.length; i-- > 1;) {
-		let j = Math.floor(random() * i);
 		[array[i], array[j]] = [array[j], array[i]];
 	}
 
@@ -136,10 +103,6 @@ export function hashCode(input: string) {
 
 	return hash;
 };
-
-export function isArrayOrTypedArray(arg: any) {
-	return Boolean(arg && (typeof arg === "object") && (Array.isArray(arg) || (ArrayBuffer.isView(arg) && !(arg instanceof DataView))));
-}
 
 export function addMainDatapackAdvancement(datapack: Datapack) {
 	let advancement = new GenericAdvancement("data/fasguys_toolbox/advancements/root.json");
@@ -195,7 +158,7 @@ export function filenameWithoutExtension(path: string) {
 	return path;
 }
 
-export function spreadOrEmpty<T>(array: T[]) {
+export function spreadOrEmpty<T>(array?: T[]) {
 	return [...(array ?? [])];
 }
 
@@ -307,4 +270,29 @@ export function mergeDeep(target: any, ...sources: any): any {
 	}
 
 	return mergeDeep(target, ...sources);
+}
+
+export function seedHelper(submittedSeed: string) {
+	//There's one thing to note about how seeds work here:
+	//I wanted to emulate how Minecraft handles seeds as much as possible.
+	//Therefore, the seed input is a string. If i can parse it to a Number, I'll use that.
+	//Otherwise, i'll use the hash code of the string.
+	//A problem arises with how JavaScript handles numbers.
+	//We have a maximum safe integer precision of 53 bits, so we can't use the full range of numbers, that Minecraft would normally allow.
+	//This means, that if we actually *have* a number that's outside those bounds, the last 3 digits will essentially be dropped.
+
+	let parsedSeed = tryParseInt(submittedSeed);
+	let seed: number;
+
+	if (parsedSeed.success && parsedSeed.value !== 0) {
+		seed = parsedSeed.value;
+	} else {
+		seed = hashCode(submittedSeed);
+	}
+
+	if (seed === 0) {
+		seed = parseInt(randomMinecraftSeed());
+	}
+
+	return seed;
 }

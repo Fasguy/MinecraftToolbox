@@ -12,14 +12,14 @@ export type IEntry = IEntry_Base
 		| IEntry_Sequence)
 
 type IEntry_Base = {
-	conditions: IPredicate[];
+	conditions?: IPredicate[];
 }
 
 type IEntry_Item = {
 	type: "minecraft:item";
-	functions: IItemFunction[];
-	weight: number; //Integer
-	quality: number; //Integer
+	functions?: IItemFunction[];
+	weight?: number; //Integer
+	quality?: number; //Integer
 	name: string; //Resource location
 }
 
@@ -34,9 +34,9 @@ type IEntry_Tag = {
 
 type IEntry_LootTable = {
 	type: "minecraft:loot_table";
-	functions: IItemFunction[];
-	weight: number; //Integer
-	quality: number; //Integer
+	functions?: IItemFunction[];
+	weight?: number; //Integer
+	quality?: number; //Integer
 	name: string; //Resource location
 }
 
