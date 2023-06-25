@@ -1,4 +1,14 @@
 <p>Fasguy's Minecraft Toolbox v{{version}}</p>
-<div class="tool-selection-container">
-	<a *ngFor="let route of routes | filter: filterTitledRoutes" [routerLink]="route.path" routerLinkActive="is-active">{{route!.data!["title"]}}</a>
+<div class="overflow-helper">
+	<div class="overflow-container" #overflowContainer>
+		<div class="tool-selection-container">
+			<div class="outer-border" *ngFor="let route of routes | filter: filterTitledRoutes">
+				<a class="route" [routerLink]="route.path" routerLinkActive="is-active"><span class="route-title">{{route!.data!["title"]}}</span></a>
+			</div>
+		</div>
+	</div>
+	<div class="controls">
+		<button class="scroll left" (click)="scrollAlong(-100)"></button>
+		<button class="scroll right" (click)="scrollAlong(100)"></button>
+	</div>
 </div>
