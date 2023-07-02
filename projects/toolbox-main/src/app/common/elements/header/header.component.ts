@@ -41,4 +41,9 @@ export class HeaderComponent implements AfterViewInit {
 	protected scrollAlong(units: number): void {
 		this._overflowContainer.nativeElement.scrollLeft += units;
 	}
+
+	protected onWheel(e: WheelEvent, target: HTMLElement) {
+		e.preventDefault();
+		target.scrollLeft += e.deltaY;
+	}
 }

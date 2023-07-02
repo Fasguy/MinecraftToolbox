@@ -46,6 +46,9 @@ import { LocalInterceptor } from "./common/interceptors/local/local.interceptor"
 import { FilterPipe } from "./common/pipes/filter/filter.pipe";
 import { ReversePipe } from "./common/pipes/reverse/reverse.pipe";
 
+//Directives
+import { HoldEventDirective } from './common/directives/hold-event/hold-event.directive';
+
 @NgModule({
 	declarations: [
 		AppComponent,
@@ -77,7 +80,8 @@ import { ReversePipe } from "./common/pipes/reverse/reverse.pipe";
 		CraftingRecipeRandomizerInstructionsComponent,
 		CraftingRecipeRandomizerFAQComponent,
 		PresetWarningComponent,
-		MusicAreaComponent
+		MusicAreaComponent,
+		HoldEventDirective
 	],
 	imports: [
 		BrowserModule,

@@ -2,7 +2,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 10px 5px 0;
+	padding-top: 10px;
 	background:
 		linear-gradient(#000000B0, transparent),
 		url("../../../../style/images/spruce_planks.png") repeat 0 0 / 3em 3em;
@@ -66,6 +66,12 @@
 	overflow-x: auto;
 	overflow-y: hidden;
 
+	scrollbar-width: none;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
 	&.overflowing~.controls {
 		display: block;
 	}
@@ -102,7 +108,6 @@
 	padding: 0 5px;
 
 	.route-title {
-		transform: translateX(0);
 		transition: 1s;
 		min-width: 100%;
 	}
@@ -113,7 +118,7 @@
 
 		.route-title {
 			display: inline-block;
-			transform: translateX(calc(247px - 100%));
+			animation: move-text 5s infinite;
 		}
 
 		&::before {
@@ -135,8 +140,27 @@
 		border-bottom: none;
 		backdrop-filter: brightness(2);
 
+		.route-title {
+			display: inline-block;
+			animation: move-text 5s infinite;
+		}
+
 		&::before {
 			display: none;
 		}
+	}
+}
+
+@keyframes move-text {
+
+	0%,
+	75%,
+	100% {
+		transform: translateX(0);
+	}
+
+	25%,
+	50% {
+		transform: translateX(calc(247px - 100%));
 	}
 }
