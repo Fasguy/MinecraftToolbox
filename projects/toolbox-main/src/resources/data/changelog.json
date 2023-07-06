@@ -116,5 +116,17 @@
 			"removals": []
 		},
 		"notes": ""
+	},
+	{
+		"version": "",
+		"build_date": "",
+		"changes": {
+			"additions": [],
+			"modifications": [
+				"The tool menu is now more future-proof"
+			],
+			"removals": []
+		},
+		"notes": ""
 	}
 ]
