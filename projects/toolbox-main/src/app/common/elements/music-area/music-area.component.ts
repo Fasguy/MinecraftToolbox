@@ -18,9 +18,11 @@ export class MusicAreaComponent implements AfterViewInit, OnDestroy {
 	public constructor(
 		private _netRequest: NetRequestService
 	) {
-		this._audio.onended = this._audio.onpause = () => {
+		this._audio.onpause = () => {
 			this.playingAudio = undefined;
 		}
+
+		this._audio.onended = this.jukeboxClick.bind(this);
 	}
 
 	public async ngAfterViewInit(): Promise<void> {
