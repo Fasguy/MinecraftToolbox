@@ -11,6 +11,8 @@ import { ToolboxSettingsService } from "src/app/common/services/toolbox-settings
 export class SplashComponent implements AfterViewInit {
 	@ViewChild("splashText")
 	private _splashText!: ElementRef<HTMLElement>
+	@ViewChild("splashSizer")
+	private _splashSizer!: ElementRef<HTMLElement>
 
 	public constructor(
 		private _netRequest: NetRequestService,
@@ -35,7 +37,9 @@ export class SplashComponent implements AfterViewInit {
 							this._splashText.nativeElement.innerText = splash;
 							document.fonts.ready.then(() => {
 								if (document.fonts.check("1em Minecraft")) {
-									this.fitText(this._splashText.nativeElement);
+									this._splashText.nativeElement.style.fontSize = "1em";
+									const splashWidth = Math.max(this._splashSizer.nativeElement.parentElement!.clientWidth, this._splashSizer.nativeElement.clientWidth);
+									this._splashSizer.nativeElement.style.transform = `scale(${this._splashSizer.nativeElement.parentElement!.clientWidth / splashWidth})`;
 								}
 							});
 						});
@@ -45,33 +49,4 @@ export class SplashComponent implements AfterViewInit {
 				}
 			});
 	}
-
-	private fitText(element: HTMLElement) {
-		let i = MINSIZE;
-		let overflow = false;
-
-		const parent = element.parentElement;
-
-		while (!overflow && i < MAXSIZE) {
-			element.style.fontSize = `${i}px`;
-			overflow = this.isOverflown(parent!);
-
-			if (!overflow) i += STEP;
-		}
-
-		let fontSizePx = i - STEP;
-
-		element.style.fontSize = `${fontSizePx}px`;
-
-		let shadowOffset = (2 / 16) * fontSizePx;
-		element.style.textShadow = `${shadowOffset}px ${shadowOffset}px #3f3f3f`;
-	}
-
-	private isOverflown({ clientWidth, clientHeight, scrollWidth, scrollHeight }: HTMLElement) {
-		return (scrollWidth > clientWidth) || (scrollHeight > clientHeight);
-	}
 }
-
-const MINSIZE = 0;
-const MAXSIZE = 19;
-const STEP = 0.1;
