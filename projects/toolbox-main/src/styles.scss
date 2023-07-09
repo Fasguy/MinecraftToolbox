@@ -59,3 +59,14 @@ u {
 	min-height: 100vh;
 	min-height: 100svh;
 }
+
+.tooltip {
+	display: none;
+	background-clip: padding-box;
+	background-color: #100110;
+	text-align: left;
+	padding: 1px 5px 5px;
+	border: 4px solid #100110;
+	border-image: url("./style/sprites/tooltip.png") stretch 2;
+	position: absolute;
+}

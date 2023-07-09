@@ -23,6 +23,7 @@ import { MusicAreaComponent } from './common/elements/music-area/music-area.comp
 import { PanoramaComponent } from "./common/elements/panorama/panorama.component";
 import { SelectionComponent } from "./common/elements/selection/selection.component";
 import { SubSectionComponent } from "./common/elements/sub-section/sub-section.component";
+import { TooltipComponent } from './common/elements/tooltip/tooltip.component';
 import { VersionSelectorViewComponent } from "./common/views/version-selector/version-selector.component";
 import { WindowComponent } from "./common/views/window/window.component";
 import { ChangelogComponent } from "./common/views/windows/changelog/changelog.component";
@@ -81,7 +82,8 @@ import { HoldEventDirective } from './common/directives/hold-event/hold-event.di
 		CraftingRecipeRandomizerFAQComponent,
 		PresetWarningComponent,
 		MusicAreaComponent,
-		HoldEventDirective
+		HoldEventDirective,
+		TooltipComponent
 	],
 	imports: [
 		BrowserModule,
