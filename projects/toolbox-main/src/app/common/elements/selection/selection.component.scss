@@ -87,7 +87,7 @@
 
 	&.collapsed {
 		max-height: 50px;
-		overflow-y: hidden;
+		overflow: hidden;
 		-webkit-mask-image: linear-gradient(to bottom, black, transparent);
 		mask-image: linear-gradient(to bottom, black, transparent);
 

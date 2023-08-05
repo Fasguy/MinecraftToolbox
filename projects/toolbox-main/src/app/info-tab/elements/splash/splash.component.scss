@@ -38,7 +38,8 @@
 	width: 400px;
 	transform: rotate(336deg);
 	left: 50%;
-	text-align: center;
+	display: flex;
+	justify-content: center;
 }
 
 .splash-text {
@@ -50,7 +51,6 @@
 	transform: translateZ(0);
 	white-space: nowrap;
 	font-size: 0;
-	text-align: center;
 }
 
 @keyframes splash {

@@ -24,6 +24,14 @@ button {
 	}
 }
 
+.footer-links {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+}
+
 .final-notes {
 	text-align: center;
 }

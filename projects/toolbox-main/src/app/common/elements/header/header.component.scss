@@ -2,21 +2,165 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 10px 5px;
+	padding-top: 10px;
 	background:
 		linear-gradient(#000000B0, transparent),
 		url("../../../../style/images/spruce_planks.png") repeat 0 0 / 3em 3em;
+	background-blend-mode: multiply;
+	background-color: rgb(126, 126, 126);
+	border-bottom: 2px solid rgba(255, 255, 255, 0.3);
 
 	&>div {
-		margin: 5px 0;
+		margin-top: 5px;
 	}
 }
 
-a {
-	margin: 0 5px;
+.overflow-helper {
+	position: relative;
+	width: 100%;
+
+	.controls {
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 44px;
+		pointer-events: none;
+
+		.scroll {
+			pointer-events: all;
+			position: absolute;
+			top: 0;
+			width: 44px;
+			height: 44px;
+			z-index: 1;
+			border: none;
+
+			&.left {
+				left: 0;
+				background:
+					url("../../../../style/sprites/arrows.png") no-repeat 75% 0 / 300%,
+					linear-gradient(to right, rgba(0, 0, 0, 0.5), transparent);
+			}
+
+			&.right {
+				right: 0;
+				background:
+					url("../../../../style/sprites/arrows.png") no-repeat 0 0 / 300%,
+					linear-gradient(to left, rgba(0, 0, 0, 0.5), transparent);
+			}
+
+			&:hover {
+				background-position-y: 75%;
+			}
+		}
+	}
 }
 
-.is-active {
-	color: #f3ed25;
-	border-color: #f3ed25;
+.overflow-container {
+	position: relative;
+	width: 100%;
+	padding: 0 44px;
+	box-sizing: border-box;
+	overflow-x: auto;
+	overflow-y: hidden;
+
+	scrollbar-width: none;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	&.overflowing~.controls {
+		display: block;
+	}
+}
+
+.tool-selection-container {
+	display: flex;
+	align-items: flex-end;
+	width: min-content;
+	margin: auto;
+}
+
+.outer-border {
+	border: 2px solid black;
+	border-bottom: none;
+}
+
+.route {
+	position: relative;
+	box-sizing: border-box;
+	white-space: nowrap;
+	display: table-cell;
+	vertical-align: middle;
+	width: 261px;
+	min-width: 261px;
+	max-width: 261px;
+	height: 34px;
+	border: 2px solid rgba(255, 255, 255, 0.1);
+	border-bottom: none;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align: center;
+	box-shadow: none;
+	padding: 0 5px;
+
+	.route-title {
+		transition: 1s;
+		min-width: 100%;
+	}
+
+	&:hover {
+		border-color: #fff;
+		text-overflow: unset;
+
+		.route-title {
+			display: inline-block;
+			animation: move-text 5s infinite;
+		}
+
+		&::before {
+			content: "";
+			box-sizing: border-box;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			border-bottom: 2px solid #fff;
+			z-index: 1;
+		}
+	}
+
+	&.is-active {
+		height: 42px;
+		border-color: #fff;
+		border-bottom: none;
+		backdrop-filter: brightness(2);
+
+		.route-title {
+			display: inline-block;
+			animation: move-text 5s infinite;
+		}
+
+		&::before {
+			display: none;
+		}
+	}
+}
+
+@keyframes move-text {
+
+	0%,
+	75%,
+	100% {
+		transform: translateX(0);
+	}
+
+	25%,
+	50% {
+		transform: translateX(calc(247px - 100%));
+	}
 }
