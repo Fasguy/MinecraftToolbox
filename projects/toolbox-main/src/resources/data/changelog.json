@@ -118,12 +118,17 @@
 		"notes": ""
 	},
 	{
-		"version": "",
-		"build_date": "",
+		"version": "1.3.1",
+		"build_date": "2023-08-05",
 		"changes": {
 			"additions": [],
 			"modifications": [
-				"The tool menu is now more future-proof"
+				"Fixed an oversight that caused some broken loot-tables in Minecraft versions before 1.20.0",
+				"The WebApp now runs on Angular 16",
+				"The tool menu is now more future-proof",
+				"Multiple smaller style adjustments",
+				"Playing music through the jukebox will now keep going, until the music is stopped manually",
+				"DarkReader is now disallowed to prevent display issues"
 			],
 			"removals": []
 		},
