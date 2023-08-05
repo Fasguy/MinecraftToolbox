@@ -10,6 +10,7 @@ import { IFolder } from "../../../../lib/ts-datapack/interfaces/folder";
 import { IPredicate_EntityProperties } from "../../../../lib/ts-datapack/interfaces/predicate";
 import { Pack_MCMeta } from "../../../../lib/ts-datapack/pack_mcmeta";
 import { addMainDatapackAdvancement, filenameWithoutExtension, seededRandom, shuffle } from "../../../../lib/utils";
+import { PackFormat } from "../../../../lib/ts-datapack/enums/packformat";
 
 export class LootTableRandomizerWorker {
 	private _defaultLootTableFilePaths!: string[];
@@ -236,6 +237,8 @@ export class LootTableRandomizerWorker {
 	}
 
 	public async fixMatchTool() {
+		const packFormat = this._loadedDatapack["pack.mcmeta"].packFormat;
+
 		for (let i = 0; i < this._defaultLootTableFilePaths.length; i++) {
 			let originalFile = this._finalDatapack.get<LootTableFile>(this._defaultLootTableFilePaths[i])!;
 
@@ -244,7 +247,7 @@ export class LootTableRandomizerWorker {
 			if (this._defaultLootTableFilePaths[i].split("/")[3] === "entities") {
 				fixEntity(conditions);
 			} else {
-				fixBlock(conditions);
+				fixBlock(conditions, packFormat);
 			}
 		}
 
@@ -264,9 +267,9 @@ export class LootTableRandomizerWorker {
 			}
 		}
 
-		function fixBlock(conditions: any[]) {
+		function fixBlock(conditions: any[], packFormat: PackFormat) {
 			for (const conditionKit of conditions) {
-				conditionKit.data.condition = "minecraft:any_of";
+				conditionKit.data.condition = packFormat >= PackFormat.MC1_20_0 ? "minecraft:any_of" : "minecraft:alternative";
 				conditionKit.data.terms = [
 					{
 						condition: "minecraft:entity_properties",
