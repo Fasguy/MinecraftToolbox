@@ -133,5 +133,18 @@
 			"removals": []
 		},
 		"notes": ""
+	},
+	{
+		"version": "1.3.2",
+		"build_date": "2023-08-06",
+		"changes": {
+			"additions": [],
+			"modifications": [
+				"Small style fixes for the new tool menu",
+				"Fixed a deadlock when using the v1.20.0 Loot-Table randomizer in Firefox"
+			],
+			"removals": []
+		},
+		"notes": ""
 	}
 ]
