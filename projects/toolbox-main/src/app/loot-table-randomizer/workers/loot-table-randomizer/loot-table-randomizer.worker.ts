@@ -4,13 +4,13 @@ import { LootTableFile } from "../../../../lib/ts-datapack-extensions/loot_table
 import "../../../../lib/ts-datapack-extensions/loot_table_file_ex";
 import { DatapackSerializer } from "../../../../lib/ts-datapack-fflate/datapack-serializer";
 import { Datapack } from "../../../../lib/ts-datapack/datapack";
+import { PackFormat } from "../../../../lib/ts-datapack/enums/packformat";
 import { GenericAdvancement } from "../../../../lib/ts-datapack/generic-advancement";
 import { GenericFile } from "../../../../lib/ts-datapack/genericfile";
 import { IFolder } from "../../../../lib/ts-datapack/interfaces/folder";
 import { IPredicate_EntityProperties } from "../../../../lib/ts-datapack/interfaces/predicate";
 import { Pack_MCMeta } from "../../../../lib/ts-datapack/pack_mcmeta";
 import { addMainDatapackAdvancement, filenameWithoutExtension, seededRandom, shuffle } from "../../../../lib/utils";
-import { PackFormat } from "../../../../lib/ts-datapack/enums/packformat";
 
 export class LootTableRandomizerWorker {
 	private _defaultLootTableFilePaths!: string[];
@@ -76,6 +76,13 @@ export class LootTableRandomizerWorker {
 		uz.register(UnzipInflate);
 
 		const reader: ReadableStreamDefaultReader<Uint8Array> = blob.stream().getReader();
+
+		// Firefox locks up, when trying to read the last bit of data of v1.20.0
+		// It seems, causing a bit of delay prevents the lock-up, outputting the reader instance in the console seems to do the trick.
+		// The only corresponding bug i could find has been resolved as "WORKSFORME" :/
+		// https://bugzilla.mozilla.org/show_bug.cgi?id=1646204
+		console.log(reader);
+
 		while (true) {
 			const { done, value } = await reader.read();
 			if (done) {
