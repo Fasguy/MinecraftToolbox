@@ -133,5 +133,18 @@
 			"removals": []
 		},
 		"notes": ""
+	},
+	{
+		"version": "",
+		"build_date": "",
+		"changes": {
+			"additions": [],
+			"modifications": [
+				"Small style fixes for the new tool menu",
+				"Fixed a deadlock when using the v1.20.0 Loot-Table randomizer in Firefox"
+			],
+			"removals": []
+		},
+		"notes": ""
 	}
 ]
