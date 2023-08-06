@@ -82,7 +82,7 @@ export class LootTableRandomizerService implements OnDestroy, OnInit {
 }
 
 type RandomizeOptions = {
-	seed: number;
+	seed: bigint;
 	dropChance100: boolean;
 	deadEndIndicator: boolean;
 	selectedLootTables: string[];

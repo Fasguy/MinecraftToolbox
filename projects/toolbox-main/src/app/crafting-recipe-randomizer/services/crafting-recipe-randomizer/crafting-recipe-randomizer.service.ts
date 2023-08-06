@@ -62,6 +62,6 @@ export class CraftingRecipeRandomizerService implements OnInit, OnDestroy {
 }
 
 type RandomizeOptions = {
-	seed: number;
+	seed: bigint;
 	selectedCraftingRecipes: string[];
 }
