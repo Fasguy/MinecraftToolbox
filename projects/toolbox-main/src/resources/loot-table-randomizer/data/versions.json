@@ -3,7 +3,11 @@
 		"title": "Minecraft v1.20",
 		"versions": [
 			{
-				"title": "Minecraft v1.20 (any version)",
+				"title": "Minecraft v1.20 (1.20.2)",
+				"id": "1.20.2"
+			},
+			{
+				"title": "Minecraft v1.20 (1.20.0 - 1.20.1)",
 				"id": "1.20.0"
 			}
 		]
