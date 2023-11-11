@@ -1,7 +1,6 @@
 import { Injectable, OnDestroy, OnInit } from "@angular/core";
 import { Remote, wrap } from "comlink";
 import { ActivityMonitorService } from "src/app/common/services/activity-monitor/activity-monitor.service";
-import { download } from "src/lib/utils";
 import { LootTableRandomizerWorker } from "../../workers/loot-table-randomizer/loot-table-randomizer.worker";
 
 @Injectable()
@@ -69,14 +68,9 @@ export class LootTableRandomizerService implements OnDestroy, OnInit {
 			});
 		}
 
-		let finalDatapackData = await this._activityMonitor.startActivity({
+		return await this._activityMonitor.startActivity({
 			text: "Generating final data pack...",
 			promise: this._worker.finalize()
-		});
-
-		await this._activityMonitor.startActivity({
-			text: "Downloading finished data pack...",
-			promise: (async () => download(`${finalDatapackData.filename}.zip`, finalDatapackData.href))()
 		});
 	}
 }

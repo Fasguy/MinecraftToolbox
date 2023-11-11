@@ -6,6 +6,7 @@ import { AssetManagerService } from "src/app/common/services/asset-manager/asset
 import { NetRequestService } from "src/app/common/services/net-request/net-request.service";
 import { PanoramaService } from "src/app/common/services/panorama-service/panorama.service";
 import { WindowService } from "src/app/common/services/window-service/window.service";
+import { DownloadComponent } from "src/app/common/views/windows/download/download.component";
 import { exportSettings, importSettings, mapFormData, mergeDeep, randomMinecraftSeed, seedHelper } from "src/lib/utils";
 import { EntryGroup } from "../../../common/elements/selection/selection.component";
 import { LootTableRandomizerService } from "../../services/loot-table-randomizer/loot-table-randomizer.service";
@@ -110,7 +111,7 @@ export class LootTableRandomizerViewComponent implements OnInit, ITool {
 		});
 	}
 
-	protected onSubmit(e: SubmitEvent) {
+	protected async onSubmit(e: SubmitEvent) {
 		e.preventDefault();
 		e.stopPropagation();
 
@@ -118,12 +119,16 @@ export class LootTableRandomizerViewComponent implements OnInit, ITool {
 
 		let seed = seedHelper(submittedData["seed"]);
 
-		this._randomizerService.randomize({
+		const output = await this._randomizerService.randomize({
 			seed: seed,
 			dropChance100: submittedData["dropChance100"] === "on",
 			deadEndIndicator: submittedData["deadEndIndicator"] === "on",
 			selectedLootTables: submittedData["selection[]"]
 		});
+
+		let downloadComponent = this.window.createWindow(DownloadComponent).instance;
+		downloadComponent.href = output.href;
+		downloadComponent.name = output.filename;
 	}
 
 	protected showInstructions() {

@@ -49,6 +49,7 @@ import { ReversePipe } from "./common/pipes/reverse/reverse.pipe";
 
 //Directives
 import { HoldEventDirective } from './common/directives/hold-event/hold-event.directive';
+import { DownloadComponent } from './common/views/windows/download/download.component';
 
 @NgModule({
 	declarations: [
@@ -83,7 +84,8 @@ import { HoldEventDirective } from './common/directives/hold-event/hold-event.di
 		PresetWarningComponent,
 		MusicAreaComponent,
 		HoldEventDirective,
-		TooltipComponent
+		TooltipComponent,
+		DownloadComponent
 	],
 	imports: [
 		BrowserModule,
