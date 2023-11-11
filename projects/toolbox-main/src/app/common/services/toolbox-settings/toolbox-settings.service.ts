@@ -8,7 +8,7 @@ import { BehaviorSubject, skip } from "rxjs";
 export class ToolboxSettingsService {
 	private static readonly STORAGE_KEY = "tbx_settings";
 
-	private _options: ToolboxOptions | any = {
+	private _options: ToolboxOptions = {
 		uselessVisualsEnabled: {
 			behaviourSubject: new BehaviorSubject(true),
 			text: "Useless visuals enabled",
@@ -74,14 +74,26 @@ export class ToolboxSettingsService {
 	}
 
 	private load = () => {
-		let json: any = JSON.parse(localStorage.getItem(ToolboxSettingsService.STORAGE_KEY) ?? "{}");
+		const storedSettings = localStorage.getItem(ToolboxSettingsService.STORAGE_KEY);
 
-		for (const [key, value] of Object.entries(json)) {
-			let option = this._options[key];
-			if (option != null) {
-				option.behaviourSubject.next(value);
+		if (storedSettings) {
+			let json: any = JSON.parse(storedSettings);
+
+			for (const [key, value] of Object.entries(json)) {
+				let option = this._options[key];
+				if (option != null) {
+					option.behaviourSubject.next(value);
+				}
 			}
+		} else {
+			this.accessibilityCheckSettings();
 		}
+	}
+
+	private accessibilityCheckSettings = () => {
+		const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion)");
+
+		this._options.uselessVisualsEnabled.behaviourSubject.next(!prefersReducedMotion.matches);
 	}
 
 	public Observe = {
@@ -92,6 +104,8 @@ export class ToolboxSettingsService {
 
 export type ToolboxOptions = Object & {
 	[key: string]: ToolboxOption;
+	uselessVisualsEnabled: ToolboxOption;
+	musicPlayerEnabled: ToolboxOption;
 }
 
 export type ToolboxOption = {
