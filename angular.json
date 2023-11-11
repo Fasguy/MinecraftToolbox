@@ -94,10 +94,10 @@
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"configurations": {
 						"production": {
-							"browserTarget": "toolbox-main:build:production"
+							"buildTarget": "toolbox-main:build:production"
 						},
 						"development": {
-							"browserTarget": "toolbox-main:build:development"
+							"buildTarget": "toolbox-main:build:development"
 						}
 					},
 					"defaultConfiguration": "development"
@@ -195,10 +195,10 @@
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"configurations": {
 						"production": {
-							"browserTarget": "toolbox-utilities:build:production"
+							"buildTarget": "toolbox-utilities:build:production"
 						},
 						"development": {
-							"browserTarget": "toolbox-utilities:build:development"
+							"buildTarget": "toolbox-utilities:build:development"
 						}
 					},
 					"defaultConfiguration": "development"
