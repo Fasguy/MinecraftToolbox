@@ -1,4 +1,4 @@
-import { promises, readFileSync, renameSync, writeFile } from "fs";
+import { promises, readFileSync, writeFile } from "fs";
 import { extname, resolve } from "path";
 
 async function getFiles(dir: string): Promise<string[]> {
@@ -11,7 +11,7 @@ async function getFiles(dir: string): Promise<string[]> {
 }
 
 (async () => {
-	for (const f of (await getFiles("./projects/toolbox-main/dist/browser/media")).filter(x => extname(x) === ".json")) {
+	for (const f of (await getFiles("./projects/toolbox-main/dist/resources")).filter(x => extname(x) === ".json")) {
 		console.log("Minifying", f);
 		let jsonContent = readFileSync(f, { encoding: "utf-8" });
 		writeFile(f, JSON.stringify(JSON.parse(jsonContent)), (err) => {
@@ -19,7 +19,4 @@ async function getFiles(dir: string): Promise<string[]> {
 				return console.log(err);
 		});
 	}
-
-	console.log("Moving licenses file...");
-	renameSync("./projects/toolbox-main/dist/3rdpartylicenses.txt", "./projects/toolbox-main/dist/browser/3rdpartylicenses.txt");
 })();

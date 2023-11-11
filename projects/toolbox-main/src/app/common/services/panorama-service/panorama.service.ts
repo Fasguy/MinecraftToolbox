@@ -15,7 +15,7 @@ export class PanoramaService {
 	}
 
 	public async setIndex(id: string) {
-		let def = this._definitions ?? (this._definitions = await firstValueFrom(this._netRequest.get<PanoramaDefinitions>("media/data/panorama.json")));
+		let def = this._definitions ?? (this._definitions = await firstValueFrom(this._netRequest.get<PanoramaDefinitions>("resources/data/panorama.json")));
 
 		if (!def[id]) {
 			console.warn(`Panorama with the id '${id}' not found.`);

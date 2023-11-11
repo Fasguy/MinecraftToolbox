@@ -38,19 +38,18 @@
 			"prefix": "tbx",
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:application",
+					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
 						"baseHref": "/minecraft_toolbox/",
 						"outputPath": "projects/toolbox-main/dist",
+						"resourcesOutputPath": "resources",
 						"index": "projects/toolbox-main/src/index.html",
-						"browser": "projects/toolbox-main/src/main.ts",
-						"polyfills": [
-							"projects/toolbox-main/src/polyfills.ts"
-						],
+						"main": "projects/toolbox-main/src/main.ts",
+						"polyfills": "projects/toolbox-main/src/polyfills.ts",
 						"tsConfig": "projects/toolbox-main/tsconfig.json",
 						"inlineStyleLanguage": "scss",
 						"assets": [
-							"projects/toolbox-main/src/media"
+							"projects/toolbox-main/src/resources"
 						],
 						"styles": [
 							"projects/toolbox-main/src/styles.scss"
@@ -81,7 +80,9 @@
 							"outputHashing": "all"
 						},
 						"development": {
+							"buildOptimizer": false,
 							"optimization": false,
+							"vendorChunk": true,
 							"extractLicenses": false,
 							"sourceMap": true,
 							"namedChunks": true
@@ -140,14 +141,12 @@
 			"prefix": "tbx",
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:application",
+					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
 						"outputPath": "dist/toolbox-utilities",
 						"index": "projects/toolbox-utilities/src/index.html",
-						"browser": "projects/toolbox-utilities/src/main.ts",
-						"polyfills": [
-							"projects/toolbox-utilities/src/polyfills.ts"
-						],
+						"main": "projects/toolbox-utilities/src/main.ts",
+						"polyfills": "projects/toolbox-utilities/src/polyfills.ts",
 						"tsConfig": "projects/toolbox-utilities/tsconfig.json",
 						"inlineStyleLanguage": "scss",
 						"assets": [
@@ -182,7 +181,9 @@
 							"outputHashing": "all"
 						},
 						"development": {
+							"buildOptimizer": false,
 							"optimization": false,
+							"vendorChunk": true,
 							"extractLicenses": false,
 							"sourceMap": true,
 							"namedChunks": true
