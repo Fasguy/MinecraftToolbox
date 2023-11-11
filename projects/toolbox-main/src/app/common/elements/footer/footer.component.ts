@@ -12,32 +12,6 @@ import { SettingsComponent } from "../../views/windows/settings/settings.compone
 })
 export class FooterComponent implements AfterViewInit {
 	protected currentYear = new Date().getFullYear();
-	protected items = [
-		{
-			text: "Credits",
-			click: () => this._window.createWindow(CreditsComponent)
-		},
-		{
-			text: "GitHub",
-			click: () => window.open("https://github.com/Fasguy/MinecraftToolbox", "_blank", "noopener,noreferrer")
-		},
-		{
-			text: "Changelog",
-			click: () => this._window.createWindow(ChangelogComponent)
-		},
-		{
-			text: "Settings",
-			click: () => this._window.createWindow(SettingsComponent)
-		},
-		{
-			text: "Discord",
-			click: () => window.open("https://fasguy.net/discord", "_blank", "noopener,noreferrer")
-		},
-		{
-			text: "Ko-fi",
-			click: () => window.open("https://ko-fi.com/Fasguy", "_blank", "noopener,noreferrer")
-		}
-	];
 
 	public constructor(
 		private _window: WindowService,
@@ -48,4 +22,8 @@ export class FooterComponent implements AfterViewInit {
 	public ngAfterViewInit(): void {
 		this._changeDetector.detach();
 	}
+
+	protected createCreditsWindow = () => this._window.createWindow(CreditsComponent);
+	protected createChangelogWindow = () => this._window.createWindow(ChangelogComponent);
+	protected createSettingsWindow = () => this._window.createWindow(SettingsComponent);
 }

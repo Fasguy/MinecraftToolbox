@@ -1,5 +1,10 @@
 <div class="footer-links">
-	<button *ngFor="let item of items" (click)="item.click()">{{item.text}}</button>
+	<button class="interact" (click)="createCreditsWindow()">Credits</button>
+	<button class="interact" (click)="createChangelogWindow()">Changelog</button>
+	<button class="interact" (click)="createSettingsWindow()">Settings</button>
+	<a class="interact" href="https://github.com/Fasguy/MinecraftToolbox" target="_blank">GitHub</a>
+	<a class="interact" href="https://fasguy.net/discord" target="_blank">Discord</a>
+	<a class="interact" href="https://ko-fi.com/Fasguy" target="_blank">Ko-fi</a>
 </div>
 <div class="final-notes">
 	Minecraft © 2009 - {{currentYear}} Mojang Studios
