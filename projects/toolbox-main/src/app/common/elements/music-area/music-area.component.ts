@@ -34,7 +34,7 @@ export class MusicAreaComponent implements AfterViewInit, OnDestroy {
 		this._note.nativeElement.addEventListener("animationstart", animationListener);
 		this._note.nativeElement.addEventListener("animationiteration", animationListener);
 
-		let data = await firstValueFrom(this._netRequest.get<AudioDefinitions[]>("resources/data/audio.json"));
+		let data = await firstValueFrom(this._netRequest.get<AudioDefinitions[]>("media/data/audio.json"));
 		this._possibleTracks = data
 			.filter(x => x.type === "music")
 			.flatMap(x => x.audio)

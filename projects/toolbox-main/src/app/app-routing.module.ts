@@ -21,7 +21,7 @@ const routes: Routes = [
 				path: "",
 				component: VersionSelectorViewComponent,
 				data: {
-					versionInfo: "resources/loot-table-randomizer/data/versions.json",
+					versionInfo: "media/loot-table-randomizer/data/versions.json",
 				}
 			},
 			{
@@ -40,7 +40,7 @@ const routes: Routes = [
 				path: "",
 				component: VersionSelectorViewComponent,
 				data: {
-					versionInfo: "resources/crafting-recipe-randomizer/data/versions.json",
+					versionInfo: "media/crafting-recipe-randomizer/data/versions.json",
 				}
 			},
 			{

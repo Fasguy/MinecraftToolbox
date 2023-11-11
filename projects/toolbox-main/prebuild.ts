@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync } from "fs";
 (() => {
 	const packageJson = require("../../package.json");
 
-	const changelogFile = "./projects/toolbox-main/src/resources/data/changelog.json";
+	const changelogFile = "./projects/toolbox-main/src/media/data/changelog.json";
 	const changelog = <any[]>JSON.parse(readFileSync(changelogFile, { encoding: "utf-8" }));
 
 	const previousEntry = changelog[changelog.length - 2];

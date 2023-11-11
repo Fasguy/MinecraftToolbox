@@ -11,7 +11,7 @@ async function getFiles(dir: string): Promise<string[]> {
 }
 
 (async () => {
-	for (const f of (await getFiles("./projects/toolbox-main/dist/resources")).filter(x => extname(x) === ".json")) {
+	for (const f of (await getFiles("./projects/toolbox-main/dist/media")).filter(x => extname(x) === ".json")) {
 		console.log("Minifying", f);
 		let jsonContent = readFileSync(f, { encoding: "utf-8" });
 		writeFile(f, JSON.stringify(JSON.parse(jsonContent)), (err) => {

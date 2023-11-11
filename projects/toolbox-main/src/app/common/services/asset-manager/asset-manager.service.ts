@@ -20,7 +20,7 @@ export class AssetManagerService {
 		this._loadingPromise = activityMonitor.startActivity({
 			text: "Loading asset definitions...",
 			promise: new Promise<void>((res, rej) => {
-				this._netRequest.get<any>(`resources/data/asset_definitions.json`)
+				this._netRequest.get<any>(`media/data/asset_definitions.json`)
 					.subscribe({
 						next: assets => {
 							this._assets = assets;
@@ -33,7 +33,7 @@ export class AssetManagerService {
 	}
 
 	public async loadStrings(version: string) {
-		// this.strings = await firstValueFrom(this._http.get<Dictionary<string>>(`resources/loot-table-randomizer/${version}/asset_definitions.json`));
+		// this.strings = await firstValueFrom(this._http.get<Dictionary<string>>(`media/loot-table-randomizer/${version}/asset_definitions.json`));
 	}
 
 	public getString(key: string) {

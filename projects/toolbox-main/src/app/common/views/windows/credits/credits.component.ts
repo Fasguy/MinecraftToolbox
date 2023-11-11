@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from "@angular/core";
-import credits from "../../../../../resources/data/credits.json";
+import credits from "../../../../../media/data/credits.json";
 import { IWindow } from "../../window/window.component";
 
 @Component({

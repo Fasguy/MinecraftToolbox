@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component } from "@angular/core";
-import changelogJson from "../../../../../resources/data/changelog.json";
+import changelogJson from "../../../../../media/data/changelog.json";
 import { IWindow } from "../../window/window.component";
 
 @Component({

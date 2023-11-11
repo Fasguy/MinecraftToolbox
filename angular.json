@@ -42,14 +42,14 @@
 					"options": {
 						"baseHref": "/minecraft_toolbox/",
 						"outputPath": "projects/toolbox-main/dist",
-						"resourcesOutputPath": "resources",
+						"resourcesOutputPath": "media",
 						"index": "projects/toolbox-main/src/index.html",
 						"main": "projects/toolbox-main/src/main.ts",
 						"polyfills": "projects/toolbox-main/src/polyfills.ts",
 						"tsConfig": "projects/toolbox-main/tsconfig.json",
 						"inlineStyleLanguage": "scss",
 						"assets": [
-							"projects/toolbox-main/src/resources"
+							"projects/toolbox-main/src/media"
 						],
 						"styles": [
 							"projects/toolbox-main/src/styles.scss"
