@@ -30,7 +30,7 @@ export class SplashComponent implements AfterViewInit {
 					this._splashText.nativeElement.style.removeProperty("display");
 
 					this._netRequest
-						.getUncached<string>("media/data/splashes.txt", { responseType: "text" })
+						.get<string>("media/data/splashes.txt", { responseType: "text" })
 						.subscribe(text => {
 							let lines = text.split("\n").map(line => line.trim());
 							let splash = lines[Math.floor(Math.random() * lines.length)];
