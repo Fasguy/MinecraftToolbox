@@ -19,7 +19,7 @@ export class LootTableRandomizerWorker {
 	private _intermediaryDatapack!: Datapack;
 	private _finalDatapack!: Datapack;
 
-	private _seed!: number;
+	private _seed!: bigint;
 
 	public async loadDataFromBlob(blob: Blob) {
 		const textDecoder = new TextDecoder();
@@ -102,7 +102,7 @@ export class LootTableRandomizerWorker {
 		}
 	}
 
-	public async prepareDataPack(seed: number, selectedLootTables: string[]) {
+	public async prepareDataPack(seed: bigint, selectedLootTables: string[]) {
 		this._seed = seed;
 
 		this._intermediaryDatapack = new Datapack();

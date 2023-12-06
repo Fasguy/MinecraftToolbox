@@ -6,6 +6,8 @@ import { deserialize, serialize } from "src/lib/serialize-form";
 import { Datapack } from "./ts-datapack/datapack";
 import { GenericAdvancement } from "./ts-datapack/generic-advancement";
 
+export const MAX_SIGNED_64_BIT_INTEGER = 9223372036854775807n;
+
 export function duckCheck(obj: any, ...properties: any[]) {
 	for (const property of properties) {
 		if (typeof obj[property] === "undefined") {
@@ -16,20 +18,20 @@ export function duckCheck(obj: any, ...properties: any[]) {
 	return true;
 }
 
-export function seededRandom(seed: number) {
-	const baseSeeds = [101182939, 495868718, 999091121, 39475253];
+export function seededRandom(seed: BigInt) {
+	const baseSeeds = [101182939n, 495868718n, 999091121n, 39475253n];
 
 	let [x, y, z, w] = baseSeeds;
 
 	const random = () => {
-		const t = x ^ (x << 11);
+		const t = (x ^ (x << BigInt(11))) % MAX_SIGNED_64_BIT_INTEGER;
 		[x, y, z] = [y, z, w];
-		w = w ^ (w >> 19) ^ (t ^ (t >> 8));
-		return w / 0x7fffffff;
+		w = (((w ^ (w >> BigInt(19))) % MAX_SIGNED_64_BIT_INTEGER) ^ ((t ^ (t >> BigInt(8))) % MAX_SIGNED_64_BIT_INTEGER)) % MAX_SIGNED_64_BIT_INTEGER;
+		return Number(w * 100n / MAX_SIGNED_64_BIT_INTEGER) / 100;
 	};
 
 	[x, y, z, w] = baseSeeds.map(i => i + seed);
-	[x, y, z, w] = [0, 0, 0, 0].map(() => Math.round(random() * 1e16));
+	[x, y, z, w] = [0, 0, 0, 0].map(() => BigInt(Math.round(random() * 1e16)));
 
 	return random;
 }
@@ -77,20 +79,21 @@ export function shuffle<T>(array: T[], random = Math.random) {
 	return array;
 }
 
-export function tryParseInt(str: string) {
-	const result = parseInt(str);
-
-	return {
-		success: !isNaN(result),
-		value: result
+export function tryParseBigInt(str: string) {
+	try {
+		return {
+			success: true,
+			value: BigInt(str)
+		};
+	}
+	catch {
+		return {
+			success: false,
+			value: BigInt(NaN)
+		};
 	}
 }
 
-/*
-#5 TODO: It may be worth investigating, if cyrb53 is better suited for this.
-There's no real reason to emulate how Minecraft handles hash generation and using all available 53 bits, instead of the 32 with this current method, decreases the likelyhood of collisions.
-https://github.com/bryc/code/blob/master/jshash/experimental/cyrb53.js
-*/
 export function hashCode(input: string) {
 	if (input.length === 0) return 0;
 
@@ -273,16 +276,8 @@ export function mergeDeep(target: any, ...sources: any): any {
 }
 
 export function seedHelper(submittedSeed: string) {
-	//There's one thing to note about how seeds work here:
-	//I wanted to emulate how Minecraft handles seeds as much as possible.
-	//Therefore, the seed input is a string. If i can parse it to a Number, I'll use that.
-	//Otherwise, i'll use the hash code of the string.
-	//A problem arises with how JavaScript handles numbers.
-	//We have a maximum safe integer precision of 53 bits, so we can't use the full range of numbers, that Minecraft would normally allow.
-	//This means, that if we actually *have* a number that's outside those bounds, the last 3 digits will essentially be dropped.
-
-	let parsedSeed = tryParseInt(submittedSeed);
-	let seed: number;
+	let parsedSeed = tryParseBigInt(submittedSeed);
+	let seed: bigint;
 
 	if (parsedSeed.success && parsedSeed.value !== 0) {
 		seed = parsedSeed.value;
@@ -291,7 +286,7 @@ export function seedHelper(submittedSeed: string) {
 	}
 
 	if (seed === 0) {
-		seed = parseInt(randomMinecraftSeed());
+		seed = BigInt(randomMinecraftSeed());
 	}
 
 	return seed;
