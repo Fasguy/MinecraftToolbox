@@ -157,7 +157,8 @@
 				"Credits scrolling can now be paused by clicking and scrolled manually using the scroll wheel",
 				"Links in the footer are now actual links instead of buttons",
 				"The WebApp now runs on Angular 17",
-				"Added Loot-Table randomizer for Minecraft v1.20"
+				"Added Loot-Table randomizer for Minecraft v1.20.3",
+				"Added Crafting-Recipe randomizer for Minecraft v1.20.3"
 			],
 			"removals": []
 		},
