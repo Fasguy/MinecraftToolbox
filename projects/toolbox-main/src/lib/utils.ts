@@ -6,8 +6,6 @@ import { deserialize, serialize } from "src/lib/serialize-form";
 import { Datapack } from "./ts-datapack/datapack";
 import { GenericAdvancement } from "./ts-datapack/generic-advancement";
 
-export const MAX_SIGNED_64_BIT_INTEGER = 9223372036854775807n;
-
 export function duckCheck(obj: any, ...properties: any[]) {
 	for (const property of properties) {
 		if (typeof obj[property] === "undefined") {
@@ -18,20 +16,20 @@ export function duckCheck(obj: any, ...properties: any[]) {
 	return true;
 }
 
-export function seededRandom(seed: BigInt) {
-	const baseSeeds = [101182939n, 495868718n, 999091121n, 39475253n];
+export function seededRandom(seed: number) {
+	const baseSeeds = [101182939, 495868718, 999091121, 39475253];
 
 	let [x, y, z, w] = baseSeeds;
 
 	const random = () => {
-		const t = (x ^ (x << BigInt(11))) % MAX_SIGNED_64_BIT_INTEGER;
+		const t = x ^ (x << 11);
 		[x, y, z] = [y, z, w];
-		w = (((w ^ (w >> BigInt(19))) % MAX_SIGNED_64_BIT_INTEGER) ^ ((t ^ (t >> BigInt(8))) % MAX_SIGNED_64_BIT_INTEGER)) % MAX_SIGNED_64_BIT_INTEGER;
-		return Number(w * 100n / MAX_SIGNED_64_BIT_INTEGER) / 100;
+		w = w ^ (w >> 19) ^ (t ^ (t >> 8));
+		return w / 0x7fffffff;
 	};
 
 	[x, y, z, w] = baseSeeds.map(i => i + seed);
-	[x, y, z, w] = [0, 0, 0, 0].map(() => BigInt(Math.round(random() * 1e16)));
+	[x, y, z, w] = [0, 0, 0, 0].map(() => Math.round(random() * 1e16));
 
 	return random;
 }
@@ -79,18 +77,12 @@ export function shuffle<T>(array: T[], random = Math.random) {
 	return array;
 }
 
-export function tryParseBigInt(str: string) {
-	try {
-		return {
-			success: true,
-			value: BigInt(str)
-		};
-	}
-	catch {
-		return {
-			success: false,
-			value: BigInt(NaN)
-		};
+export function tryParseInt(str: string) {
+	const result = parseInt(str);
+
+	return {
+		success: !isNaN(result),
+		value: result
 	}
 }
 
@@ -276,8 +268,8 @@ export function mergeDeep(target: any, ...sources: any): any {
 }
 
 export function seedHelper(submittedSeed: string) {
-	let parsedSeed = tryParseBigInt(submittedSeed);
-	let seed: bigint;
+	let parsedSeed = tryParseInt(submittedSeed);
+	let seed: number;
 
 	if (parsedSeed.success && parsedSeed.value !== 0) {
 		seed = parsedSeed.value;
@@ -286,7 +278,7 @@ export function seedHelper(submittedSeed: string) {
 	}
 
 	if (seed === 0) {
-		seed = BigInt(randomMinecraftSeed());
+		seed = parseInt(randomMinecraftSeed());
 	}
 
 	return seed;

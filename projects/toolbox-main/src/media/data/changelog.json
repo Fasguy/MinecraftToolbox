@@ -161,17 +161,5 @@
 			"removals": []
 		},
 		"notes": ""
-	},
-	{
-		"version": "",
-		"build_date": "",
-		"changes": {
-			"additions": [],
-			"modifications": [
-				"Seeds are now 64-Bit instead of 53-Bit"
-			],
-			"removals": []
-		},
-		"notes": "The seed adjustment is a breaking change. Using old seeds will not guarantee the same output."
 	}
 ]

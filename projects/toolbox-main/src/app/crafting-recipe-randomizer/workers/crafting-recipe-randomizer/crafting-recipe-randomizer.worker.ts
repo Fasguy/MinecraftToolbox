@@ -15,7 +15,7 @@ export class CraftingRecipeRandomizerWorker {
 	private _intermediaryDatapack!: Datapack;
 	private _finalDatapack!: Datapack;
 
-	private _seed!: bigint;
+	private _seed!: number;
 
 	public async loadDataFromBlob(blob: Blob) {
 		const textDecoder = new TextDecoder();
@@ -89,7 +89,7 @@ export class CraftingRecipeRandomizerWorker {
 		}
 	}
 
-	public prepareDataPack(seed: bigint, selectedCraftingRecipes: string[]) {
+	public prepareDataPack(seed: number, selectedCraftingRecipes: string[]) {
 		this._seed = seed;
 
 		this._intermediaryDatapack = new Datapack();
