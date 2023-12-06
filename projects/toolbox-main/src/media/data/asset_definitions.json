@@ -416,6 +416,9 @@
 	"minecraft:bread": {
 		"text": "Bread"
 	},
+	"minecraft:breeze": {
+		"text": "Breeze"
+	},
 	"minecraft:brewing_stand": {
 		"text": "Brewing Stand"
 	},
@@ -632,6 +635,9 @@
 	"minecraft:chiseled_bookshelf": {
 		"text": "Chiseled Bookshelf"
 	},
+	"minecraft:chiseled_copper": {
+		"text": "Chiseled Copper"
+	},
 	"minecraft:chiseled_deepslate": {
 		"text": "Chiseled Deepslate"
 	},
@@ -652,6 +658,12 @@
 	},
 	"minecraft:chiseled_stone_bricks": {
 		"text": "Chiseled Stone Bricks"
+	},
+	"minecraft:chiseled_tuff": {
+		"text": "Chiseled Tuff"
+	},
+	"minecraft:chiseled_tuff_bricks": {
+		"text": "Chiseled Tuff Bricks"
 	},
 	"minecraft:chorus_flower": {
 		"text": "Chorus Flower"
@@ -752,11 +764,23 @@
 	"minecraft:copper_block": {
 		"text": "Block of Copper"
 	},
+	"minecraft:copper_bulb": {
+		"text": "Copper Bulb"
+	},
+	"minecraft:copper_door": {
+		"text": "Copper Door"
+	},
+	"minecraft:copper_grate": {
+		"text": "Copper Grate"
+	},
 	"minecraft:copper_ingot": {
 		"text": "Copper Ingot"
 	},
 	"minecraft:copper_ore": {
 		"text": "Copper Ore"
+	},
+	"minecraft:copper_trapdoor": {
+		"text": "Copper Trapdoor"
 	},
 	"minecraft:cornflower": {
 		"text": "Cornflower"
@@ -778,6 +802,9 @@
 	},
 	"minecraft:cracked_stone_bricks": {
 		"text": "Cracked Stone Bricks"
+	},
+	"minecraft:crafter": {
+		"text": "Crafter"
 	},
 	"minecraft:crafting_table": {
 		"text": "Crafting Table"
@@ -1235,8 +1262,23 @@
 	"minecraft:evoker": {
 		"text": "Evoker"
 	},
+	"minecraft:exposed_chiseled_copper": {
+		"text": "Exposed Chiseled Copper"
+	},
 	"minecraft:exposed_copper": {
 		"text": "Exposed Copper"
+	},
+	"minecraft:exposed_copper_bulb": {
+		"text": "Exposed Copper Bulb"
+	},
+	"minecraft:exposed_copper_door": {
+		"text": "Exposed Copper Door"
+	},
+	"minecraft:exposed_copper_grate": {
+		"text": "Exposed Copper Grate"
+	},
+	"minecraft:exposed_copper_trapdoor": {
+		"text": "Exposed Copper Trapdoor"
 	},
 	"minecraft:exposed_cut_copper": {
 		"text": "Exposed Cut Copper"
@@ -2357,8 +2399,23 @@
 	"minecraft:oxeye_daisy": {
 		"text": "Oxeye Daisy"
 	},
+	"minecraft:oxidized_chiseled_copper": {
+		"text": "Oxidized Chiseled Copper"
+	},
 	"minecraft:oxidized_copper": {
 		"text": "Oxidized Copper"
+	},
+	"minecraft:oxidized_copper_bulb": {
+		"text": "Oxidized Copper Bulb"
+	},
+	"minecraft:oxidized_copper_door": {
+		"text": "Oxidized Copper Door"
+	},
+	"minecraft:oxidized_copper_grate": {
+		"text": "Oxidized Copper Grate"
+	},
+	"minecraft:oxidized_copper_trapdoor": {
+		"text": "Oxidized Copper Trapdoor"
 	},
 	"minecraft:oxidized_cut_copper": {
 		"text": "Oxidized Cut Copper"
@@ -2563,6 +2620,18 @@
 	},
 	"minecraft:polished_granite_stairs": {
 		"text": "Polished Granite Stairs"
+	},
+	"minecraft:polished_tuff": {
+		"text": "Polished Tuff"
+	},
+	"minecraft:polished_tuff_slab": {
+		"text": "Polished Tuff Slab"
+	},
+	"minecraft:polished_tuff_stairs": {
+		"text": "Polished Tuff Stairs"
+	},
+	"minecraft:polished_tuff_wall": {
+		"text": "Polished Tuff Wall"
 	},
 	"minecraft:popped_chorus_fruit": {
 		"text": "Popped Chorus Fruit"
@@ -3065,6 +3134,9 @@
 	"minecraft:shipwreck_treasure": {
 		"text": "Shipwreck Treasure"
 	},
+	"minecraft:short_grass": {
+		"text": "Short Grass"
+	},
 	"minecraft:shroomlight": {
 		"text": "Shroomlight"
 	},
@@ -3467,6 +3539,39 @@
 	"minecraft:trapped_chest": {
 		"text": "Trapped Chest"
 	},
+	"minecraft:trial_chamber_consumables": {
+		"text": "Consumables (Trial Chambers)"
+	},
+	"minecraft:trial_chamber_key": {
+		"text": "Trial Key (Trial Chambers)"
+	},
+	"minecraft:trial_chambers_chamber": {
+		"text": "Chamber (Trial Chambers)"
+	},
+	"minecraft:trial_chambers_corridor": {
+		"text": "Corridor (Trial Chambers)"
+	},
+	"minecraft:trial_chambers_entrance": {
+		"text": "Entrance (Trial Chambers)"
+	},
+	"minecraft:trial_chambers_intersection": {
+		"text": "Intersection (Trial Chambers)"
+	},
+	"minecraft:trial_chambers_intersection_barrel": {
+		"text": "Intersection Barrel (Trial Chambers)"
+	},
+	"minecraft:trial_chambers_reward": {
+		"text": "Reward (Trial Chambers)"
+	},
+	"minecraft:trial_chambers_supply": {
+		"text": "Supply (Trial Chambers)"
+	},
+	"minecraft:trial_chambers_water": {
+		"text": "Water (Trial Chambers)"
+	},
+	"minecraft:trial_spawner": {
+		"text": "Trial Spawner"
+	},
 	"minecraft:tripwire": {
 		"text": "Tripwire"
 	},
@@ -3487,6 +3592,27 @@
 	},
 	"minecraft:tuff": {
 		"text": "Tuff"
+	},
+	"minecraft:tuff_brick_slab": {
+		"text": "Tuff Brick Slab"
+	},
+	"minecraft:tuff_brick_stairs": {
+		"text": "Tuff Brick Stairs"
+	},
+	"minecraft:tuff_brick_wall": {
+		"text": "Tuff Brick Wall"
+	},
+	"minecraft:tuff_bricks": {
+		"text": "Tuff Bricks"
+	},
+	"minecraft:tuff_slab": {
+		"text": "Tuff Slab"
+	},
+	"minecraft:tuff_stairs": {
+		"text": "Tuff Stairs"
+	},
+	"minecraft:tuff_wall": {
+		"text": "Tuff Wall"
 	},
 	"minecraft:turtle": {
 		"text": "Turtle"
@@ -3644,8 +3770,23 @@
 	"minecraft:water_cauldron": {
 		"text": "Water Cauldron"
 	},
+	"minecraft:waxed_chiseled_copper": {
+		"text": "Waxed Chiseled Copper"
+	},
 	"minecraft:waxed_copper_block": {
 		"text": "Waxed Block of Copper"
+	},
+	"minecraft:waxed_copper_bulb": {
+		"text": "Waxed Copper Bulb"
+	},
+	"minecraft:waxed_copper_door": {
+		"text": "Waxed Copper Door"
+	},
+	"minecraft:waxed_copper_grate": {
+		"text": "Waxed Copper Grate"
+	},
+	"minecraft:waxed_copper_trapdoor": {
+		"text": "Waxed Copper Trapdoor"
 	},
 	"minecraft:waxed_cut_copper": {
 		"text": "Waxed Cut Copper"
@@ -3656,8 +3797,23 @@
 	"minecraft:waxed_cut_copper_stairs": {
 		"text": "Waxed Cut Copper Stairs"
 	},
+	"minecraft:waxed_exposed_chiseled_copper": {
+		"text": "Waxed Exposed Chiseled Copper"
+	},
 	"minecraft:waxed_exposed_copper": {
 		"text": "Waxed Exposed Copper"
+	},
+	"minecraft:waxed_exposed_copper_bulb": {
+		"text": "Waxed Exposed Copper Bulb"
+	},
+	"minecraft:waxed_exposed_copper_door": {
+		"text": "Waxed Exposed Copper Door"
+	},
+	"minecraft:waxed_exposed_copper_grate": {
+		"text": "Waxed Exposed Copper Grate"
+	},
+	"minecraft:waxed_exposed_copper_trapdoor": {
+		"text": "Waxed Exposed Copper Trapdoor"
 	},
 	"minecraft:waxed_exposed_cut_copper": {
 		"text": "Waxed Exposed Cut Copper"
@@ -3668,8 +3824,23 @@
 	"minecraft:waxed_exposed_cut_copper_stairs": {
 		"text": "Waxed Exposed Cut Copper Stairs"
 	},
+	"minecraft:waxed_oxidized_chiseled_copper": {
+		"text": "Waxed Oxidized Chiseled Copper"
+	},
 	"minecraft:waxed_oxidized_copper": {
 		"text": "Waxed Oxidized Copper"
+	},
+	"minecraft:waxed_oxidized_copper_bulb": {
+		"text": "Waxed Oxidized Copper Bulb"
+	},
+	"minecraft:waxed_oxidized_copper_door": {
+		"text": "Waxed Oxidized Copper Door"
+	},
+	"minecraft:waxed_oxidized_copper_grate": {
+		"text": "Waxed Oxidized Copper Grate"
+	},
+	"minecraft:waxed_oxidized_copper_trapdoor": {
+		"text": "Waxed Oxidized Copper Trapdoor"
 	},
 	"minecraft:waxed_oxidized_cut_copper": {
 		"text": "Waxed Oxidized Cut Copper"
@@ -3680,8 +3851,23 @@
 	"minecraft:waxed_oxidized_cut_copper_stairs": {
 		"text": "Waxed Oxidized Cut Copper Stairs"
 	},
+	"minecraft:waxed_weathered_chiseled_copper": {
+		"text": "Waxed Weathered Chiseled Copper"
+	},
 	"minecraft:waxed_weathered_copper": {
 		"text": "Waxed Weathered Copper"
+	},
+	"minecraft:waxed_weathered_copper_bulb": {
+		"text": "Waxed Weathered Copper Bulb"
+	},
+	"minecraft:waxed_weathered_copper_door": {
+		"text": "Waxed Weathered Copper Door"
+	},
+	"minecraft:waxed_weathered_copper_grate": {
+		"text": "Waxed Weathered Copper Grate"
+	},
+	"minecraft:waxed_weathered_copper_trapdoor": {
+		"text": "Waxed Weathered Copper Trapdoor"
 	},
 	"minecraft:waxed_weathered_cut_copper": {
 		"text": "Waxed Weathered Cut Copper"
@@ -3695,8 +3881,23 @@
 	"minecraft:wayfinder_armor_trim_smithing_template": {
 		"text": "Wayfinder Armor Trim"
 	},
+	"minecraft:weathered_chiseled_copper": {
+		"text": "Weathered Chiseled Copper"
+	},
 	"minecraft:weathered_copper": {
 		"text": "Weathered Copper"
+	},
+	"minecraft:weathered_copper_bulb": {
+		"text": "Weathered Copper Bulb"
+	},
+	"minecraft:weathered_copper_door": {
+		"text": "Weathered Copper Door"
+	},
+	"minecraft:weathered_copper_grate": {
+		"text": "Weathered Copper Grate"
+	},
+	"minecraft:weathered_copper_trapdoor": {
+		"text": "Weathered Copper Trapdoor"
 	},
 	"minecraft:weathered_cut_copper": {
 		"text": "Weathered Cut Copper"
@@ -3902,10 +4103,19 @@
 	"toolbox:loot_table_randomizer_group_chests": {
 		"text": "Chests"
 	},
+	"toolbox:loot_table_randomizer_group_dispensers": {
+		"text": "Dispensers"
+	},
 	"toolbox:loot_table_randomizer_group_entities": {
 		"text": "Entities"
 	},
 	"toolbox:loot_table_randomizer_group_gameplay": {
 		"text": "Gameplay"
+	},
+	"toolbox:loot_table_randomizer_group_pots": {
+		"text": "Pots"
+	},
+	"toolbox:loot_table_randomizer_group_spawners": {
+		"text": "Spawners"
 	}
 }

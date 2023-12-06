@@ -156,7 +156,8 @@
 				"The media-query 'prefers-reduced-motion' will now be checked, when accessing the site for the first time, to disable uselss visuals if needed",
 				"Credits scrolling can now be paused by clicking and scrolled manually using the scroll wheel",
 				"Links in the footer are now actual links instead of buttons",
-				"The WebApp now runs on Angular 17"
+				"The WebApp now runs on Angular 17",
+				"Added Loot-Table randomizer for Minecraft v1.20"
 			],
 			"removals": []
 		},
