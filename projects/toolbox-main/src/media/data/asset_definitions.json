@@ -3540,34 +3540,34 @@
 		"text": "Trapped Chest"
 	},
 	"minecraft:trial_chamber_consumables": {
-		"text": "Consumables (Trial Chambers)"
+		"text": "Trial Chamber Consumables"
 	},
 	"minecraft:trial_chamber_key": {
-		"text": "Trial Key (Trial Chambers)"
+		"text": "Trial Chamber Key"
 	},
 	"minecraft:trial_chambers_chamber": {
-		"text": "Chamber (Trial Chambers)"
+		"text": "Trial Chamber Chamber"
 	},
 	"minecraft:trial_chambers_corridor": {
-		"text": "Corridor (Trial Chambers)"
+		"text": "Trial Chamber Corridor"
 	},
 	"minecraft:trial_chambers_entrance": {
-		"text": "Entrance (Trial Chambers)"
+		"text": "Trial Chamber Entrance"
 	},
 	"minecraft:trial_chambers_intersection": {
-		"text": "Intersection (Trial Chambers)"
+		"text": "Trial Chamber Intersection"
 	},
 	"minecraft:trial_chambers_intersection_barrel": {
-		"text": "Intersection Barrel (Trial Chambers)"
+		"text": "Trial Chamber Intersection Barrel"
 	},
 	"minecraft:trial_chambers_reward": {
-		"text": "Reward (Trial Chambers)"
+		"text": "Trial Chamber Reward"
 	},
 	"minecraft:trial_chambers_supply": {
-		"text": "Supply (Trial Chambers)"
+		"text": "Trial Chamber Supply"
 	},
 	"minecraft:trial_chambers_water": {
-		"text": "Water (Trial Chambers)"
+		"text": "Trial Chamber Water"
 	},
 	"minecraft:trial_spawner": {
 		"text": "Trial Spawner"
