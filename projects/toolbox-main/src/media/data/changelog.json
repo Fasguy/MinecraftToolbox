@@ -158,7 +158,8 @@
 				"Links in the footer are now actual links instead of buttons",
 				"The WebApp now runs on Angular 17",
 				"Added Loot-Table randomizer for Minecraft v1.20.3",
-				"Added Crafting-Recipe randomizer for Minecraft v1.20.3"
+				"Added Crafting-Recipe randomizer for Minecraft v1.20.3",
+				"New version naming to remove unnecessary clutter"
 			],
 			"removals": []
 		},
