@@ -1,5 +1,14 @@
 [
 	{
+		"title": "Minecraft v1.21",
+		"versions": [
+			{
+				"title": "Minecraft 1.21.10",
+				"id": "1.21.10"
+			}
+		]
+	},
+	{
 		"title": "Minecraft v1.20",
 		"versions": [
 			{
